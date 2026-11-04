@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 
 import 'screens/booking_confirmation_dialog.dart';
 import 'screens/booking_date_date_screen.dart';
@@ -16,6 +18,13 @@ class TrainAwayApp extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
         title: 'Train Away',
         debugShowCheckedModeBanner: false,
+        supportedLocales: const [Locale('en'), Locale('es')],
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          SfGlobalLocalizations.delegate,
+        ],
         theme: ThemeData(
           useMaterial3: true,
           scaffoldBackgroundColor: Colors.white,

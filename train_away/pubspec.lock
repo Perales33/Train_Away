@@ -70,6 +70,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.0"
+  flutter_localizations:
+    dependency: "direct main"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -197,6 +202,14 @@ packages:
     description:
       name: syncfusion_flutter_datepicker
       sha256: "68eb960059d507f9a11ce5dbec25c8c4f0697fc9bad6bf5e07b658a8bb31bf90"
+      url: "https://pub.dev"
+    source: hosted
+    version: "35.1.43"
+  syncfusion_localizations:
+    dependency: "direct main"
+    description:
+      name: syncfusion_localizations
+      sha256: "8132895833eea10443a8cba5d62958e72f689ae8ee2067d9c81bbbed93db3970"
       url: "https://pub.dev"
     source: hosted
     version: "35.1.43"

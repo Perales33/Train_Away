@@ -8,7 +8,9 @@ class BookingDateTimeScreen extends StatelessWidget {
   const BookingDateTimeScreen({required this.onContinue, super.key});
 
   final VoidCallback onContinue;
-
+  static final ahora = DateTime.now();
+  static final firstDay = DateTime(ahora.year, ahora.month, 1);
+  static final lastDay = DateTime(ahora.year, ahora.month + 1, 0);
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: const AppBanner(),
@@ -32,15 +34,20 @@ class BookingDateTimeScreen extends StatelessWidget {
               ),
             ),
           ), 
-          Expanded(
-            flex: 1,
-            borderB
+          Container(
             child: Container(
-              color: AppColors.navy,
-              child: SfDateRangePicker(
+              width: 600,
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.navy, width: 2.5),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Localizations.override(
+                context: context,
+                locale: const Locale('es', 'ES'),
+                child: SfDateRangePicker(
                 selectionMode: DateRangePickerSelectionMode.single,
                 monthViewSettings: const DateRangePickerMonthViewSettings(
-                  showTrailingAndLeadingDates: true,
+                  showTrailingAndLeadingDates: false,
                 ),
                 backgroundColor: Colors.white,
                 headerHeight: 60,
@@ -49,7 +56,9 @@ class BookingDateTimeScreen extends StatelessWidget {
                   textStyle: TextStyle(color: AppColors.navy, fontSize: 20, fontWeight: FontWeight.w600),
                   backgroundColor: Colors.white,
                 ),
-                
+                minDate: firstDay,
+                maxDate: lastDay,
+                ),
               ),
             ),
           ),
