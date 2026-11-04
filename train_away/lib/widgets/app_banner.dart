@@ -1,0 +1,38 @@
+import 'package:flutter/material.dart';
+
+import '../theme/app_colors.dart';
+
+class AppBanner extends StatelessWidget implements PreferredSizeWidget {
+  const AppBanner({super.key});
+
+  @override
+  Size get preferredSize => const Size.fromHeight(70);
+
+  @override
+  Widget build(BuildContext context) => AppBar(
+        toolbarHeight: 70,
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        title: const Text(
+          'Train Away',
+          style: TextStyle(
+            color: AppColors.burgundy,
+            fontSize: 32,
+            fontFamily: 'Corinthia',
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.menu, size: 34, color: AppColors.navy),
+            onPressed: () {},
+          ),
+        ],
+        shape: const Border(
+          bottom: BorderSide(color: AppColors.navy, width: 1.5),
+        ),
+      );
+}
