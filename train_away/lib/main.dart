@@ -7,6 +7,7 @@ import 'screens/booking_date_date_screen.dart';
 import 'screens/booking_form_screen.dart';
 import 'screens/booking_success_screen.dart';
 import 'theme/app_colors.dart';
+import 'widgets/app_bottom_button.dart';
 import 'widgets/app_banner.dart';
 
 void main() => runApp(const TrainAwayApp());
@@ -101,27 +102,10 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
               ),
         ),
 
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(20),
-          decoration: const BoxDecoration(border: Border(top: BorderSide(color: Color(0xFFBDBDBD)))),
-          child: Center(
-            child: SizedBox(
-              width: 192,
-              height: 46,
-              child: _success
-                  ? OutlinedButton(
-                      style: OutlinedButton.styleFrom(foregroundColor: AppColors.navy, side: const BorderSide(color: AppColors.navy, width: 2.5), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(11))),
-                      onPressed: () => setState(() => _success = false),
-                      child: const Text('Entendido'),
-                    )
-                  : FilledButton(
-                      style: FilledButton.styleFrom(backgroundColor: AppColors.navy, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(11))),
-                      onPressed: _openCalendar,
-                      child: const Text('Continuar'),
-                    ),
-            ),
-          ),
+        AppBottomButton(
+          label: _success ? 'Entendido' : 'Continuar',
+          outlined: _success,
+          onPressed: _success ? () => setState(() => _success = false) : _openCalendar,
         ),
       ]
     ),
