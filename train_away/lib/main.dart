@@ -3,7 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 
 import 'pages/confirmation_dialog.dart';
-import 'pages/date_date_page.dart';
+import 'pages/date_time_page.dart';
 import 'pages/form_page.dart';
 import 'pages/reservation_confirmed.dart';
 import 'pages/success_page.dart';
@@ -63,8 +63,13 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
   void _showConfirmation() {
     showDialog<void>(
       context: context,
-      builder: (dialogContext) => BookingConfirmationDialog(
-        onCancel: () => Navigator.pop(dialogContext),
+      builder: (dialogContext) => ConfirmationDialog(
+        onCancel: () => {
+          Navigator.pop(dialogContext),
+          setState(() {
+            _showReservationSummary = false;
+          })
+        },
         onConfirm: () {
           Navigator.pop(dialogContext);
           setState(() {

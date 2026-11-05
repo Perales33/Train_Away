@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class BookingConfirmationDialog extends StatelessWidget {
-  const BookingConfirmationDialog({
+class ConfirmationDialog extends StatelessWidget {
+  const ConfirmationDialog({
     required this.onCancel,
     required this.onConfirm,
     super.key,

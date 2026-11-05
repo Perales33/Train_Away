@@ -132,7 +132,7 @@ class _DateTimePageState extends State<DateTimePage> {
               ),
             ),
             AppBottomButton(
-              label: 'Confirmar',
+              label: 'Continuar',
               onPressed: _confirmSelection,
             ),
           ],
