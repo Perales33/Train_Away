@@ -74,14 +74,26 @@ flutter run -d <device>
 ## Estructura del proyecto
 
 ```text
-lib/
-├── main.dart                  # Configuración de la app y flujo de pantallas
-├── pages/                     # Formulario, fecha/hora, resumen y confirmación
-├── theme/                     # Colores de la aplicación
-└── widgets/                   # Componentes reutilizables
-assets/
-├── fonts/                     # Tipografías de la aplicación
-└── img/                       # Icono y recursos gráficos
+┌── android/                # Configuracion para Android
+├── assets/                 # Fuentes e imagenes
+│   ├── fonts/              # Tipografías de la aplicación
+│   └── img/                # Icono y recursos gráficos
+├── ios/                    # Configuracion para iOS
+├── lib/                    # Codigo Dart de la aplicacion
+│   ├── main.dart           # Inicio y flujo principal
+│   ├── pages/              # Pantallas y dialogo de reserva
+│   ├── theme/              # Colores de la aplicacion
+│   └── widgets/            # Componentes reutilizables
+├── linux/                  # Configuracion para Linux
+├── macos/                  # Configuracion para macOS
+├── test/                   # Pruebas del proyecto
+├── web/                    # Configuracion y recursos web
+├── windows/                # Configuracion para Windows
+├── .gitignore              # Archivos excluidos de Git
+├── analysis_options.yaml   # Reglas de analisis de Dart
+├── pubspec.yaml            # Dependencias y recursos del proyecto
+├── pubspec.lock            # Versiones instaladas de dependencias
+└── README.md               # Documentacion del proyecto
 ```
 
 ## Dependencias principales
@@ -109,3 +121,13 @@ Para poder generar las diferentes pantallas del proyecto, se ha creado la carpet
 
 Además, de la carpeta widgets, se utiliza la carpeta theme para poder definir de forma prederteminada los colores que usará la aplicación.
 - `app_colors.dart`: Tema principal de la aplicación.
+
+## Bibliografía
+
+- [Documentación oficial de Flutter](https://docs.flutter.dev/)
+- [Internacionalización y localización en Flutter](https://docs.flutter.dev/ui/internationalization)
+- [Clase Navigator de Flutter](https://api.flutter.dev/flutter/widgets/Navigator-class.html)
+- [Guía de inicio de SfDateRangePicker de Syncfusion](https://help.syncfusion.com/flutter/daterangepicker/getting-started)
+- [Introducción al lenguaje Dart](https://dart.dev/language)
+- [Clase MaterialApp de Flutter](https://api.flutter.dev/flutter/material/MaterialApp-class.html)
+- [Paquete syncfusion_localizations](https://pub.dev/packages/syncfusion_localizations)
