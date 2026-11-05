@@ -16,6 +16,13 @@ class DateTimeSelection {
   final String hour;
 }
 
+enum ReservationStep
+{
+  form,
+  summary,
+  success,
+}
+
 class DateTimePage extends StatefulWidget {
   const DateTimePage({super.key});
 
@@ -24,6 +31,7 @@ class DateTimePage extends StatefulWidget {
 }
 
 class _DateTimePageState extends State<DateTimePage> {
+  
   static final now = DateTime.now();
   static final firstDay = DateTime(now.year, now.month, 1);
   static final lastDay = DateTime(now.year, now.month + 1, 0);
@@ -53,6 +61,7 @@ class _DateTimePageState extends State<DateTimePage> {
                 child: Column(
                   children: [
                     const SizedBox(height: 20),
+                    
                     const Text(
                       'Fecha de salida',
                       style: TextStyle(
@@ -61,6 +70,7 @@ class _DateTimePageState extends State<DateTimePage> {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
+                    
                     Center(
                       child: SizedBox(
                         width: 800,
@@ -72,9 +82,11 @@ class _DateTimePageState extends State<DateTimePage> {
                         ),
                       ),
                     ),
+                    
                     const SizedBox(height: 10),
+                    
                     Container(
-                      width: 800,
+                      width: 700,
                       decoration: BoxDecoration(
                         border: Border.all(color: AppColors.navy, width: 1.5),
                         borderRadius: BorderRadius.circular(20),
@@ -113,7 +125,9 @@ class _DateTimePageState extends State<DateTimePage> {
                         ),
                       ),
                     ),
+                    
                     const SizedBox(height: 20),
+                    
                     const Text(
                       'Horas disponibles',
                       style: TextStyle(
@@ -122,7 +136,9 @@ class _DateTimePageState extends State<DateTimePage> {
                         color: AppColors.navy,
                       ),
                     ),
+                    
                     const SizedBox(height: 10),
+                    
                     HourSelection(
                       selectedHour: selectedHour,
                       onChanged: (hour) => setState(() => selectedHour = hour),

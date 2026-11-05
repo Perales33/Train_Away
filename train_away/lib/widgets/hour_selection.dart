@@ -23,14 +23,14 @@ class HourSelection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Wrap(
-        spacing: 8,
-        runSpacing: 8,
-        children: hours.map((hour) {
-          return ChoiceChip(
-            label: Text(hour),
-            selected: selectedHour == hour,
-            onSelected: (_) => onChanged(hour),
-          );
-        }).toList(),
+    spacing: 8,
+    runSpacing: 8,
+    children: hours.map((hour) {
+      return ChoiceChip(
+        label: Text(hour),
+        selected: selectedHour == hour,
+        onSelected: (_) => onChanged(hour),
       );
+    }).toList(),
+  );
 }

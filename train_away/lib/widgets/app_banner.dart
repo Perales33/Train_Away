@@ -3,19 +3,24 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
 class AppBanner extends StatelessWidget implements PreferredSizeWidget {
-  const AppBanner({super.key});
+  const AppBanner({this.onLogoTap, super.key});
+
+  final VoidCallback? onLogoTap;
 
   @override
   Size get preferredSize => const Size.fromHeight(70);
 
   @override
   Widget build(BuildContext context) => AppBar(
-        toolbarHeight: 70,
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        title: const Text(
+    toolbarHeight: 70,
+    backgroundColor: Colors.white,
+    surfaceTintColor: Colors.white,
+    elevation: 0,
+    automaticallyImplyLeading: false,
+    title: GestureDetector(
+      onTap: onLogoTap ??
+          () => Navigator.of(context).popUntil((route) => route.isFirst),
+      child: const Text(
           'Train Away',
           style: TextStyle(
             color: AppColors.burgundy,
@@ -24,15 +29,18 @@ class AppBanner extends StatelessWidget implements PreferredSizeWidget {
             fontStyle: FontStyle.italic,
             fontWeight: FontWeight.w600,
           ),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.menu, size: 34, color: AppColors.navy),
-            onPressed: () {},
-          ),
-        ],
-        shape: const Border(
-          bottom: BorderSide(color: AppColors.navy, width: 1.5),
-        ),
-      );
+    )
+  ),
+    
+    actions: [
+      IconButton(
+        icon: const Icon(Icons.menu, size: 34, color: AppColors.navy),
+        onPressed: () {},
+      ),
+    ],
+    
+    shape: const Border(
+      bottom: BorderSide(color: AppColors.navy, width: 1.5),
+    ),
+  );
 }
