@@ -33,7 +33,7 @@ class FormDropdown<T> extends StatelessWidget {
 
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(
-              color: AppColors.burgundy, 
+              color: Colors.black, 
               width: 2.5
             ), 
             borderRadius: BorderRadius.circular(12)

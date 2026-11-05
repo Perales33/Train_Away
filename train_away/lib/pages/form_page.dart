@@ -47,7 +47,7 @@ class FormPage extends StatelessWidget {
             const FormFieldLabel('Origen'),
             FormDropdown<String>(
               value: origin,
-              values: stations,
+              values: FormPage.stations.where((station) => station != destination).toList(),
               onChanged: (value) {
                 if (value != null) onOriginChanged(value);
               },
@@ -56,7 +56,7 @@ class FormPage extends StatelessWidget {
             const FormFieldLabel('Destino'),
             FormDropdown<String>(
               value: destination,
-              values: stations,
+              values: FormPage.stations.where((station) => station != origin).toList(),
               onChanged: (value) {
                 if (value != null) onDestinationChanged(value);
               },

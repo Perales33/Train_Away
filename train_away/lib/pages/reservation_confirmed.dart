@@ -53,7 +53,7 @@ class ReservationConfirmedPage extends StatelessWidget {
                   _infoTile('Destino', destination),
                   Row(
                     children: [
-                      Expanded(child: _infoTile('Fecha:', _formatDate(date))),
+                      Expanded(child: _infoTile('Fecha', _formatDate(date))),
                       const SizedBox(width: 10),
                       Expanded(child: _infoTile('Hora', hour)),
                     ],
@@ -61,7 +61,7 @@ class ReservationConfirmedPage extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: _infoTile('Número de pasajero: ', '$passengers'),
+                        child: _infoTile('Número de pasajero', '$passengers'),
                       ),
                       const SizedBox(width: 10),
                       Expanded(child: _infoTile('Categoría', category)),
@@ -72,7 +72,7 @@ class ReservationConfirmedPage extends StatelessWidget {
                     'Opciones de viaje',
                     style: TextStyle(
                       color: AppColors.navy,
-                      fontSize: 13,
+                      fontSize: 17,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -97,7 +97,7 @@ class ReservationConfirmedPage extends StatelessWidget {
               label,
               style: const TextStyle(
                 color: AppColors.navy,
-                fontSize: 13,
+                fontSize: 17,
                 fontWeight: FontWeight.bold,
               ),
             ),
