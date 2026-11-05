@@ -2,16 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../theme/app_colors.dart';
-import '../widgets/app_bottom_button.dart';
 import '../widgets/app_banner.dart';
+import '../widgets/app_bottom_button.dart';
+import '../widgets/hour_selection.dart';
 
-class BookingDateTimeScreen extends StatelessWidget {
-  const BookingDateTimeScreen({required this.onContinue, super.key});
+class DateTimeSelection {
+  const DateTimeSelection({
+    required this.date,
+    required this.hour,
+  });
 
-  final VoidCallback onContinue;
-  static final ahora = DateTime.now();
-  static final firstDay = DateTime(ahora.year, ahora.month, 1);
-  static final lastDay = DateTime(ahora.year, ahora.month + 1, 0);
+  final DateTime date;
+  final String hour;
+}
+
+class DateTimePage extends StatefulWidget {
+  const DateTimePage({super.key});
+
+  @override
+  State<DateTimePage> createState() => _DateTimePageState();
+}
+
+class _DateTimePageState extends State<DateTimePage> {
+  static final now = DateTime.now();
+  static final firstDay = DateTime(now.year, now.month, 1);
+  static final lastDay = DateTime(now.year, now.month + 1, 0);
+
+  DateTime? selectedDate;
+  String? selectedHour;
+
+  void _confirmSelection() {
+    final date = selectedDate;
+    final hour = selectedHour;
+
+    if (date == null || hour == null) return;
+
+    Navigator.pop(
+      context,
+      DateTimeSelection(date: date, hour: hour),
+    );
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: const AppBanner(),
@@ -55,8 +86,14 @@ class BookingDateTimeScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                           child: SfDateRangePicker(
                             selectionMode: DateRangePickerSelectionMode.single,
-                            monthViewSettings:
-                                const DateRangePickerMonthViewSettings(
+                            onSelectionChanged: (args) {
+                              if (args.value is DateTime) {
+                                setState(() {
+                                  selectedDate = args.value as DateTime;
+                                });
+                              }
+                            },
+                            monthViewSettings: const DateRangePickerMonthViewSettings(
                               showTrailingAndLeadingDates: false,
                             ),
                             backgroundColor: Colors.white,
@@ -76,11 +113,28 @@ class BookingDateTimeScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      'Horas disponibles',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.navy,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    HourSelection(
+                      selectedHour: selectedHour,
+                      onChanged: (hour) => setState(() => selectedHour = hour),
+                    ),
                   ],
                 ),
               ),
             ),
-            AppBottomButton(label: 'Confirmar', onPressed: onContinue),
+            AppBottomButton(
+              label: 'Confirmar',
+              onPressed: _confirmSelection,
+            ),
           ],
         ),
       );

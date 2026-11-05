@@ -4,8 +4,8 @@ import '../theme/app_colors.dart';
 import '../widgets/form_dropdown.dart';
 import '../widgets/form_field_label.dart';
 
-class BookingFormScreen extends StatelessWidget {
-  const BookingFormScreen({
+class FormPage extends StatelessWidget {
+  const FormPage({
     required this.origin,
     required this.destination,
     required this.passengers,

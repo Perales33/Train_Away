@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 
-import 'screens/booking_confirmation_dialog.dart';
-import 'screens/booking_date_date_screen.dart';
-import 'screens/booking_form_screen.dart';
-import 'screens/booking_success_screen.dart';
+import 'pages/confirmation_dialog.dart';
+import 'pages/date_date_page.dart';
+import 'pages/form_page.dart';
+import 'pages/reservation_confirmed.dart';
+import 'pages/success_page.dart';
 import 'theme/app_colors.dart';
 import 'widgets/app_bottom_button.dart';
 import 'widgets/app_banner.dart';
@@ -30,7 +31,7 @@ class TrainAwayApp extends StatelessWidget {
           useMaterial3: true,
           scaffoldBackgroundColor: Colors.white,
           colorScheme: ColorScheme.fromSeed(seedColor: AppColors.navy, primary: AppColors.navy),
-          fontFamily: 'Roboto',
+          fontFamily: 'DM Sans',
         ),
         home: const ConfirmationPage(),
       );
@@ -44,6 +45,7 @@ class ConfirmationPage extends StatefulWidget {
 }
 
 class _ConfirmationPageState extends State<ConfirmationPage> {
+  bool _showReservationSummary = false;
   bool _success = false;
   String _origin = 'Estación Norte de Madrid';
   String _destination = 'Estación Sur de Barcelona';
@@ -55,29 +57,40 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     'Coche cama': false,
   };
 
-  void _showConfirmation(BuildContext context) {
+  DateTime? _travelDate;
+  String? _travelHour;
+
+  void _showConfirmation() {
     showDialog<void>(
       context: context,
       builder: (dialogContext) => BookingConfirmationDialog(
         onCancel: () => Navigator.pop(dialogContext),
         onConfirm: () {
           Navigator.pop(dialogContext);
-          Navigator.pop(context);
-          setState(() => _success = true);
+          setState(() {
+            _showReservationSummary = false;
+            _success = true;
+          });
         },
       ),
     );
   }
 
-  void _openCalendar() {
-    Navigator.push(
+  Future<void> _openCalendar() async {
+    final selection = await Navigator.push<DateTimeSelection>(
       context,
-      MaterialPageRoute<void>(
-        builder: (_) => BookingDateTimeScreen(
-          onContinue: () => _showConfirmation(context),
-        ),
+      MaterialPageRoute(
+        builder: (_) => const DateTimePage(),
       ),
     );
+
+    if (selection == null || !mounted) return;
+
+    setState(() {
+      _travelDate = selection.date;
+      _travelHour = selection.hour;
+      _showReservationSummary = true;
+    });
   }
 
   @override
@@ -87,8 +100,18 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
       children: [
         Expanded(
           child: _success
-              ? const BookingSuccessScreen()
-              : BookingFormScreen(
+              ? const SuccessPage()
+              : _showReservationSummary
+                  ? ReservationConfirmedPage(
+                  origin: _origin,
+                  destination: _destination,
+                  passengers: _passengers,
+                  category: _category,
+                  extras: _extras,
+                  date: _travelDate!,
+                  hour: _travelHour!,
+                )
+              : FormPage(
               origin: _origin,
               destination: _destination,
               passengers: _passengers,
@@ -103,9 +126,22 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
         ),
 
         AppBottomButton(
-          label: _success ? 'Entendido' : 'Continuar',
+          label: _success
+              ? 'Entendido'
+              : _showReservationSummary
+                  ? 'Confirmar'
+                  : 'Continuar',
           outlined: _success,
-          onPressed: _success ? () => setState(() => _success = false) : _openCalendar,
+          onPressed: _success
+              ? () => setState(() {
+                  _success = false;
+                  _showReservationSummary = false;
+                  _travelDate = null;
+                  _travelHour = null;
+                })
+              : _showReservationSummary
+                  ? _showConfirmation
+                  : _openCalendar,
         ),
       ]
     ),
