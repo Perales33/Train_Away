@@ -31,7 +31,7 @@ class ReservationConfirmedPage extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.white,
             border: Border.all(color: AppColors.navy),
             borderRadius: BorderRadius.circular(14),
           ),
@@ -116,7 +116,7 @@ class ReservationConfirmedPage extends StatelessWidget {
     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
     margin: const EdgeInsets.only(bottom: 7),
     decoration: BoxDecoration(
-      color: const Color(0xFFE7E6E7),
+      color: AppColors.surfaceGrey,
       borderRadius: BorderRadius.circular(10),
     ),
     child: Text(

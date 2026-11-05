@@ -13,8 +13,8 @@ class AppBanner extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) => AppBar(
     toolbarHeight: 70,
-    backgroundColor: Colors.white,
-    surfaceTintColor: Colors.white,
+    backgroundColor: AppColors.white,
+    surfaceTintColor: AppColors.white,
     elevation: 0,
     automaticallyImplyLeading: false,
     title: GestureDetector(

@@ -29,7 +29,7 @@ class TrainAwayApp extends StatelessWidget {
     ],
     theme: ThemeData(
       useMaterial3: true,
-      scaffoldBackgroundColor: Colors.white,
+      scaffoldBackgroundColor: AppColors.white,
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.navy,
         primary: AppColors.navy,

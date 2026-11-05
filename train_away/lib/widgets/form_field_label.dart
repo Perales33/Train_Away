@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:train_away/theme/app_colors.dart';
 
 class FormFieldLabel extends StatelessWidget {
   const FormFieldLabel(this.label, {super.key});
@@ -13,7 +14,7 @@ class FormFieldLabel extends StatelessWidget {
       style: const TextStyle(
         fontSize: 17, 
         fontWeight: FontWeight.w700, 
-        color: Colors.black
+        color: AppColors.black
       )
     ),
   );

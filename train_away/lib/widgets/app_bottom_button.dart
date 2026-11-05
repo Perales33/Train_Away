@@ -19,7 +19,7 @@ class AppBottomButton extends StatelessWidget {
     width: double.infinity,
     padding: const EdgeInsets.all(20),
     decoration: const BoxDecoration(
-      border: Border(top: BorderSide(color: Color(0xFFBDBDBD))),
+      border: Border(top: BorderSide(color: AppColors.divider)),
     ),
     child: Center(
       child: SizedBox(

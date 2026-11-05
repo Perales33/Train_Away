@@ -76,7 +76,7 @@ class _DateTimePageState extends State<DateTimePage> {
                     width: 800,
                     child: Divider(
                       thickness: 2,
-                      color: Colors.grey,
+                      color: AppColors.grey,
                       indent: 200,
                       endIndent: 200,
                     ),
@@ -108,7 +108,7 @@ class _DateTimePageState extends State<DateTimePage> {
                         monthViewSettings: const DateRangePickerMonthViewSettings(
                           showTrailingAndLeadingDates: false,
                         ),
-                        backgroundColor: Colors.white,
+                        backgroundColor: AppColors.white,
                         headerHeight: 60,
                         headerStyle: const DateRangePickerHeaderStyle(
                           textAlign: TextAlign.center,
@@ -117,7 +117,7 @@ class _DateTimePageState extends State<DateTimePage> {
                             fontSize: 20,
                             fontWeight: FontWeight.w600,
                           ),
-                          backgroundColor: Colors.white,
+                          backgroundColor: AppColors.white,
                         ),
                         minDate: firstDay,
                         maxDate: lastDay,
