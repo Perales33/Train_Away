@@ -5,9 +5,9 @@ Aplicación móvil desarrollada con Flutter para crear reservas de tren. Permite
 ## Funcionalidades
 
 - Selección de origen y destino entre estaciones disponibles. No se puede elegir la misma estación para ambos, pudiendo ser las opciones.
-- Selección de entre 1 y 8 pasajeros y de categoría ('1ª clase' y '2ª clase') (Véase documento: [`form_page.dart`](lib/pages/form_page.dart)).
+- Selección de entre 1 y 8 pasajeros y de categoría ('1ª clase' y '2ª clase').
 - Selección de opciones adicionales del viaje (equipaje, servicio restaurante y coche cama).
-- Calendario en español con fechas disponibles desde el mes actual y selección de hora predifinidas para todos los días (Véase documento: [`hour_selection.dart`](lib/widgets/hour_selection.dart#13)).
+- Calendario en español con fechas disponibles desde el mes actual y selección de hora predifinidas para todos los días.
 - Revisión de los datos antes de confirmar y pantalla de confirmación de reserva de cita.
 - El logo reinicia el flujo y restaura los valores iniciales.
 
