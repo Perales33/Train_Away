@@ -31,16 +31,17 @@ Aplicación móvil desarrollada con Flutter para crear reservas de tren. Permite
 ## Flujo general de páginas
 
 ```bash
-Formulario de reserva <──────────────────(No)────────────┐
-|                                                        |
-└──> Selección de fecha y hora del tren                  |
-     |                                                   |
-     └──> Previsualización de los datos de la reserva    |
-          |                                              |
-          └──> Dialogo para confirmación de la reserva ──┘
-               |
+```text
+Formulario de reserva <──────────────(No)──────────┐
+│                                                  │
+└──> Selección de fecha y hora del tren            │
+     │                                             │
+     └──> Previsualización de la reserva           │
+          │                                        │
+          └──> Diálogo de confirmación ────────────┘
+               │
               (Sí)
-               └──> Confirmación de reservada completada
+               └──> Confirmación de reserva completada
 ```
 
 ## Requisitos
