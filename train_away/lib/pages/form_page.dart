@@ -40,101 +40,107 @@ class FormPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(16, 14, 16, 28),
-        child: Column(
+    padding: const EdgeInsets.fromLTRB(16, 14, 16, 28),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const FormFieldLabel('Origen'),
+        FormDropdown<String>(
+          value: origin,
+          values: FormPage.stations.where((station) => station != destination).toList(),
+          onChanged: (value) {
+            if (value != null) onOriginChanged(value);
+          },
+        ),
+
+        const SizedBox(height: 12),
+
+        const FormFieldLabel('Destino'),
+        FormDropdown<String>(
+          value: destination,
+          values: FormPage.stations.where((station) => station != origin).toList(),
+          onChanged: (value) {
+            if (value != null) onDestinationChanged(value);
+          },
+        ),
+        const SizedBox(height: 42),
+        Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const FormFieldLabel('Origen'),
-            FormDropdown<String>(
-              value: origin,
-              values: FormPage.stations.where((station) => station != destination).toList(),
-              onChanged: (value) {
-                if (value != null) onOriginChanged(value);
-              },
-            ),
-            const SizedBox(height: 12),
-            const FormFieldLabel('Destino'),
-            FormDropdown<String>(
-              value: destination,
-              values: FormPage.stations.where((station) => station != origin).toList(),
-              onChanged: (value) {
-                if (value != null) onDestinationChanged(value);
-              },
-            ),
-            const SizedBox(height: 42),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: _selectField(
-                    'Pasajeros',
-                    FormDropdown<int>(
-                      value: passengers,
-                      values: List.generate(8, (index) => index + 1),
-                      onChanged: (value) {
-                        if (value != null) onPassengersChanged(value);
-                      },
-                    ),
-                  ),
+            Expanded(
+              child: _selectField(
+                'Pasajeros',
+                FormDropdown<int>(
+                  value: passengers,
+                  values: List.generate(8, (index) => index + 1),
+                  onChanged: (value) {
+                    if (value != null) onPassengersChanged(value);
+                  },
                 ),
-                const SizedBox(width: 28),
-                Expanded(
-                  child: _selectField(
-                    'Categoría',
-                    FormDropdown<String>(
-                      value: category,
-                      values: categories,
-                      onChanged: (value) {
-                        if (value != null) onCategoryChanged(value);
-                      },
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-            const SizedBox(height: 42),
-            const FormFieldLabel('Opciones de viaje'),
-            const SizedBox(height: 8),
-            ...extras.entries.map((entry) => _option(entry.key, entry.value)),
+
+            const SizedBox(width: 28),
+
+            Expanded(
+              child: _selectField(
+                'Categoría',
+                FormDropdown<String>(
+                  value: category,
+                  values: categories,
+                  onChanged: (value) {
+                    if (value != null) onCategoryChanged(value);
+                  },
+                ),
+              ),
+            ),
           ],
         ),
-      );
+        const SizedBox(height: 42),
+        const FormFieldLabel('Opciones de viaje'),
+        const SizedBox(height: 8),
+        ...extras.entries.map((entry) => _option(entry.key, entry.value)),
+      ],
+    ),
+  );
 
   Widget _selectField(String label, Widget child) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [FormFieldLabel(label), child],
-      );
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [FormFieldLabel(label), child],
+  );
 
   Widget _option(String label, bool selected) => InkWell(
-        onTap: () => onExtraChanged(label, !selected),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 3),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 30,
-                height: 34,
-                child: Checkbox(
-                  value: selected,
-                  onChanged: (value) => onExtraChanged(label, value ?? false),
-                  activeColor: AppColors.navy,
-                  side: const BorderSide(color: AppColors.navy, width: 2.5),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                ),
+    onTap: () => onExtraChanged(label, !selected),
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 3),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 30,
+            height: 34,
+            child: Checkbox(
+              value: selected,
+              onChanged: (value) => onExtraChanged(label, value ?? false),
+              activeColor: AppColors.navy,
+              side: const BorderSide(color: AppColors.navy, width: 2.5),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(6),
               ),
-              const SizedBox(width: 5),
-              Text(
-                label,
-                style: const TextStyle(
-                  color: AppColors.navy,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 15,
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-      );
+
+          const SizedBox(width: 5),
+
+          Text(
+            label,
+            style: const TextStyle(
+              color: AppColors.navy,
+              fontWeight: FontWeight.w600,
+              fontSize: 15,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }

@@ -18,26 +18,26 @@ class TrainAwayApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-        title: 'Train Away',
-        debugShowCheckedModeBanner: false,
-        supportedLocales: const [Locale('en'), Locale('es')],
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-          SfGlobalLocalizations.delegate,
-        ],
-        theme: ThemeData(
-          useMaterial3: true,
-          scaffoldBackgroundColor: Colors.white,
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: AppColors.navy,
-            primary: AppColors.navy,
-          ),
-          fontFamily: 'DM Sans',
-        ),
-        home: const ConfirmationPage(),
-      );
+    title: 'Train Away',
+    debugShowCheckedModeBanner: false,
+    supportedLocales: const [Locale('en'), Locale('es')],
+    localizationsDelegates: const [
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+      GlobalCupertinoLocalizations.delegate,
+      SfGlobalLocalizations.delegate,
+    ],
+    theme: ThemeData(
+      useMaterial3: true,
+      scaffoldBackgroundColor: Colors.white,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: AppColors.navy,
+        primary: AppColors.navy,
+      ),
+      fontFamily: 'DM Sans',
+    ),
+    home: const ConfirmationPage(),
+  );
 }
 
 enum ReservationStep { form, summary, success }
@@ -73,6 +73,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
           Navigator.pop(dialogContext);
           setState(() => _step = ReservationStep.form);
         },
+        
         onConfirm: () {
           Navigator.pop(dialogContext);
           setState(() {
@@ -119,52 +120,54 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
   Widget build(BuildContext context) {
     final currentPage = switch (_step) {
       ReservationStep.form => FormPage(
-          origin: _origin,
-          destination: _destination,
-          passengers: _passengers,
-          category: _category,
-          extras: _extras,
-          onOriginChanged: (value) => setState(() => _origin = value),
-          onDestinationChanged: (value) => setState(() => _destination = value),
-          onPassengersChanged: (value) => setState(() => _passengers = value),
-          onCategoryChanged: (value) => setState(() => _category = value),
-          onExtraChanged: (label, selected) =>
-              setState(() => _extras[label] = selected),
-        ),
+        origin: _origin,
+        destination: _destination,
+        passengers: _passengers,
+        category: _category,
+        extras: _extras,
+        onOriginChanged: (value) => setState(() => _origin = value),
+        onDestinationChanged: (value) => setState(() => _destination = value),
+        onPassengersChanged: (value) => setState(() => _passengers = value),
+        onCategoryChanged: (value) => setState(() => _category = value),
+        onExtraChanged: (label, selected) => setState(() => _extras[label] = selected),
+      ),
+      
       ReservationStep.summary => ReservationConfirmedPage(
-          origin: _origin,
-          destination: _destination,
-          passengers: _passengers,
-          category: _category,
-          extras: _extras,
-          date: _travelDate!,
-          hour: _travelHour!,
-        ),
+        origin: _origin,
+        destination: _destination,
+        passengers: _passengers,
+        category: _category,
+        extras: _extras,
+        date: _travelDate!,
+        hour: _travelHour!,
+      ),
+
       ReservationStep.success => const SuccessPage(),
     };
+
     final isSummary = _step == ReservationStep.summary;
     final isSuccess = _step == ReservationStep.success;
 
     return Scaffold(
-        appBar: AppBanner(onLogoTap: _resetReservation),
-        body: Column(
-          children: [
-            Expanded(child: currentPage),
-            AppBottomButton(
-              label: isSuccess
-                  ? 'Entendido'
-                  : isSummary
-                      ? 'Confirmar'
-                      : 'Continuar',
-              outlined: isSuccess,
-              onPressed: isSuccess
-                  ? _resetReservation
-                  : isSummary
-                      ? _showConfirmation
-                      : _openCalendar,
-            ),
-          ],
-        ),
-      );
+      appBar: AppBanner(onLogoTap: _resetReservation),
+      body: Column(
+        children: [
+          Expanded(child: currentPage),
+          AppBottomButton(
+            label: isSuccess
+                ? 'Entendido'
+                : isSummary
+                    ? 'Confirmar'
+                    : 'Continuar',
+            outlined: isSuccess,
+            onPressed: isSuccess
+                ? _resetReservation
+                : isSummary
+                    ? _showConfirmation
+                    : _openCalendar,
+          ),
+        ],
+      ),
+    );
   }
 }

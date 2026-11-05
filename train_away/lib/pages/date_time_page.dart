@@ -53,105 +53,106 @@ class _DateTimePageState extends State<DateTimePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: const AppBanner(),
-        body: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 20),
-                    
-                    const Text(
-                      'Fecha de salida',
-                      style: TextStyle(
-                        color: AppColors.navy,
-                        fontSize: 30,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    
-                    Center(
-                      child: SizedBox(
-                        width: 800,
-                        child: Divider(
-                          thickness: 2,
-                          color: Colors.grey,
-                          indent: 200,
-                          endIndent: 200,
-                        ),
-                      ),
-                    ),
-                    
-                    const SizedBox(height: 10),
-                    
-                    Container(
-                      width: 700,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.navy, width: 1.5),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Localizations.override(
-                        context: context,
-                        locale: const Locale('es', 'ES'),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: SfDateRangePicker(
-                            selectionMode: DateRangePickerSelectionMode.single,
-                            onSelectionChanged: (args) {
-                              if (args.value is DateTime) {
-                                setState(() {
-                                  selectedDate = args.value as DateTime;
-                                });
-                              }
-                            },
-                            monthViewSettings: const DateRangePickerMonthViewSettings(
-                              showTrailingAndLeadingDates: false,
-                            ),
-                            backgroundColor: Colors.white,
-                            headerHeight: 60,
-                            headerStyle: const DateRangePickerHeaderStyle(
-                              textAlign: TextAlign.center,
-                              textStyle: TextStyle(
-                                color: AppColors.navy,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              backgroundColor: Colors.white,
-                            ),
-                            minDate: firstDay,
-                            maxDate: lastDay,
-                          ),
-                        ),
-                      ),
-                    ),
-                    
-                    const SizedBox(height: 20),
-                    
-                    const Text(
-                      'Horas disponibles',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.navy,
-                      ),
-                    ),
-                    
-                    const SizedBox(height: 10),
-                    
-                    HourSelection(
-                      selectedHour: selectedHour,
-                      onChanged: (hour) => setState(() => selectedHour = hour),
-                    ),
-                  ],
+    appBar: const AppBanner(),
+    body: Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 20),
+                
+                const Text(
+                  'Fecha de salida',
+                  style: TextStyle(
+                    color: AppColors.navy,
+                    fontSize: 30,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              ),
+                
+                Center(
+                  child: SizedBox(
+                    width: 800,
+                    child: Divider(
+                      thickness: 2,
+                      color: Colors.grey,
+                      indent: 200,
+                      endIndent: 200,
+                    ),
+                  ),
+                ),
+                
+                const SizedBox(height: 10),
+                
+                Container(
+                  width: 700,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.navy, width: 1.5),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Localizations.override(
+                    context: context,
+                    locale: const Locale('es', 'ES'),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: SfDateRangePicker(
+                        selectionMode: DateRangePickerSelectionMode.single,
+                        onSelectionChanged: (args) {
+                          if (args.value is DateTime) {
+                            setState(() {
+                              selectedDate = args.value as DateTime;
+                            });
+                          }
+                        },
+                        monthViewSettings: const DateRangePickerMonthViewSettings(
+                          showTrailingAndLeadingDates: false,
+                        ),
+                        backgroundColor: Colors.white,
+                        headerHeight: 60,
+                        headerStyle: const DateRangePickerHeaderStyle(
+                          textAlign: TextAlign.center,
+                          textStyle: TextStyle(
+                            color: AppColors.navy,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          backgroundColor: Colors.white,
+                        ),
+                        minDate: firstDay,
+                        maxDate: lastDay,
+                      ),
+                    ),
+                  ),
+                ),
+                
+                const SizedBox(height: 20),
+                
+                const Text(
+                  'Horas disponibles',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.navy,
+                  ),
+                ),
+                
+                const SizedBox(height: 10),
+                
+                HourSelection(
+                  selectedHour: selectedHour,
+                  onChanged: (hour) => setState(() => selectedHour = hour),
+                ),
+              ],
             ),
-            AppBottomButton(
-              label: 'Continuar',
-              onPressed: _confirmSelection,
-            ),
-          ],
+          ),
         ),
-      );
+        
+        AppBottomButton(
+          label: 'Continuar',
+          onPressed: _confirmSelection,
+        ),
+      ],
+    ),
+  );
 }

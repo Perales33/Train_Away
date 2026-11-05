@@ -16,38 +16,38 @@ class AppBottomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(20),
-        decoration: const BoxDecoration(
-          border: Border(top: BorderSide(color: Color(0xFFBDBDBD))),
-        ),
-        child: Center(
-          child: SizedBox(
-            width: 192,
-            height: 46,
-            child: outlined
-                ? OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: AppColors.navy,
-                      side: const BorderSide(color: AppColors.navy, width: 2.5),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(11),
-                      ),
-                    ),
-                    onPressed: onPressed,
-                    child: Text(label),
-                  )
-                : FilledButton(
-                    style: FilledButton.styleFrom(
-                      backgroundColor: AppColors.navy,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(11),
-                      ),
-                    ),
-                    onPressed: onPressed,
-                    child: Text(label),
-                  ),
-          ),
-        ),
-      );
+    width: double.infinity,
+    padding: const EdgeInsets.all(20),
+    decoration: const BoxDecoration(
+      border: Border(top: BorderSide(color: Color(0xFFBDBDBD))),
+    ),
+    child: Center(
+      child: SizedBox(
+        width: 192,
+        height: 46,
+        child: outlined
+          ? OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                foregroundColor: AppColors.navy,
+                side: const BorderSide(color: AppColors.navy, width: 2.5),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(11),
+                ),
+              ),
+              onPressed: onPressed,
+              child: Text(label),
+            )
+          : FilledButton(
+              style: FilledButton.styleFrom(
+                backgroundColor: AppColors.navy,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(11),
+                ),
+              ),
+              onPressed: onPressed,
+              child: Text(label),
+            ),
+      ),
+    ),
+  );
 }

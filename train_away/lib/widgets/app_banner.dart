@@ -18,19 +18,18 @@ class AppBanner extends StatelessWidget implements PreferredSizeWidget {
     elevation: 0,
     automaticallyImplyLeading: false,
     title: GestureDetector(
-      onTap: onLogoTap ??
-          () => Navigator.of(context).popUntil((route) => route.isFirst),
+      onTap: onLogoTap ?? () => Navigator.of(context).popUntil((route) => route.isFirst),
       child: const Text(
-          'Train Away',
-          style: TextStyle(
-            color: AppColors.burgundy,
-            fontSize: 32,
-            fontFamily: 'Corinthia',
-            fontStyle: FontStyle.italic,
-            fontWeight: FontWeight.w600,
-          ),
-    )
-  ),
+        'Train Away',
+        style: TextStyle(
+          color: AppColors.burgundy,
+          fontSize: 32,
+          fontFamily: 'Corinthia',
+          fontStyle: FontStyle.italic,
+          fontWeight: FontWeight.w600,
+        ),
+      )
+    ),
     
     actions: [
       IconButton(
