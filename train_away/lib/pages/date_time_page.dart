@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-import '../theme/app_colors.dart';
-import '../widgets/app_banner.dart';
-import '../widgets/app_bottom_button.dart';
-import '../widgets/hour_selection.dart';
+import 'package:train_away/theme/app_colors.dart';
+import 'package:train_away/widgets/app_banner.dart';
+import 'package:train_away/widgets/app_bottom_button.dart';
+import 'package:train_away/widgets/hour_selection.dart';
 
 class DateTimeSelection {
   const DateTimeSelection({

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../theme/app_colors.dart';
-import '../widgets/form_dropdown.dart';
-import '../widgets/form_field_label.dart';
+import 'package:train_away/theme/app_colors.dart';
+import 'package:train_away/widgets/form_dropdown.dart';
+import 'package:train_away/widgets/form_field_label.dart';
 
 class FormPage extends StatelessWidget {
   const FormPage({

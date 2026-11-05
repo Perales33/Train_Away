@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 
-import 'pages/confirmation_dialog.dart';
-import 'pages/date_time_page.dart';
-import 'pages/form_page.dart';
-import 'pages/reservation_confirmed.dart';
-import 'pages/success_page.dart';
-import 'theme/app_colors.dart';
-import 'widgets/app_bottom_button.dart';
-import 'widgets/app_banner.dart';
+import 'package:train_away/pages/confirmation_dialog.dart';
+import 'package:train_away/pages/date_time_page.dart';
+import 'package:train_away/pages/form_page.dart';
+import 'package:train_away/pages/reservation_confirmed.dart';
+import 'package:train_away/pages/success_page.dart';
+import 'package:train_away/theme/app_colors.dart';
+import 'package:train_away/widgets/app_bottom_button.dart';
+import 'package:train_away/widgets/app_banner.dart';
 
 void main() => runApp(const TrainAwayApp());
 
