@@ -44,7 +44,7 @@ class ConfirmationDialog extends StatelessWidget {
                   border: BoxBorder.all(color: AppColors.black, width: 2),
                 ),
 
-                child: FilledButton(
+                child: TextButton(
                   style: FilledButton.styleFrom(
                     backgroundColor: AppColors.transparent,
                   ),
@@ -71,7 +71,7 @@ class ConfirmationDialog extends StatelessWidget {
 
                   border: BoxBorder.all(color: AppColors.black, width: 2),
                 ),
-                child: FilledButton(
+                child: TextButton(
                   style: FilledButton.styleFrom(
                     backgroundColor: AppColors.transparent,
                   ),

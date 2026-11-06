@@ -73,7 +73,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
           Navigator.pop(dialogContext);
           setState(() => _step = ReservationStep.form);
         },
-        
+
         onConfirm: () {
           Navigator.pop(dialogContext);
           setState(() {
@@ -87,9 +87,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
   Future<void> _openCalendar() async {
     final selection = await Navigator.push<DateTimeSelection>(
       context,
-      MaterialPageRoute(
-        builder: (_) => const DateTimePage(),
-      ),
+      MaterialPageRoute(builder: (_) => const DateTimePage()),
     );
 
     if (selection == null || !mounted) return;
@@ -129,9 +127,10 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
         onDestinationChanged: (value) => setState(() => _destination = value),
         onPassengersChanged: (value) => setState(() => _passengers = value),
         onCategoryChanged: (value) => setState(() => _category = value),
-        onExtraChanged: (label, selected) => setState(() => _extras[label] = selected),
+        onExtraChanged: (label, selected) =>
+            setState(() => _extras[label] = selected),
       ),
-      
+
       ReservationStep.summary => ReservationConfirmedPage(
         origin: _origin,
         destination: _destination,
@@ -157,14 +156,14 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
             label: isSuccess
                 ? 'Entendido'
                 : isSummary
-                    ? 'Confirmar'
-                    : 'Continuar',
+                ? 'Confirmar'
+                : 'Continuar',
             outlined: isSuccess,
             onPressed: isSuccess
                 ? _resetReservation
                 : isSummary
-                    ? _showConfirmation
-                    : _openCalendar,
+                ? _showConfirmation
+                : _openCalendar,
           ),
         ],
       ),
