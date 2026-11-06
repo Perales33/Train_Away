@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:train_away/theme/app_colors.dart';
 
+// Widget que permite elegir un valor de una lista desplegable.
 class FormDropdown<T> extends StatelessWidget {
   const FormDropdown({
     required this.value,
@@ -16,10 +17,10 @@ class FormDropdown<T> extends StatelessWidget {
   final ValueChanged<T?> onChanged;
   final String? hint;
 
+  // Construye el desplegable con el estilo común de los formularios.
   @override
   Widget build(BuildContext context) => DropdownButtonFormField<T>(
     borderRadius: BorderRadius.circular(15),
-
     dropdownColor: AppColors.surfaceGrey,
     value: value,
     isExpanded: true,

@@ -6,6 +6,7 @@ import 'package:train_away/widgets/app_banner.dart';
 import 'package:train_away/widgets/app_bottom_button.dart';
 import 'package:train_away/widgets/hour_selection.dart';
 
+// Datos que la pantalla devuelve al completar la selección del viaje.
 class DateTimeSelection {
   const DateTimeSelection({required this.date, required this.hour});
 
@@ -15,6 +16,7 @@ class DateTimeSelection {
 
 enum ReservationStep { form, summary, success }
 
+// Página donde se eligen la fecha y la hora de salida.
 class DateTimePage extends StatefulWidget {
   const DateTimePage({super.key});
 
@@ -23,6 +25,7 @@ class DateTimePage extends StatefulWidget {
 }
 
 class _DateTimePageState extends State<DateTimePage> {
+  // Limita el calendario al mes actual.
   static final now = DateTime.now();
   static final firstDay = DateTime(now.year, now.month, 1);
   static final lastDay = DateTime(now.year, now.month + 1, 0);
@@ -30,6 +33,7 @@ class _DateTimePageState extends State<DateTimePage> {
   DateTime? selectedDate;
   String? selectedHour;
 
+  // Devuelve la selección cuando se han indicado fecha y hora.
   void _confirmSelection() {
     final date = selectedDate;
     final hour = selectedHour;
@@ -39,6 +43,7 @@ class _DateTimePageState extends State<DateTimePage> {
     Navigator.pop(context, DateTimeSelection(date: date, hour: hour));
   }
 
+  // Construye el calendario, el selector de hora y la acción para continuar.
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: const AppBanner(),
@@ -75,6 +80,7 @@ class _DateTimePageState extends State<DateTimePage> {
 
                 const SizedBox(height: 6),
 
+                // Calendario de selección individual dentro del mes actual.
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Container(

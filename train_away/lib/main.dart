@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 
@@ -11,15 +11,19 @@ import 'package:train_away/theme/app_colors.dart';
 import 'package:train_away/widgets/app_bottom_button.dart';
 import 'package:train_away/widgets/app_banner.dart';
 
+// Inicia la aplicación Train Away.
 void main() => runApp(const TrainAwayApp());
 
 class TrainAwayApp extends StatelessWidget {
   const TrainAwayApp({super.key});
 
+  // Widget de la aplicación
   @override
   Widget build(BuildContext context) => MaterialApp(
     title: 'Train Away',
     debugShowCheckedModeBanner: false,
+    
+    // Permitir conversión de elementos para traducirlos a inglés o español, según el sistema
     supportedLocales: const [Locale('en'), Locale('es')],
     localizationsDelegates: const [
       GlobalMaterialLocalizations.delegate,
@@ -40,8 +44,10 @@ class TrainAwayApp extends StatelessWidget {
   );
 }
 
+// Enumeración para indicar en que paso se encuentra del formulario
 enum ReservationStep { form, summary, success }
 
+// Clase ConfirmationPage para declarar el esado inicial de la aplicaciÃ³n
 class ConfirmationPage extends StatefulWidget {
   const ConfirmationPage({super.key});
 
@@ -50,21 +56,25 @@ class ConfirmationPage extends StatefulWidget {
 }
 
 class _ConfirmationPageState extends State<ConfirmationPage> {
+
+  // Variables con valores por defecto
   String _origin = 'Estación Norte de Madrid';
   String _destination = 'Estación Sur de Barcelona';
   int _passengers = 1;
-  String _category = '1º Clase';
+  String _category = '1ª Clase';
   final _extras = <String, bool>{
     'Con equipaje': false,
     'Con servicio de restaurante': false,
     'Coche cama': false,
   };
 
+  // Variables para elementos futuros con la fecha y la hora
   DateTime? _travelDate;
   String? _travelHour;
 
   ReservationStep _step = ReservationStep.form;
 
+  // Función para ver cuando se puede ejecutar el dialog para confirmar la reserva
   void _showConfirmation() {
     showDialog<void>(
       context: context,
@@ -84,6 +94,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     );
   }
 
+  // Abre la selección de fecha y hora y guarda los datos recibidos.
   Future<void> _openCalendar() async {
     final selection = await Navigator.push<DateTimeSelection>(
       context,
@@ -99,6 +110,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     });
   }
 
+  // Restablece los datos para empezar una nueva reserva.
   void _resetReservation() {
     setState(() {
       _step = ReservationStep.form;
@@ -114,9 +126,11 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     });
   }
 
+  // Widget para enviar los datos entre páginas (Formulario -> Fecha y Hora (Se guarda en una función a aparte) -> Resumen de Reserva)
   @override
   Widget build(BuildContext context) {
     final currentPage = switch (_step) {
+      // Guardar los datos del formulario para actualizarlos cuando se cambie cualquier valor
       ReservationStep.form => FormPage(
         origin: _origin,
         destination: _destination,
@@ -131,6 +145,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
             setState(() => _extras[label] = selected),
       ),
 
+      // Enviar los datos confirmados 
       ReservationStep.summary => ReservationConfirmedPage(
         origin: _origin,
         destination: _destination,
@@ -141,12 +156,14 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
         hour: _travelHour!,
       ),
 
+      // Mostrar por último la página de confirmación de reserva
       ReservationStep.success => const SuccessPage(),
     };
 
     final isSummary = _step == ReservationStep.summary;
     final isSuccess = _step == ReservationStep.success;
 
+    // Manejo de la página de la aplicación que se va a mostrar
     return Scaffold(
       appBar: AppBanner(onLogoTap: _resetReservation),
       body: Column(

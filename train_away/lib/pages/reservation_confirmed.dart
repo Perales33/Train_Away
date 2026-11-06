@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:train_away/theme/app_colors.dart';
 
+// Página que resume los datos del viaje antes de confirmarlo.
 class ReservationConfirmedPage extends StatelessWidget {
   const ReservationConfirmedPage({
     required this.origin,
@@ -22,6 +23,7 @@ class ReservationConfirmedPage extends StatelessWidget {
   final DateTime date;
   final String hour;
 
+  // Construye la tarjeta con el resumen completo de la reserva.
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
     padding: const EdgeInsets.all(16),
@@ -63,7 +65,7 @@ class ReservationConfirmedPage extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: _infoTile('Número de pasajero', '$passengers'),
+                    child: _infoTile('Número de pasajeros', '$passengers'),
                   ),
                   const SizedBox(width: 10),
                   Expanded(child: _infoTile('Categoría', category)),
@@ -92,6 +94,7 @@ class ReservationConfirmedPage extends StatelessWidget {
     ),
   );
 
+  // Presenta una etiqueta junto al valor correspondiente.
   Widget _infoTile(String label, String value) => Padding(
     padding: const EdgeInsets.only(bottom: 12),
     child: Column(
@@ -111,6 +114,7 @@ class ReservationConfirmedPage extends StatelessWidget {
     ),
   );
 
+  // Muestra un valor dentro de una caja de estilo común.
   Widget _valueBox(String value) => Container(
     width: double.infinity,
     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -129,6 +133,7 @@ class ReservationConfirmedPage extends StatelessWidget {
     ),
   );
 
+  // Formatea la fecha con día y mes de dos cifras.
   String _formatDate(DateTime value) =>
     '${value.day.toString().padLeft(2, '0')} / '
     '${value.month.toString().padLeft(2, '0')} / ${value.year}';

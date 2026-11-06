@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:train_away/theme/app_colors.dart';
 
+// Widget que coloca una acción principal en la parte inferior de la pantalla.
 class AppBottomButton extends StatelessWidget {
   const AppBottomButton({
     required this.label,
@@ -14,6 +15,7 @@ class AppBottomButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool outlined;
 
+  // Construye el contenedor inferior y el estilo de botón solicitado.
   @override
   Widget build(BuildContext context) => Container(
     width: double.infinity,

@@ -4,6 +4,7 @@ import 'package:train_away/theme/app_colors.dart';
 import 'package:train_away/widgets/form_dropdown.dart';
 import 'package:train_away/widgets/form_field_label.dart';
 
+// Página que recoge los datos principales y las preferencias del viaje.
 class FormPage extends StatelessWidget {
   const FormPage({
     required this.origin,
@@ -19,6 +20,7 @@ class FormPage extends StatelessWidget {
     super.key,
   });
 
+
   final String origin;
   final String destination;
   final int passengers;
@@ -30,14 +32,17 @@ class FormPage extends StatelessWidget {
   final ValueChanged<String> onCategoryChanged;
   final void Function(String label, bool selected) onExtraChanged;
 
+  // Estaciones que se pueden elegir como origen o destino.
   static const stations = [
     'Estación Norte de Madrid',
     'Estación Sur de Barcelona',
     'Estación de Centro de Valencia',
   ];
 
-  static const categories = ['1º Clase', '2º Clase'];
+  // Clases disponibles para el viaje.
+  static const categories = ['1ª Clase', '2ª Clase'];
 
+  // Construye los campos de trayecto, pasajeros, clase y opciones adicionales.
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
     padding: const EdgeInsets.fromLTRB(16, 14, 16, 28),
@@ -68,6 +73,7 @@ class FormPage extends StatelessWidget {
           },
         ),
         const SizedBox(height: 42),
+        // Organiza los campos de pasajeros y clase en la misma fila.
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -88,7 +94,7 @@ class FormPage extends StatelessWidget {
 
             Expanded(
               child: _selectField(
-                'Categoría',
+                'Categorí­a',
                 FormDropdown<String>(
                   value: category,
                   values: categories,
@@ -108,11 +114,13 @@ class FormPage extends StatelessWidget {
     ),
   );
 
+  // Agrupa la etiqueta de un campo con su control de selección.
   Widget _selectField(String label, Widget child) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [FormFieldLabel(label), child],
   );
 
+  // Construye una opción seleccionable para personalizar el viaje.
   Widget _option(String label, bool selected) => InkWell(
     onTap: () => onExtraChanged(label, !selected),
     child: Padding(
