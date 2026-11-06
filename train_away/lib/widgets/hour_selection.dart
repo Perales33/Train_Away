@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:train_away/widgets/form_dropdown.dart';
 
 class HourSelection extends StatelessWidget {
   const HourSelection({
@@ -22,15 +23,9 @@ class HourSelection extends StatelessWidget {
   ];
 
   @override
-  Widget build(BuildContext context) => Wrap(
-    spacing: 8,
-    runSpacing: 8,
-    children: hours.map((hour) {
-      return ChoiceChip(
-        label: Text(hour),
-        selected: selectedHour == hour,
-        onSelected: (_) => onChanged(hour),
-      );
-    }).toList(),
+  Widget build(BuildContext context) => FormDropdown<String>(
+    value: selectedHour ?? hours.first,
+    values: hours,
+    onChanged: (hour) => onChanged(hour ?? hours.first),
   );
 }

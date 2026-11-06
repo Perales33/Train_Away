@@ -10,12 +10,12 @@ class FormFieldLabel extends StatelessWidget {
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.only(bottom: 6),
     child: Text(
-      label, 
+      label,
       style: const TextStyle(
-        fontSize: 17, 
-        fontWeight: FontWeight.w700, 
-        color: AppColors.black
-      )
+        fontSize: 17,
+        fontWeight: FontWeight.w700,
+        color: AppColors.black,
+      ),
     ),
   );
 }

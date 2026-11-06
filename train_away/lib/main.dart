@@ -157,7 +157,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                 ? 'Entendido'
                 : isSummary
                 ? 'Confirmar'
-                : 'Continuar',
+                : 'Reservar',
             outlined: isSuccess,
             onPressed: isSuccess
                 ? _resetReservation

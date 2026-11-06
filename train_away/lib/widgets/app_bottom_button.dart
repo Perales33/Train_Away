@@ -26,27 +26,34 @@ class AppBottomButton extends StatelessWidget {
         width: 192,
         height: 46,
         child: outlined
-          ? OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                foregroundColor: AppColors.navy,
-                side: const BorderSide(color: AppColors.navy, width: 2.5),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(11),
+            ? OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: AppColors.navy,
+                  side: const BorderSide(color: AppColors.navy, width: 2.5),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(11),
+                  ),
+                ),
+                onPressed: onPressed,
+                child: Text(label),
+              )
+            : FilledButton(
+                style: FilledButton.styleFrom(
+                  backgroundColor: AppColors.navy,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(11),
+                  ),
+                ),
+                onPressed: onPressed,
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 18,
+                  ),
                 ),
               ),
-              onPressed: onPressed,
-              child: Text(label),
-            )
-          : FilledButton(
-              style: FilledButton.styleFrom(
-                backgroundColor: AppColors.navy,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(11),
-                ),
-              ),
-              onPressed: onPressed,
-              child: Text(label),
-            ),
       ),
     ),
   );
