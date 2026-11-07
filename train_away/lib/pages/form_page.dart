@@ -32,13 +32,85 @@ class FormPage extends StatelessWidget {
   final ValueChanged<String> onCategoryChanged;
   final void Function(String label, bool selected) onExtraChanged;
 
-  // Estaciones que se pueden elegir como origen o destino.
-  static const stations = [
-    'Estación Norte de Madrid',
-    'Estación Sur de Barcelona',
-    'Estación de Centro de Valencia',
-  ];
+  // Estaciones que se pueden elegir como origen o destino (Una por cada Provincia de España).
+static const stations = [
+    // Andalucía
+    'Estación de Almería',
+    'Estación de Cádiz',
+    'Estación de Córdoba',
+    'Estación de Granada',
+    'Estación de Huelva',
+    'Estación de Jaén',
+    'Estación de Málaga',
+    'Estación de Sevilla',
 
+    // Aragón
+    'Estación de Huesca',
+    'Estación de Teruel',
+    'Estación de Zaragoza',
+
+    // Asturias
+    'Estación de Oviedo',
+
+    // Cantabria
+    'Estación de Santander',
+
+    // Castilla-La Mancha
+    'Estación de Albacete',
+    'Estación de Ciudad Real',
+    'Estación de Cuenca',
+    'Estación de Guadalajara',
+    'Estación de Toledo',
+
+    // Castilla y León
+    'Estación de Ávila',
+    'Estación de Burgos',
+    'Estación de León',
+    'Estación de Palencia',
+    'Estación de Salamanca',
+    'Estación de Segovia',
+    'Estación de Soria',
+    'Estación de Valladolid',
+    'Estación de Zamora',
+
+    // Cataluña
+    'Estación de Barcelona',
+    'Estación de Girona',
+    'Estación de Lleida',
+    'Estación de Tarragona',
+
+    // Comunidad Valenciana
+    'Estación de Alicante',
+    'Estación de Castellón',
+    'Estación de Valencia',
+
+    // Extremadura
+    'Estación de Badajoz',
+    'Estación de Cáceres',
+
+    // Galicia
+    'Estación de A Coruña',
+    'Estación de Lugo',
+    'Estación de Ourense',
+    'Estación de Santiago de Compostela',
+
+    // La Rioja
+    'Estación de Logroño',
+
+    // Comunidad de Madrid
+    'Estación de Madrid',
+
+    // Navarra
+    'Estación de Pamplona',
+
+    // País Vasco
+    'Estación de Bilbao',
+    'Estación de Donostia',
+    'Estación de Vitoria-Gasteiz',
+
+    // Región de Murcia
+    'Estación de Murcia',
+];
   // Clases disponibles para el viaje.
   static const categories = ['1ª Clase', '2ª Clase'];
 
@@ -94,7 +166,7 @@ class FormPage extends StatelessWidget {
 
             Expanded(
               child: _selectField(
-                'Categorí­a',
+                'Categoría',
                 FormDropdown<String>(
                   value: category,
                   values: categories,

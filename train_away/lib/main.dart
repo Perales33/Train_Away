@@ -58,8 +58,8 @@ class ConfirmationPage extends StatefulWidget {
 class _ConfirmationPageState extends State<ConfirmationPage> {
 
   // Variables con valores por defecto
-  String _origin = 'Estación Norte de Madrid';
-  String _destination = 'Estación Sur de Barcelona';
+  String _origin = 'Estación de Almería';
+  String _destination = 'Estación de Cádiz';
   int _passengers = 1;
   String _category = '1ª Clase';
   final _extras = <String, bool>{
