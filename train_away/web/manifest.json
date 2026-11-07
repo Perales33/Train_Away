@@ -1,11 +1,11 @@
 {
-    "name": "train_away",
-    "short_name": "train_away",
+    "name": "Train Away",
+    "short_name": "Train Away",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#061B49",
+    "theme_color": "#061B49",
+    "description": "Planifica tus viajes en tren con Train Away.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
