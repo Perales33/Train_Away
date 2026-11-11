@@ -152,7 +152,8 @@ class _DateTimePageState extends State<DateTimePage> {
 
                 const SizedBox(height: 10),
 
-                // Declaramos el widget para elegir los horarios, en los que podremos variar entre horarios desde la clae HourSelection.
+                // Declaramos el widget para elegir los horarios, en los que podremos variar entre horarios desde la clae HourSelection, y dependiendo de si se ha elegido o no
+                // el día de la reserva se va comportar de una forma u otra.
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 100.0,

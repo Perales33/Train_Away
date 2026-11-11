@@ -27,6 +27,7 @@ class AppBottomButton extends StatelessWidget {
       child: SizedBox(
         width: 192,
         height: 46,
+        // Dependiendo del valor del booleano pasado, el botón se mostrará con un estilo u otro
         child: outlined
             ? OutlinedButton(
                 style: OutlinedButton.styleFrom(

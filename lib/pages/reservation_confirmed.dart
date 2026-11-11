@@ -114,7 +114,7 @@ class ReservationConfirmedPage extends StatelessWidget {
     ),
   );
 
-  // Muestra un valor dentro de una caja de estilo común.
+  // Estilos para mostrar el valor dentro de la caja con los datos de la confirmación de reserva.
   Widget _valueBox(String value) => Container(
     width: double.infinity,
     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),

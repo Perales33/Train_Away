@@ -122,7 +122,7 @@ class FormPage extends StatelessWidget {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Usamos la clase FormFieldLabel y FormDropdown para definir los elementos que debe tener estos elementos.
+        // Usamos la clase FormFieldLabel y FormDropdown para definir los elementos que debe tener estos elementos (Origen, Destino, Categoría y Pasajeros).
         const FormFieldLabel('Origen'),
         FormDropdown<String>(
           value: origin,

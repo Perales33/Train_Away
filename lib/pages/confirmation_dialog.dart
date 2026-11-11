@@ -35,6 +35,7 @@ class ConfirmationDialog extends StatelessWidget {
       style: TextStyle(fontWeight: FontWeight(600), fontSize: 16),
     ),
 
+    // Definimos las acciones del dialogo, en caso de que sí va a la pantalla de confirmación, y en el caso de que no, vuelve al formulario de reserva.
     actions: [
       Container(
         child: Row(

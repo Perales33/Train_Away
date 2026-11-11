@@ -22,6 +22,7 @@ class AppBanner extends StatelessWidget implements PreferredSizeWidget {
     elevation: 0,
     automaticallyImplyLeading: false,
 
+    // Logo de la aplicación que permite reiniciar los valores de la reserva y vuelve al formulario inicial
     title: GestureDetector(
       onTap: onLogoTap ?? () => Navigator.of(context).popUntil((route) => route.isFirst),
       child: const Text(
