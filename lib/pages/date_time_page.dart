@@ -81,6 +81,8 @@ class _DateTimePageState extends State<DateTimePage> {
                 const SizedBox(height: 6),
 
                 // Calendario de selección individual dentro del mes actual.
+                // Para evitar crearlo de forma manual, que ocuparía mucho código, usamos directamente la dependencia
+                // syncfusion_date_picker que nos permite diseñar un calendario solamente aplicando los estilos.
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Container(
@@ -150,6 +152,7 @@ class _DateTimePageState extends State<DateTimePage> {
 
                 const SizedBox(height: 10),
 
+                // Declaramos el widget para elegir los horarios, en los que podremos variar entre horarios desde la clae HourSelection.
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 100.0,
@@ -197,6 +200,8 @@ class _DateTimePageState extends State<DateTimePage> {
           ),
         ),
 
+        // Este botón se crea desde el main, pasandole como el label del botón que deberá crearse, y actualizará las variables
+        // hora y fecha, para mostrarsela en la sección de reservation_confirmed
         AppBottomButton(label: 'Continuar', onPressed: _confirmSelection),
       ],
     ),

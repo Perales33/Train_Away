@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:train_away/theme/app_colors.dart';
 
-// Widget que coloca una acción principal en la parte inferior de la pantalla.
+// Widget que coloca un botón en la parte inferior de las pantallas.
 class AppBottomButton extends StatelessWidget {
   const AppBottomButton({
     required this.label,

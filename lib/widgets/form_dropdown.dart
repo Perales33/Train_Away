@@ -58,8 +58,9 @@ class _FormDropdownState<T> extends State<FormDropdown<T>> {
                 ),
               ),
             ),
-          )
-          .toList();
+          ).toList();
+
+      // Separamos el estilo de cuando hay más de 5 elementos, para uqe la pantalla no se vea opacada por el scroll  
       final menuChildren = widget.values.length > 5
           ? <Widget>[
               SizedBox(
@@ -81,6 +82,7 @@ class _FormDropdownState<T> extends State<FormDropdown<T>> {
             ]
           : items;
 
+      // Devuelve el elemento de Scroll para visualización de los elementos
       return MenuAnchor(
         alignmentOffset: const Offset(0, 4),
         crossAxisUnconstrained: false,

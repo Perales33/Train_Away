@@ -160,6 +160,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
       ReservationStep.success => const SuccessPage(),
     };
 
+    // Para manejar los estado del botón, comprobamos si se cumple que esté en una sección u otra de la aplicación
     final isSummary = _step == ReservationStep.summary;
     final isSuccess = _step == ReservationStep.success;
 

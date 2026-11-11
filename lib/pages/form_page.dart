@@ -33,7 +33,7 @@ class FormPage extends StatelessWidget {
   final void Function(String label, bool selected) onExtraChanged;
 
   // Estaciones que se pueden elegir como origen o destino (Una por cada Provincia de España).
-static const stations = [
+  static const stations = [
     // Andalucía
     'Estación de Almería',
     'Estación de Cádiz',
@@ -110,7 +110,8 @@ static const stations = [
 
     // Región de Murcia
     'Estación de Murcia',
-];
+  ];
+
   // Clases disponibles para el viaje.
   static const categories = ['1ª Clase', '2ª Clase'];
 
@@ -121,6 +122,7 @@ static const stations = [
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Usamos la clase FormFieldLabel y FormDropdown para definir los elementos que debe tener estos elementos.
         const FormFieldLabel('Origen'),
         FormDropdown<String>(
           value: origin,
@@ -181,6 +183,7 @@ static const stations = [
         const SizedBox(height: 42),
         const FormFieldLabel('Opciones de viaje'),
         const SizedBox(height: 8),
+        // Añadimos Sin tener que ir uno a uno cada widget de forma separada para los elementos extras (Operador de expansión '...')
         ...extras.entries.map((entry) => _option(entry.key, entry.value)),
       ],
     ),
