@@ -43,7 +43,6 @@ class _FormPageState extends State<FormPage> {
 
   final MockService _mockService = const MockService();
 
-  // Estaciones que se pueden elegir como origen o destino (Una por cada Provincia de España).
   List <Station> _stations = [];
   List<TravelCategory> _categories = [];
   List<TravelOption> _options = [];

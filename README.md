@@ -83,7 +83,10 @@ flutter run -d <device>
 │   ├── main.dart           # Inicio y flujo principal
 │   ├── pages/              # Pantallas y dialogo de reserva
 │   ├── theme/              # Colores de la aplicacion
+│   ├── models/             # Clases estáticas para cargar los datos
+│   ├── mocks/              # Mock para poder recuperar los datos
 │   └── widgets/            # Componentes reutilizables
+│    
 ├── linux/                  # Configuracion para Linux
 ├── macos/                  # Configuracion para macOS
 ├── test/                   # Pruebas del proyecto
