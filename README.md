@@ -10,28 +10,21 @@ Aplicación móvil desarrollada con Flutter para crear reservas de tren. Permite
 - Calendario en español con fechas disponibles desde el mes actual y selección de hora predifinidas para todos los días.
 - Revisión de los datos antes de confirmar y pantalla de confirmación de reserva de cita.
 - El logo reinicia el flujo y restaura los valores iniciales.
+- Carga de los datos de la aplicación desde un sistema de mock para simular una base de datos.
 
-> La aplicación muestra un flujo de reserva de demostración. No conecta con un servicio de reservas ni compra billetes. <br>Para cargar las estaciones y categorías se realiza desde el propio código mediante un Array.
-
-### Código relacionado con las funcionalidades
-
-- [Flujo principal de carga de datos](lib/main.dart#L52)
-- [Selección de origen](lib/pages/form_page.dart#L47)
-- [Selección de destino](lib/pages/form_page.dart#L59)
-- [Selección de pasajeros](lib/pages/form_page.dart#L73)
-- [Selección de categoría](lib/pages/form_page.dart#L87)
-- [Opciones extra](lib/pages/form_page.dart#L102)
-- [Selección fecha](lib/pages/date_time_page.dart)
-- [Selección de horas](lib/widgets/hour_selection.dart)
-- [Resumen de la reserva](lib/pages/reservation_confirmed.dart)
-- [Diálogo de confirmación](lib/pages/confirmation_dialog.dart)
-- [Pantalla de reserva completada](lib/pages/success_page.dart)
-
+> La aplicación muestra un flujo de reserva de demostración. No conecta con un servicio de reservas ni compra billetes, todo se realiza desde el archivo mock_service.dart y las clases dentro de la
+> carpeta models.
 
 ## Flujo general de páginas
 
-```bash
+El flujo de la aplicación se estructura en diferentes pasos que se establecen desde la actividad de Penpot: 
 
+> Pantalla de formulario → pantalla de selección de fecha y hora → Pantalla del resumen de la reserva → Pantalla de la confirmación de la reserva. 
+
+Cada pantalla se comunica con la siguiente a través de los datos seleccionados por el usuario (origen, destino, pasajeros, categoría, opciones, fecha y hora), pasándose mediante el Navigator de Flutter como resultado de la pantalla anterior.
+
+
+```bash
 Formulario de reserva <──────────────(No)──────────┐
 │                                                  │
 └──> Selección de fecha y hora del tren            │
@@ -43,6 +36,27 @@ Formulario de reserva <──────────────(No)───�
               (Sí)
                └──> Confirmación de reserva completada
 ```
+
+## Gestión de estado y navegación
+
+La aplicación gestiona el estado de la reserva mediante variables propias de la pantalla principal y un enum con diferentes valores (ReservationStep: form, summary, success) que determina qué pantalla se muestra en cada momento. 
+
+El uso de Navigator permite abrir la pantalla de selección de fecha y hora para recibir el resultado (DateTimeSelection) y continuar el flujo.
+
+Finalmente, el logo de la aplicación nos reinicia el flujo restaurando la aplicación a los valores iniciales, ya que no deja de tratarse de un mock visual, que sirve como muestra al cliente.
+
+### Paso de parámetros entre pantallas
+
+La comunicación entre pantallas se realiza mediante el estado de la pantalla principal (ConfirmationPage definida en main.dart) y el retorno de resultados a través del Navigator de Flutter.
+ 
+- Del formulario a la selección de fecha y hora: los datos del viaje (origen, destino, pasajeros, categoría y opciones) se almacenan en las variables del estado de la pantalla principal y se envían a FormPage como parámetros. Al pulsar la acción principal ("Reservar"), la pantalla principal abre la pantalla de selección de fecha y hora mediante Navigator.push, para recibir el resultado (DateTimeSelection) una vez el usuario confirma la fecha y la hora.
+
+- De la selección al resumen: la pantalla de fecha y hora devuelve los datos seleccionados (que son la fecha y la hora) al cerrar la ruta mediante Navigator.pop, momento en el que la pantalla principal los recibe y avanza al estado summary, mostrando la ReservationConfirmedPage con todos los datos del viaje.
+
+- Del resumen a la confirmación: la pantalla de resumen muestra los datos recibidos y, mediante el botón de acción, abre el ConfirmationDialog. Si el usuario confirma, la aplicación avanza al estado success (pantalla de éxito); si cancela, vuelve al estado form.
+
+- De la confirmación al reinicio: al finalizar este flujo (éxito o cancelación por parte del cliente), y el logo de la aplicación reinicia el flujo restaurando los valores iniciales.
+
 
 ## Requisitos
 
@@ -112,18 +126,6 @@ El proyecto configura `flutter_launcher_icons` en `pubspec.yaml`. Para volver a 
 ```bash
 dart run flutter_launcher_icons
 ```
-
-## Elementos reutilizables
-
-Para poder generar las diferentes pantallas del proyecto, se ha creado la carpeta widgets que alberga los diferentes elementos reutilizables para la aplicación:
-- `app_banner.dart`: Navbar de la aplicación.
-- `app.bottom_button.dart`: Footer de la aplicación.
-- `form_dropdown.dart`: Estilos y creación de los elementos tipo desplegable del menú del formulario de reserva.
-- `form_field_label.dart`: Estilos de los labels del formulario
-- `hour_selection.dart`: Selector de horarios para la pantalla `date_time_page.dart`.
-
-Además, de la carpeta widgets, se utiliza la carpeta theme para poder definir de forma prederteminada los colores que usará la aplicación.
-- `app_colors.dart`: Tema principal de la aplicación.
 
 ## Bibliografía
 
