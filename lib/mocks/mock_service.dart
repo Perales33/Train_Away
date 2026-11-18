@@ -3,9 +3,12 @@ import 'package:train_away/models/travel_category.dart';
 import 'package:train_away/models/travel_option.dart';
 import 'package:train_away/models/travel_schedule.dart';
 
+// Clase MockService para generar los datos de la aplicación
 class MockService {
+  // Constructor
   const MockService();
 
+  // Método para poder crear las diferentes estaciones de Origen y Destino.
   Future<List<Station>> getStations() async => const [
     // Andalucía
     Station(id: 'almeria', name: 'Estación de Almería'),
@@ -88,17 +91,20 @@ class MockService {
     Station(id: 'murcia', name: 'Estación de Murcia'),
   ];
 
+  // Método para poder cargar los tipos de categorías del viaje
   Future<List<TravelCategory>> getCategories() async => const [
     TravelCategory(id: 'first', name: '1ª Clase'),
     TravelCategory(id: 'second', name: '2ª Clase')
   ];
 
+  // Método para cargar las opciones de viaje (No hace falta cargar la inicialización, porque dentro de su clase, viene por defecto en False)
   Future<List<TravelOption>> getTravelOptions() async => const[
     TravelOption(id: 'luggage', name: 'Equipaje'),
     TravelOption(id: 'restaurant', name: 'Servicio restaurante'),
     TravelOption(id: 'bed', name: 'Coche cama')
   ];
 
+  // Método para definir los horarios
   Future<List<TravelSchedule>> getSchedules() async => const [
       TravelSchedule(id: '07-00', time: '07:00'),
       TravelSchedule(id: '09-00', time: '09:00'),

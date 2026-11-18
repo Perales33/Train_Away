@@ -19,7 +19,7 @@ Aplicación móvil desarrollada con Flutter para crear reservas de tren. Permite
 
 El flujo de la aplicación se estructura en diferentes pasos que se establecen desde la actividad de Penpot: 
 
-> Pantalla de formulario → pantalla de selección de fecha y hora → Pantalla del resumen de la reserva → Pantalla de la confirmación de la reserva. 
+> Pantalla de formulario → Pantalla de selección de fecha y hora → Pantalla del resumen de la reserva → Pantalla de la confirmación de la reserva. 
 
 Cada pantalla se comunica con la siguiente a través de los datos seleccionados por el usuario (origen, destino, pasajeros, categoría, opciones, fecha y hora), pasándose mediante el Navigator de Flutter como resultado de la pantalla anterior.
 

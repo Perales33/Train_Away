@@ -10,6 +10,7 @@ import 'package:train_away/widgets/form_field_label.dart';
 // Página que recoge los datos principales y las preferencias del viaje.
 class FormPage extends StatefulWidget
 {
+  // Constructor con todas las variables y métodos de las variables
   const FormPage({
     required this.origin,
     required this.destination,
@@ -24,6 +25,7 @@ class FormPage extends StatefulWidget
     super.key,
   });
 
+  // Definimos todas las variables empleadas y los métodos que nos permitirán actualizar los datos en las diferentes pantallas de la aplicación
   final String origin;
   final String destination;
   final int passengers;
@@ -41,14 +43,18 @@ class FormPage extends StatefulWidget
 
 class _FormPageState extends State<FormPage> {
 
+  // Instanciamos un mockService para poder cargar todos los datos, simulando una base de datos
   final MockService _mockService = const MockService();
 
+  // Tres listas para guardar todos los datos procedentes del mock
   List <Station> _stations = [];
   List<TravelCategory> _categories = [];
   List<TravelOption> _options = [];
 
+  // Variable para definir cuando se han terminado de cargar los datos
   bool _loading = true;
   
+  // Inicializar el método para cargar los datos desde el principio de la aplicación (Futures)
   @override 
   void initState()
   {
@@ -56,8 +62,11 @@ class _FormPageState extends State<FormPage> {
     _loadData();
   }
 
+  // Método con elementos futuros, que nos permite cargar los datos del mock, es decir, trabajamos en paralelo
   Future<void> _loadData() async {
 
+    // Guardamos todos los datos en una única variable, teniendo en cuenta que se bloquea el hilo dedicado a ello
+    // hasta que no se carguen todos los datos.
     final results = await Future.wait([
       _mockService.getStations(),
       _mockService.getCategories(),
@@ -66,6 +75,7 @@ class _FormPageState extends State<FormPage> {
     
     if(!mounted) { return; }
 
+    // Definimos donde se guardarán los datos de cada lista, y además, indicamos que los datos se han terminado de cargar en la variable _loading
     setState(() {
       _stations = results[0] as List<Station>;
       _categories = results[1] as List<TravelCategory>;
@@ -89,6 +99,8 @@ class _FormPageState extends State<FormPage> {
         children: [
           const FormFieldLabel('Origen'),
           FormDropdown<String>(
+            // Con value definimos el valor por defecto que se cargará tanto para el Origen, el Destino, la Categoría y el número de pasajeros, aunque cada uno en su elemento, 
+            // y con values definimos los valores que emplearán los dropdowns.
             value: widget.origin,
             values: _stations
                 .map((station) => station.name)
@@ -144,6 +156,7 @@ class _FormPageState extends State<FormPage> {
           const SizedBox(height: 42),
           const FormFieldLabel('Opciones de viaje'),
           const SizedBox(height: 8),
+          // Mediante el operador de propagación '...' insertamos todos los elementos dentro del mapa de opciones extras
           ..._options.map(
             (option) => _option(
               option.name,

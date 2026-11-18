@@ -36,22 +36,29 @@ class _DateTimePageState extends State<DateTimePage> {
   DateTime? selectedDate;
   String? selectedHour;
 
+  // Al igual que en el formulario y en el main.dart, se instancia un mock para cargar los datos, en este caso de las horas
   final MockService _mockService = const MockService();
 
+  // Creamos dos variables para cargar los datos y saber cuando se han terminado de cargar
   List<TravelSchedule> _schedules = [];
   bool _loadingSchedules = true;
 
+  // Definimos el estado inicial
   @override
   void initState(){
     super.initState();
     _loadSchedules();
   }
 
+  // Método para cargar los horarios, como en los anteriores también para elementos futuros y con async para trabajar en paralelo
   Future<void> _loadSchedules() async {
+    // Obtenemos todos los horarios
     final schedules = await _mockService.getSchedules();
 
     if(!mounted) { return; }
 
+    // En caso de estar en la pantalla adecuada se asignan los horarios a la lista de horarios de la página, 
+    // y se indica que ya se ha terminado de cargar
     setState(() {
       _schedules = schedules;
       _loadingSchedules = false;
@@ -177,8 +184,7 @@ class _DateTimePageState extends State<DateTimePage> {
 
                 const SizedBox(height: 10),
 
-                // Declaramos el widget para elegir los horarios, en los que podremos variar entre horarios desde la clae HourSelection, y dependiendo de si se ha elegido o no
-                // el día de la reserva se va comportar de una forma u otra.
+                // Definimos el comportamiento del horario. En caso de seleccionar la fecha, aparecerán las opciones de las fechas, del contrario aparecerá solo el mensaje "Seleccione una fecha".
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 100.0,
@@ -191,6 +197,7 @@ class _DateTimePageState extends State<DateTimePage> {
                         : _schedules.isEmpty
                           ? const Text('No hay horarios disponibles')
                           : HourSelection(
+                            // Se cargan las horas desde el mock y se envian al Widget con el dropdown del horario (Mirar archivo: hour_selection.dart)
                             hours: _schedules.map((schedule) => schedule.time).toList(), 
                             selectedHour: selectedHour, 
                             onChanged: (hour) { setState(() => selectedHour = hour);

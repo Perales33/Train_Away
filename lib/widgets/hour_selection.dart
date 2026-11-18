@@ -10,7 +10,9 @@ class HourSelection extends StatelessWidget {
     super.key,
   });
 
+  // Cargamos en forma de lista las horas procedentes del mock 
   final List<String> hours;
+  
   final String? selectedHour;
   final ValueChanged<String> onChanged;
 

@@ -69,14 +69,18 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
   String _category = '';
   Map<String, bool> _extras = {};
 
+  // Se instancia un mock para cargar los datos simulando la base de datos
   final MockService _mockService = const MockService();
-  
+
+  // Creamos tres listas para guardar todos los datos de las clases. No se crea el de horarios, porque ese se gestiona desde su propia página.
   List <Station> _stations = [];
   List <TravelCategory> _categories = [];
   List <TravelOption> _options = [];
 
+  // Variable que permite indicar que ya se han terminado de cargar los datos
   bool _loading = true;
 
+  // Definimos que los datos se carguen desde el principio
   @override
   void initState()
   {
@@ -84,16 +88,21 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     _loadMockData();
   }
 
+  // Método para cargar los datos del mock
   Future<void> _loadMockData() async
   {
+    // Guardamos todos los datos en una variable para gestionar en que elemento lista irán
     final results = await Future.wait([
       _mockService.getStations(),
       _mockService.getCategories(),
       _mockService.getTravelOptions()
     ]);
 
+    // Comprobamos la pantalla actual
     if(!mounted) { return; }
 
+    // Cargamos los datos en cada lista para poder emplearlos en la aplicación. Además, indicamos que ya se han terminado de cargar los datos poniendo a false la variable _loading.
+    // Por último, definimos cual es el estado inicial de las variables Origen, Destino, Categoria y el estado inicial de los extras (false)
     setState(() {
       _stations = results[0] as List<Station>;
       _categories = results[1] as List<TravelCategory>;
