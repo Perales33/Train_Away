@@ -10,6 +10,11 @@ import 'package:train_away/pages/success_page.dart';
 import 'package:train_away/theme/app_colors.dart';
 import 'package:train_away/widgets/app_bottom_button.dart';
 import 'package:train_away/widgets/app_banner.dart';
+import 'package:train_away/mocks/mock_service.dart';
+import 'package:train_away/models/stations.dart';
+import 'package:train_away/models/travel_category.dart';
+import 'package:train_away/models/travel_option.dart';
+
 
 // Inicia la aplicación Train Away.
 void main() => runApp(const TrainAwayApp());
@@ -58,15 +63,50 @@ class ConfirmationPage extends StatefulWidget {
 class _ConfirmationPageState extends State<ConfirmationPage> {
 
   // Variables con valores por defecto
-  String _origin = 'Estación de Almería';
-  String _destination = 'Estación de Cádiz';
+  String _origin = '';
+  String _destination = '';
   int _passengers = 1;
-  String _category = '1ª Clase';
-  final _extras = <String, bool>{
-    'Con equipaje': false,
-    'Con servicio de restaurante': false,
-    'Coche cama': false,
-  };
+  String _category = '';
+  Map<String, bool> _extras = {};
+
+  final MockService _mockService = const MockService();
+  
+  List <Station> _stations = [];
+  List <TravelCategory> _categories = [];
+  List <TravelOption> _options = [];
+
+  bool _loading = true;
+
+  @override
+  void initState()
+  {
+    super.initState();
+    _loadMockData();
+  }
+
+  Future<void> _loadMockData() async
+  {
+    final results = await Future.wait([
+      _mockService.getStations(),
+      _mockService.getCategories(),
+      _mockService.getTravelOptions()
+    ]);
+
+    if(!mounted) { return; }
+
+    setState(() {
+      _stations = results[0] as List<Station>;
+      _categories = results[1] as List<TravelCategory>;
+      _options = results[2] as List<TravelOption>;
+
+      _origin = _stations.first.name;
+      _destination = _stations[1].name;
+      _category = _categories.first.name;
+      _extras = {for(final option in _options) option.name: false};
+
+      _loading = false;
+    });
+  }
 
   // Variables para elementos futuros con la fecha y la hora
   DateTime? _travelDate;
@@ -114,13 +154,11 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
   void _resetReservation() {
     setState(() {
       _step = ReservationStep.form;
-      _origin = FormPage.stations.first;
-      _destination = FormPage.stations[1];
+      _origin = _stations.first.name;
+      _destination = _stations[1].name;
       _passengers = 1;
-      _category = FormPage.categories.first;
-      for (final key in _extras.keys.toList()) {
-        _extras[key] = false;
-      }
+      _category = _categories.first.name;
+      _extras = {for(final option in _options) option.name: false};
       _travelDate = null;
       _travelHour = null;
     });

@@ -6,6 +6,9 @@ import 'package:train_away/widgets/app_banner.dart';
 import 'package:train_away/widgets/app_bottom_button.dart';
 import 'package:train_away/widgets/hour_selection.dart';
 
+import 'package:train_away/mocks/mock_service.dart';
+import 'package:train_away/models/travel_schedule.dart';
+
 // Datos que la pantalla devuelve al completar la selección del viaje.
 class DateTimeSelection {
   const DateTimeSelection({required this.date, required this.hour});
@@ -32,6 +35,28 @@ class _DateTimePageState extends State<DateTimePage> {
 
   DateTime? selectedDate;
   String? selectedHour;
+
+  final MockService _mockService = const MockService();
+
+  List<TravelSchedule> _schedules = [];
+  bool _loadingSchedules = true;
+
+  @override
+  void initState(){
+    super.initState();
+    _loadSchedules();
+  }
+
+  Future<void> _loadSchedules() async {
+    final schedules = await _mockService.getSchedules();
+
+    if(!mounted) { return; }
+
+    setState(() {
+      _schedules = schedules;
+      _loadingSchedules = false;
+    });
+  }
 
   // Devuelve la selección cuando se han indicado fecha y hora.
   void _confirmSelection() {
@@ -159,42 +184,18 @@ class _DateTimePageState extends State<DateTimePage> {
                     horizontal: 100.0,
                     vertical: 4,
                   ),
-                  child: selectedDate != null
-                      ? HourSelection(
-                          selectedHour: selectedHour,
-                          onChanged: (hour) =>
-                              setState(() => selectedHour = hour),
-                        )
-                      : Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 8,
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.black.withAlpha(120),
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "N/A",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black.withAlpha(120),
-                                ),
-                              ),
-                              Icon(
-                                Icons.arrow_drop_down_sharp,
-                                color: Colors.black.withAlpha(120),
-                              ),
-                            ],
-                          ),
-                        ),
+                  child: selectedDate == null
+                      ? const Text('Seleccione una fecha')
+                      : _loadingSchedules
+                        ? const Center(child: CircularProgressIndicator())
+                        : _schedules.isEmpty
+                          ? const Text('No hay horarios disponibles')
+                          : HourSelection(
+                            hours: _schedules.map((schedule) => schedule.time).toList(), 
+                            selectedHour: selectedHour, 
+                            onChanged: (hour) { setState(() => selectedHour = hour);
+                            }
+                          )
                 ),
               ],
             ),
