@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+import 'package:train_away/models/reserva.dart';
 import 'package:train_away/models/travel_category.dart';
 import 'package:train_away/models/travel_option.dart';
 import 'package:train_away/models/stations.dart';
@@ -6,6 +8,11 @@ import 'package:train_away/mocks/mock_service.dart';
 import 'package:train_away/theme/app_colors.dart';
 import 'package:train_away/widgets/form_dropdown.dart';
 import 'package:train_away/widgets/form_field_label.dart';
+import 'package:train_away/models/reserva_model.dart';
+import 'package:train_away/providers/last_train_provider.dart';
+
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 // Página que recoge los datos principales y las preferencias del viaje.
 class FormPage extends StatefulWidget
@@ -75,11 +82,45 @@ class _FormPageState extends State<FormPage> {
     
     if(!mounted) { return; }
 
+    final stations = results[0] as List<Station>;
+    final categories = results[1] as List<TravelCategory>;
+    final options = results[2] as List<TravelOption>;
+
+    final lastTrain = context.read<LastTrainProvider>();
+    await lastTrain.charge();
+
+    final reserva = context.read<ReservaModel>();
+
+    final defaultOrigen = _stations.first.name;
+    final defaultDestino = _stations[1].name;
+
+    final savedOrigen = lastTrain.origen;
+    final savedDestino = lastTrain.destino;
+    
+  
+    final origen = reserva.origen.isNotEmpty ? reserva.origen : savedOrigen ?? defaultOrigen;
+    final destino = reserva.destino.isNotEmpty ? reserva.destino : savedDestino ?? defaultDestino;
+
+    reserva.setTrayecto(
+      origen: origen,
+      destino: destino
+    );
+
+    if(reserva.categoria.isEmpty && categories.isNotEmpty) {
+      reserva.setCategorias(categories.first.name);
+    }
+
+    if(reserva.opciones.isEmpty) {
+      reserva.setOpciones({
+        for(final option in options) option.name: false
+      });
+    }
+
     // Definimos donde se guardarán los datos de cada lista, y además, indicamos que los datos se han terminado de cargar en la variable _loading
     setState(() {
-      _stations = results[0] as List<Station>;
-      _categories = results[1] as List<TravelCategory>;
-      _options = results[2] as List<TravelOption>;
+      _stations = stations;
+      _categories = categories;
+      _options = options;
       _loading = false;
     });
   }
@@ -88,9 +129,21 @@ class _FormPageState extends State<FormPage> {
   // Construye los campos de trayecto, pasajeros, clase y opciones adicionales.
   @override
   Widget build(BuildContext context) {
+
     if (_loading) {
       return const Center(child: CircularProgressIndicator());
     }
+
+    final reserva = context.watch<ReservaModel>();
+
+    final stationNames = _stations.map((station) => station.name).toList();
+    final categoryNames = _categories.map((category) => category.name).toList();
+
+    final origen = stationNames.contains(reserva.origen) ? reserva.origen : stationNames.first;
+    final destino = stationNames.contains(reserva.destino) && reserva.destino != origen 
+    ? reserva.destino : stationNames.firstWhere((name) => name != origen);
+
+    final categoria = categoryNames.contains(reserva.categoria) ? reserva.categoria : categoryNames.first;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 28),
@@ -101,25 +154,19 @@ class _FormPageState extends State<FormPage> {
           FormDropdown<String>(
             // Con value definimos el valor por defecto que se cargará tanto para el Origen, el Destino, la Categoría y el número de pasajeros, aunque cada uno en su elemento, 
             // y con values definimos los valores que emplearán los dropdowns.
-            value: widget.origin,
-            values: _stations
-                .map((station) => station.name)
-                .where((name) => name != widget.destination)
-                .toList(),
+            value: origen,
+            values: stationNames.where((name) => name != destino).toList(),
             onChanged: (value) {
-              if (value != null) widget.onOriginChanged(value);
+              if (value != null) context.read<ReservaModel>().setOrigen(value);
             },
           ),
           const SizedBox(height: 12),
           const FormFieldLabel('Destino'),
           FormDropdown<String>(
-            value: widget.destination,
-            values: _stations
-                .map((station) => station.name)
-                .where((name) => name != widget.origin)
-                .toList(),
+            value: destino,
+            values: stationNames.where((name) => name != origen).toList(),
             onChanged: (value) {
-              if (value != null) widget.onDestinationChanged(value);
+              if (value != null) context.read<ReservaModel>().setDestino(value);
             },
           ),
           const SizedBox(height: 42),
@@ -133,7 +180,7 @@ class _FormPageState extends State<FormPage> {
                     value: widget.passengers,
                     values: List.generate(8, (index) => index + 1),
                     onChanged: (value) {
-                      if (value != null) widget.onPassengersChanged(value);
+                      if (value != null) context.read<ReservaModel>().setPasajeros(value);
                     },
                   ),
                 ),
@@ -143,8 +190,8 @@ class _FormPageState extends State<FormPage> {
                 child: _selectField(
                   'Categoría',
                   FormDropdown<String>(
-                    value: widget.category,
-                    values: _categories.map((category) => category.name).toList(),
+                    value: categoria,
+                    values: categoryNames,
                     onChanged: (value) {
                       if (value != null) widget.onCategoryChanged(value);
                     },
