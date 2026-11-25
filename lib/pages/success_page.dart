@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:train_away/theme/app_colors.dart';
+import 'package:train_away/widgets/app_banner.dart';
+import 'package:train_away/widgets/app_bottom_button.dart';
 
 // Página que confirma que la reserva se ha completado correctamente.
 class SuccessPage extends StatelessWidget {
@@ -8,25 +11,34 @@ class SuccessPage extends StatelessWidget {
 
   // Construye el icono y el mensaje de confirmación.
   @override
-  Widget build(BuildContext context) => const Center(
-    child: Padding(
-      padding: EdgeInsets.all(28),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.verified_outlined, size: 30),
-          SizedBox(height: 30),
-          Text(
-            'La reserva se ha realizado exitosamente.',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.navy,
-              fontSize: 23,
-              fontWeight: FontWeight.w700,
-            ),
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBanner(),
+      body: const Center(
+        child: Padding(
+          padding: EdgeInsets.all(28),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.verified_outlined, size: 30),
+              SizedBox(height: 30),
+              Text(
+                'La reserva se ha realizado exitosamente.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AppColors.navy,
+                  fontSize: 23,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
-    ),
-  );
+      bottomNavigationBar: AppBottomButton(
+        label: 'Entendido', 
+        onPressed: () => context.go('/mis-reservas')
+      ),
+    );
+  }
 }

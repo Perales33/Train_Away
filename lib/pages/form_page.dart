@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:train_away/models/travel_category.dart';
 import 'package:train_away/models/travel_option.dart';
 import 'package:train_away/models/stations.dart';
@@ -8,6 +9,7 @@ import 'package:train_away/widgets/form_dropdown.dart';
 import 'package:train_away/widgets/form_field_label.dart';
 import 'package:train_away/models/reserva_model.dart';
 import 'package:train_away/providers/last_train_provider.dart';
+import 'package:train_away/widgets/app_bottom_button.dart';
 
 import 'package:provider/provider.dart';
 
@@ -145,74 +147,87 @@ class _FormPageState extends State<FormPage> {
 
     final categoria = categoryNames.contains(reserva.categoria) ? reserva.categoria : categoryNames.first;
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 28),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const FormFieldLabel('Origen'),
-          FormDropdown<String>(
-            // Con value definimos el valor por defecto que se cargará tanto para el Origen, el Destino, la Categoría y el número de pasajeros, aunque cada uno en su elemento, 
-            // y con values definimos los valores que emplearán los dropdowns.
-            value: origen,
-            values: stationNames.where((name) => name != destino).toList(),
-            onChanged: (value) {
-              if (value != null) context.read<ReservaModel>().setOrigen(value);
-            },
-          ),
-          const SizedBox(height: 12),
-          const FormFieldLabel('Destino'),
-          FormDropdown<String>(
-            value: destino,
-            values: stationNames.where((name) => name != origen).toList(),
-            onChanged: (value) {
-              if (value != null) context.read<ReservaModel>().setDestino(value);
-            },
-          ),
-          const SizedBox(height: 42),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: _selectField(
-                  'Pasajeros',
-                  FormDropdown<int>(
-                    value: reserva.pasajeros,
-                    values: List.generate(8, (index) => index + 1),
-                    onChanged: (value) {
-                      if (value != null) context.read<ReservaModel>().setPasajeros(value);
-                    },
+    return Scaffold(
+      appBar: AppBar(),
+      body: Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(16, 14, 16, 28),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const FormFieldLabel('Origen'),
+                FormDropdown<String>(
+                  // Con value definimos el valor por defecto que se cargará tanto para el Origen, el Destino, la Categoría y el número de pasajeros, aunque cada uno en su elemento, 
+                  // y con values definimos los valores que emplearán los dropdowns.
+                  value: origen,
+                  values: stationNames.where((name) => name != destino).toList(),
+                  onChanged: (value) {
+                    if (value != null) context.read<ReservaModel>().setOrigen(value);
+                  },
+                ),
+                const SizedBox(height: 12),
+                const FormFieldLabel('Destino'),
+                FormDropdown<String>(
+                  value: destino,
+                  values: stationNames.where((name) => name != origen).toList(),
+                  onChanged: (value) {
+                    if (value != null) context.read<ReservaModel>().setDestino(value);
+                  },
+                ),
+                const SizedBox(height: 42),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: _selectField(
+                        'Pasajeros',
+                        FormDropdown<int>(
+                          value: reserva.pasajeros,
+                          values: List.generate(8, (index) => index + 1),
+                          onChanged: (value) {
+                            if (value != null) context.read<ReservaModel>().setPasajeros(value);
+                          },
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 28),
+                    Expanded(
+                      child: _selectField(
+                        'Categoría',
+                        FormDropdown<String>(
+                          value: categoria,
+                          values: categoryNames,
+                          onChanged: (value) {
+                            if (value != null) context.read<ReservaModel>().setCategorias(value);
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 42),
+                const FormFieldLabel('Opciones de viaje'),
+                const SizedBox(height: 8),
+                // Mediante el operador de propagación '...' insertamos todos los elementos dentro del mapa de opciones extras
+                ..._options.map(
+                  (option) => _option(
+                    context,
+                    option.name,
+                    reserva.opciones[option.name] ?? false,
                   ),
                 ),
-              ),
-              const SizedBox(width: 28),
-              Expanded(
-                child: _selectField(
-                  'Categoría',
-                  FormDropdown<String>(
-                    value: categoria,
-                    values: categoryNames,
-                    onChanged: (value) {
-                      if (value != null) context.read<ReservaModel>().setCategorias(value);
-                    },
-                  ),
-                ),
-              ),
-            ],
+              ],
+            )
           ),
-          const SizedBox(height: 42),
-          const FormFieldLabel('Opciones de viaje'),
-          const SizedBox(height: 8),
-          // Mediante el operador de propagación '...' insertamos todos los elementos dentro del mapa de opciones extras
-          ..._options.map(
-            (option) => _option(
-              context,
-              option.name,
-              reserva.opciones[option.name] ?? false,
-            ),
-          ),
-        ],
-      ),
+        ),
+        AppBottomButton(
+            label: 'Continuar',
+            onPressed: () => context.push('/reservar/fecha')
+          )
+      ],
+      )
     );
   }
 

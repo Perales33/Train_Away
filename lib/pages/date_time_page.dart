@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import 'package:train_away/theme/app_colors.dart';
@@ -8,6 +10,8 @@ import 'package:train_away/widgets/hour_selection.dart';
 
 import 'package:train_away/mocks/mock_service.dart';
 import 'package:train_away/models/travel_schedule.dart';
+
+import 'package:train_away/models/reserva_model.dart';
 
 // Datos que la pantalla devuelve al completar la selección del viaje.
 class DateTimeSelection {
@@ -72,7 +76,9 @@ class _DateTimePageState extends State<DateTimePage> {
 
     if (date == null || hour == null) return;
 
-    Navigator.pop(context, DateTimeSelection(date: date, hour: hour));
+    context.read<ReservaModel>().setFechaHora(fecha: date, hora: hour);
+
+    context.push('/reservar/confirmacion');
   }
 
   // Construye el calendario, el selector de hora y la acción para continuar.
