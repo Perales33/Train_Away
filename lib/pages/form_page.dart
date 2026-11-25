@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:train_away/models/reserva.dart';
 import 'package:train_away/models/travel_category.dart';
 import 'package:train_away/models/travel_option.dart';
@@ -82,17 +81,20 @@ class _FormPageState extends State<FormPage> {
     
     if(!mounted) { return; }
 
+
     final stations = results[0] as List<Station>;
     final categories = results[1] as List<TravelCategory>;
     final options = results[2] as List<TravelOption>;
 
     final lastTrain = context.read<LastTrainProvider>();
-    await lastTrain.charge();
-
     final reserva = context.read<ReservaModel>();
 
-    final defaultOrigen = _stations.first.name;
-    final defaultDestino = _stations[1].name;
+    await lastTrain.charge();
+
+    if(!mounted) { return; }
+
+    final defaultOrigen = stations.first.name;
+    final defaultDestino = stations[1].name;
 
     final savedOrigen = lastTrain.origen;
     final savedDestino = lastTrain.destino;
@@ -206,8 +208,9 @@ class _FormPageState extends State<FormPage> {
           // Mediante el operador de propagación '...' insertamos todos los elementos dentro del mapa de opciones extras
           ..._options.map(
             (option) => _option(
+              context,
               option.name,
-              widget.extras[option.name] ?? false,
+              reserva.opciones[option.name] ?? false,
             ),
           ),
         ],
@@ -222,38 +225,42 @@ class _FormPageState extends State<FormPage> {
   );
 
   // Construye una opción seleccionable para personalizar el viaje.
-  Widget _option(String label, bool selected) => InkWell(
-    onTap: () => widget.onExtraChanged(label, !selected),
-    child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 3),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 30,
-            height: 34,
-            child: Checkbox(
-              value: selected,
-              onChanged: (value) => widget.onExtraChanged(label, value ?? false),
-              activeColor: AppColors.navy,
-              side: const BorderSide(color: AppColors.navy, width: 2.5),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6),
+  Widget _option(BuildContext context, String label, bool selected) {
+    return InkWell(
+      onTap: () {
+        context.read<ReservaModel>().setOpcion(label, !selected);
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 3),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 30,
+              height: 34,
+              child: Checkbox(
+                value: selected,
+                onChanged: (value) { context.read<ReservaModel>().setOpcion(label, value ?? false); },
+                activeColor: AppColors.navy,
+                side: const BorderSide(color: AppColors.navy, width: 2.5),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                ),
               ),
             ),
-          ),
 
-          const SizedBox(width: 5),
+            const SizedBox(width: 5),
 
-          Text(
-            label,
-            style: const TextStyle(
-              color: AppColors.navy,
-              fontWeight: FontWeight.w600,
-              fontSize: 15,
+            Text(
+              label,
+              style: const TextStyle(
+                color: AppColors.navy,
+                fontWeight: FontWeight.w600,
+                fontSize: 15,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }

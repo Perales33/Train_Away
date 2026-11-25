@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 
 import 'package:train_away/pages/confirmation_dialog.dart';
@@ -7,6 +8,8 @@ import 'package:train_away/pages/date_time_page.dart';
 import 'package:train_away/pages/form_page.dart';
 import 'package:train_away/pages/reservation_confirmed.dart';
 import 'package:train_away/pages/success_page.dart';
+import 'package:train_away/providers/last_train_provider.dart';
+import 'package:train_away/providers/reservas_provider.dart';
 import 'package:train_away/theme/app_colors.dart';
 import 'package:train_away/widgets/app_bottom_button.dart';
 import 'package:train_away/widgets/app_banner.dart';
@@ -14,10 +17,27 @@ import 'package:train_away/mocks/mock_service.dart';
 import 'package:train_away/models/stations.dart';
 import 'package:train_away/models/travel_category.dart';
 import 'package:train_away/models/travel_option.dart';
+import 'package:train_away/models/reserva_model.dart';
 
 
 // Inicia la aplicación Train Away.
-void main() => runApp(const TrainAwayApp());
+void main() => runApp(
+  MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (_) => ReservaModel()
+      ),
+      ChangeNotifierProvider(
+        create: (_) => LastTrainProvider()
+      ),
+      /*
+      ChangeNotifierProvider(
+        create: (_) => ReservasProvider(ReservasDatabase.instance),
+      )*/
+    ],
+    child: const TrainAwayApp())
+  );
+  
 
 class TrainAwayApp extends StatelessWidget {
   const TrainAwayApp({super.key});

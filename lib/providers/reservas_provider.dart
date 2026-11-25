@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 
-import 'package:train_away/data/reservas_database.dart';
+// import 'package:train_away/data/reservas_database.dart';
 import 'package:train_away/models/reserva.dart';
 
 class ReservasProvider extends ChangeNotifier {
+  final _db;
+  
   ReservasProvider(this._db);
-
-  final ReservasDatabase _db;
 
   List<Reserva> _reservas = [];
   bool _cargando = false;
@@ -22,7 +22,7 @@ class ReservasProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _reservas = await _db.selectReservas();
+      // _reservas = await _db.selectReservas();
     }
     catch (e) {
       _error = 'No se pudieron cargar las reservas';
