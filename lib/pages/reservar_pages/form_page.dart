@@ -5,43 +5,19 @@ import 'package:train_away/models/travel_option.dart';
 import 'package:train_away/models/stations.dart';
 import 'package:train_away/mocks/mock_service.dart';
 import 'package:train_away/theme/app_colors.dart';
-import 'package:train_away/widgets/form_dropdown.dart';
-import 'package:train_away/widgets/form_field_label.dart';
+import 'package:train_away/widgets/forms/form_dropdown.dart';
+import 'package:train_away/widgets/forms/form_field_label.dart';
 import 'package:train_away/models/reserva_model.dart';
 import 'package:train_away/providers/last_train_provider.dart';
-import 'package:train_away/widgets/app_bottom_button.dart';
+import 'package:train_away/widgets/general/app_bottom_button.dart';
 
 import 'package:provider/provider.dart';
 
 // Página que recoge los datos principales y las preferencias del viaje.
 class FormPage extends StatefulWidget {
   // Constructor con todas las variables y métodos de las variables
-  const FormPage({
-    required this.origin,
-    required this.destination,
-    required this.passengers,
-    required this.category,
-    required this.extras,
-    required this.onOriginChanged,
-    required this.onDestinationChanged,
-    required this.onPassengersChanged,
-    required this.onCategoryChanged,
-    required this.onExtraChanged,
-    super.key,
-  });
-
-  // Definimos todas las variables empleadas y los métodos que nos permitirán actualizar los datos en las diferentes pantallas de la aplicación
-  final String origin;
-  final String destination;
-  final int passengers;
-  final String category;
-  final Map<String, bool> extras;
-  final ValueChanged<String> onOriginChanged;
-  final ValueChanged<String> onDestinationChanged;
-  final ValueChanged<int> onPassengersChanged;
-  final ValueChanged<String> onCategoryChanged;
-  final void Function(String label, bool selected) onExtraChanged;
-
+  const FormPage({super.key});
+  
   @override
   State<FormPage> createState() => _FormPageState();
 }

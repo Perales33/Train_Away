@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:train_away/widgets/form_dropdown.dart';
+import 'package:train_away/widgets/forms/form_dropdown.dart';
 
 // Widget que permite elegir la hora de salida entre las horas disponibles.
 class HourSelection extends StatelessWidget {

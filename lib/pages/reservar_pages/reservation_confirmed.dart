@@ -6,9 +6,9 @@ import 'package:train_away/theme/app_colors.dart';
 import 'package:train_away/models/reserva_model.dart';
 import 'package:train_away/providers/reservas_provider.dart';
 import 'package:train_away/providers/last_train_provider.dart';
-import 'package:train_away/widgets/app_banner.dart';
-import 'package:train_away/widgets/app_bottom_button.dart';
-import 'package:train_away/pages/confirmation_dialog.dart';
+import 'package:train_away/widgets/general/app_banner.dart';
+import 'package:train_away/widgets/general/app_bottom_button.dart';
+import 'package:train_away/pages/reservar_pages/confirmation_dialog.dart';
 
 // Página que resume los datos del viaje antes de confirmarlo.
 class ReservationConfirmedPage extends StatelessWidget {
