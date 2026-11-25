@@ -177,7 +177,7 @@ class _FormPageState extends State<FormPage> {
                 child: _selectField(
                   'Pasajeros',
                   FormDropdown<int>(
-                    value: widget.passengers,
+                    value: reserva.pasajeros,
                     values: List.generate(8, (index) => index + 1),
                     onChanged: (value) {
                       if (value != null) context.read<ReservaModel>().setPasajeros(value);
@@ -193,7 +193,7 @@ class _FormPageState extends State<FormPage> {
                     value: categoria,
                     values: categoryNames,
                     onChanged: (value) {
-                      if (value != null) widget.onCategoryChanged(value);
+                      if (value != null) context.read<ReservaModel>().setCategorias(value);
                     },
                   ),
                 ),
