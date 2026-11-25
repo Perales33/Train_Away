@@ -3,6 +3,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:syncfusion_localizations/syncfusion_localizations.dart';
+import 'package:train_away/pages/mis_reservas_pages/mis_reservas_page.dart';
+import 'package:train_away/pages/mis_reservas_pages/reserva_detalle_page.dart';
 
 import 'package:train_away/pages/reservar_pages/confirmation_dialog.dart';
 import 'package:train_away/pages/reservar_pages/date_time_page.dart';
@@ -36,36 +38,45 @@ void main() => runApp(
 );
 
 final _router = GoRouter(
-  initialLocation: 'reservar',
+  initialLocation: '/reservar',
   routes: [
-    // Sección de 'reservar'
+    // --- Sección 'Reservar' ---
     ShellRoute(
       builder: (context, state, child) =>
-          Scaffold(body: child, bottomNavigationBar: const BottomNavBar()),
+          Scaffold(body: child, bottomNavigationBar: const BottomAppBar()),
       routes: [
         GoRoute(
-          path: 'reservar',
+          path: '/reservar',
           builder: (context, state) => ConfirmationPage(),
         ),
-        GoRoute(path: 'fecha', builder: ((context, state) => DateTimePage())),
         GoRoute(
-          path: 'confirmacion',
-          builder: ((context, state) =>
-              ConfirmationDialog(onCancel: () {}, onConfirm: () {})),
+          path: '/reservar/fecha',
+          builder: (context, state) => DateTimePage(),
         ),
         GoRoute(
-          path: 'reserva-confirmada',
-          builder: ((context, state) => SuccessPage()),
+          path: '/reservar/confirmacion',
+          builder: (context, state) =>
+              ConfirmationDialog(onCancel: () {}, onConfirm: () {}),
+        ),
+        GoRoute(
+          path: '/reserva-confirmada',
+          builder: (context, state) => SuccessPage(),
         ),
       ],
     ),
+
+    // --- Sección 'Mis reservas' ---
     ShellRoute(
       builder: (context, state, child) =>
-          Scaffold(body: child, bottomNavigationBar: const BottomNavBar()),
+          Scaffold(body: child, bottomNavigationBar: const BottomAppBar()),
       routes: [
         GoRoute(
-          path: 'mis-reservas',
+          path: '/mis-reservas',
           builder: (context, state) => MisReservasPage(),
+        ),
+        GoRoute(
+          path: '/mis-reservas/:id',
+          builder: (context, state) => ReservaDetallePage(),
         ),
       ],
     ),
