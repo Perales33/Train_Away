@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:train_away/models/reserva.dart';
 import 'package:train_away/models/travel_category.dart';
 import 'package:train_away/models/travel_option.dart';
 import 'package:train_away/models/stations.dart';
@@ -10,7 +9,6 @@ import 'package:train_away/widgets/form_field_label.dart';
 import 'package:train_away/models/reserva_model.dart';
 import 'package:train_away/providers/last_train_provider.dart';
 
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 // Página que recoge los datos principales y las preferencias del viaje.
