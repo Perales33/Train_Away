@@ -14,8 +14,7 @@ import 'package:train_away/widgets/app_bottom_button.dart';
 import 'package:provider/provider.dart';
 
 // Página que recoge los datos principales y las preferencias del viaje.
-class FormPage extends StatefulWidget
-{
+class FormPage extends StatefulWidget {
   // Constructor con todas las variables y métodos de las variables
   const FormPage({
     required this.origin,
@@ -48,29 +47,26 @@ class FormPage extends StatefulWidget
 }
 
 class _FormPageState extends State<FormPage> {
-
   // Instanciamos un mockService para poder cargar todos los datos, simulando una base de datos
   final MockService _mockService = const MockService();
 
   // Tres listas para guardar todos los datos procedentes del mock
-  List <Station> _stations = [];
+  List<Station> _stations = [];
   List<TravelCategory> _categories = [];
   List<TravelOption> _options = [];
 
   // Variable para definir cuando se han terminado de cargar los datos
   bool _loading = true;
-  
+
   // Inicializar el método para cargar los datos desde el principio de la aplicación (Futures)
-  @override 
-  void initState()
-  {
+  @override
+  void initState() {
     super.initState();
     _loadData();
   }
 
   // Método con elementos futuros, que nos permite cargar los datos del mock, es decir, trabajamos en paralelo
   Future<void> _loadData() async {
-
     // Guardamos todos los datos en una única variable, teniendo en cuenta que se bloquea el hilo dedicado a ello
     // hasta que no se carguen todos los datos.
     final results = await Future.wait([
@@ -78,9 +74,10 @@ class _FormPageState extends State<FormPage> {
       _mockService.getCategories(),
       _mockService.getTravelOptions(),
     ]);
-    
-    if(!mounted) { return; }
 
+    if (!mounted) {
+      return;
+    }
 
     final stations = results[0] as List<Station>;
     final categories = results[1] as List<TravelCategory>;
@@ -91,31 +88,31 @@ class _FormPageState extends State<FormPage> {
 
     await lastTrain.charge();
 
-    if(!mounted) { return; }
+    if (!mounted) {
+      return;
+    }
 
     final defaultOrigen = stations.first.name;
     final defaultDestino = stations[1].name;
 
     final savedOrigen = lastTrain.origen;
     final savedDestino = lastTrain.destino;
-    
-  
-    final origen = reserva.origen.isNotEmpty ? reserva.origen : savedOrigen ?? defaultOrigen;
-    final destino = reserva.destino.isNotEmpty ? reserva.destino : savedDestino ?? defaultDestino;
 
-    reserva.setTrayecto(
-      origen: origen,
-      destino: destino
-    );
+    final origen = reserva.origen.isNotEmpty
+        ? reserva.origen
+        : savedOrigen ?? defaultOrigen;
+    final destino = reserva.destino.isNotEmpty
+        ? reserva.destino
+        : savedDestino ?? defaultDestino;
 
-    if(reserva.categoria.isEmpty && categories.isNotEmpty) {
+    reserva.setTrayecto(origen: origen, destino: destino);
+
+    if (reserva.categoria.isEmpty && categories.isNotEmpty) {
       reserva.setCategorias(categories.first.name);
     }
 
-    if(reserva.opciones.isEmpty) {
-      reserva.setOpciones({
-        for(final option in options) option.name: false
-      });
+    if (reserva.opciones.isEmpty) {
+      reserva.setOpciones({for (final option in options) option.name: false});
     }
 
     // Definimos donde se guardarán los datos de cada lista, y además, indicamos que los datos se han terminado de cargar en la variable _loading
@@ -126,12 +123,10 @@ class _FormPageState extends State<FormPage> {
       _loading = false;
     });
   }
-  
-  
+
   // Construye los campos de trayecto, pasajeros, clase y opciones adicionales.
   @override
   Widget build(BuildContext context) {
-
     if (_loading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -141,11 +136,17 @@ class _FormPageState extends State<FormPage> {
     final stationNames = _stations.map((station) => station.name).toList();
     final categoryNames = _categories.map((category) => category.name).toList();
 
-    final origen = stationNames.contains(reserva.origen) ? reserva.origen : stationNames.first;
-    final destino = stationNames.contains(reserva.destino) && reserva.destino != origen 
-    ? reserva.destino : stationNames.firstWhere((name) => name != origen);
+    final origen = stationNames.contains(reserva.origen)
+        ? reserva.origen
+        : stationNames.first;
+    final destino =
+        stationNames.contains(reserva.destino) && reserva.destino != origen
+        ? reserva.destino
+        : stationNames.firstWhere((name) => name != origen);
 
-    final categoria = categoryNames.contains(reserva.categoria) ? reserva.categoria : categoryNames.first;
+    final categoria = categoryNames.contains(reserva.categoria)
+        ? reserva.categoria
+        : categoryNames.first;
 
     return Scaffold(
       appBar: AppBar(),
@@ -252,7 +253,9 @@ class _FormPageState extends State<FormPage> {
               height: 34,
               child: Checkbox(
                 value: selected,
-                onChanged: (value) { context.read<ReservaModel>().setOpcion(label, value ?? false); },
+                onChanged: (value) {
+                  context.read<ReservaModel>().setOpcion(label, value ?? false);
+                },
                 activeColor: AppColors.navy,
                 side: const BorderSide(color: AppColors.navy, width: 2.5),
                 shape: RoundedRectangleBorder(

@@ -2,7 +2,10 @@
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
 import 'package:syncfusion_localizations/syncfusion_localizations.dart';
+import 'package:train_away/pages/mis_reservas_pages/mis_reservas_page.dart';
+import 'package:train_away/pages/mis_reservas_pages/reserva_detalle_page.dart';
 
 // import 'package:train_away/data/reservas_database.dart';
 import 'package:train_away/models/reserva_model.dart';
@@ -16,37 +19,81 @@ import 'package:train_away/providers/last_train_provider.dart';
 import 'package:train_away/providers/reservas_provider.dart';
 import 'package:train_away/theme/app_colors.dart';
 
-
 // Inicia la aplicación Train Away.
 void main() => runApp(
   MultiProvider(
     providers: [
-      ChangeNotifierProvider(
-        create: (_) => ReservaModel()
-      ),
-      ChangeNotifierProvider(
-        create: (_) => LastTrainProvider()
-      ),
+      ChangeNotifierProvider(create: (_) => ReservaModel()),
+      ChangeNotifierProvider(create: (_) => LastTrainProvider()),
       /*
       ChangeNotifierProvider(
         create: (_) => ReservasProvider(ReservasDatabase.instance),
         ..changeReservas(),
       )*/
     ],
-    child: const TrainAwayApp())
-  );
-  
+    child: const TrainAwayApp(),
+  ),
+);
+
+final _router = GoRouter(
+  initialLocation: '/reservar',
+  routes: [
+    // --- Sección 'Reservar' ---
+    ShellRoute(
+      builder: (context, state, child) =>
+          Scaffold(body: child, bottomNavigationBar: const BottomAppBar()),
+      routes: [
+        GoRoute(
+          path: '/reservar',
+          builder: (context, state) => ConfirmationPage(),
+        ),
+        GoRoute(
+          path: '/reservar/fecha',
+          builder: (context, state) => DateTimePage(),
+        ),
+        GoRoute(
+          path: '/reservar/confirmacion',
+          builder: (context, state) =>
+              ConfirmationDialog(onCancel: () {}, onConfirm: () {}),
+        ),
+        GoRoute(
+          path: '/reserva-confirmada',
+          builder: (context, state) => SuccessPage(),
+        ),
+      ],
+    ),
+
+    // --- Sección 'Mis reservas' ---
+    ShellRoute(
+      builder: (context, state, child) =>
+          Scaffold(body: child, bottomNavigationBar: const BottomAppBar()),
+      routes: [
+        GoRoute(
+          path: '/mis-reservas',
+          builder: (context, state) => MisReservasPage(),
+        ),
+        GoRoute(
+          path: '/mis-reservas/:id',
+          builder: (context, state) => ReservaDetallePage(),
+        ),
+      ],
+    ),
+  ],
+);
 
 class TrainAwayApp extends StatelessWidget {
   const TrainAwayApp({super.key});
 
   // Widget de la aplicación
   @override
-  Widget build(BuildContext context) => MaterialApp(
+  Widget build(BuildContext context) => MaterialApp.router(
     title: 'Train Away',
     debugShowCheckedModeBanner: false,
-    
-    // Permitir conversión de elementos para traducirlos a inglés o español, según el sistema
+
+    routerDelegate: _router.routerDelegate,
+    routeInformationProvider: _router.routeInformationProvider,
+    routeInformationParser: _router.routeInformationParser,
+
     supportedLocales: const [Locale('en'), Locale('es')],
     localizationsDelegates: const [
       GlobalMaterialLocalizations.delegate,
@@ -69,7 +116,7 @@ class TrainAwayApp extends StatelessWidget {
 // Enumeración para indicar en que paso se encuentra del formulario
 enum ReservationStep { form, summary, success }
 
-// Clase ConfirmationPage para declarar el esado inicial de la aplicaciÃ³n
+// Clase ConfirmationPage para declarar el esado inicial de la aplicación
 class ConfirmationPage extends StatefulWidget {
   const ConfirmationPage({super.key});
 
@@ -78,7 +125,6 @@ class ConfirmationPage extends StatefulWidget {
 }
 
 class _ConfirmationPageState extends State<ConfirmationPage> {
-
   // Variables con valores por defecto
   String _origin = '';
   String _destination = '';
@@ -90,33 +136,33 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
   final MockService _mockService = const MockService();
 
   // Creamos tres listas para guardar todos los datos de las clases. No se crea el de horarios, porque ese se gestiona desde su propia página.
-  List <Station> _stations = [];
-  List <TravelCategory> _categories = [];
-  List <TravelOption> _options = [];
+  List<Station> _stations = [];
+  List<TravelCategory> _categories = [];
+  List<TravelOption> _options = [];
 
   // Variable que permite indicar que ya se han terminado de cargar los datos
   bool _loading = true;
 
   // Definimos que los datos se carguen desde el principio
   @override
-  void initState()
-  {
+  void initState() {
     super.initState();
     _loadMockData();
   }
 
   // Método para cargar los datos del mock
-  Future<void> _loadMockData() async
-  {
+  Future<void> _loadMockData() async {
     // Guardamos todos los datos en una variable para gestionar en que elemento lista irán
     final results = await Future.wait([
       _mockService.getStations(),
       _mockService.getCategories(),
-      _mockService.getTravelOptions()
+      _mockService.getTravelOptions(),
     ]);
 
     // Comprobamos la pantalla actual
-    if(!mounted) { return; }
+    if (!mounted) {
+      return;
+    }
 
     // Cargamos los datos en cada lista para poder emplearlos en la aplicación. Además, indicamos que ya se han terminado de cargar los datos poniendo a false la variable _loading.
     // Por último, definimos cual es el estado inicial de las variables Origen, Destino, Categoria y el estado inicial de los extras (false)
@@ -128,7 +174,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
       _origin = _stations.first.name;
       _destination = _stations[1].name;
       _category = _categories.first.name;
-      _extras = {for(final option in _options) option.name: false};
+      _extras = {for (final option in _options) option.name: false};
 
       _loading = false;
     });
@@ -184,7 +230,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
       _destination = _stations[1].name;
       _passengers = 1;
       _category = _categories.first.name;
-      _extras = {for(final option in _options) option.name: false};
+      _extras = {for (final option in _options) option.name: false};
       _travelDate = null;
       _travelHour = null;
     });
@@ -209,7 +255,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
             setState(() => _extras[label] = selected),
       ),
 
-      // Enviar los datos confirmados 
+      // Enviar los datos confirmados
       ReservationStep.summary => ReservationConfirmedPage(
         origin: _origin,
         destination: _destination,
