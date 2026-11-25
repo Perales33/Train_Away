@@ -9,6 +9,7 @@ import 'package:train_away/pages/reservar_pages/date_time_page.dart';
 import 'package:train_away/pages/reservar_pages/form_page.dart';
 import 'package:train_away/pages/reservar_pages/reservation_confirmed.dart';
 import 'package:train_away/pages/reservar_pages/success_page.dart';
+import 'package:train_away/providers/last_train_provider.dart';
 import 'package:train_away/theme/app_colors.dart';
 import 'package:train_away/widgets/app_bottom_button.dart';
 import 'package:train_away/widgets/app_banner.dart';
