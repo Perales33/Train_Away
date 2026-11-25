@@ -4,12 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 
-import 'package:train_away/pages/confirmation_dialog.dart';
-import 'package:train_away/pages/date_time_page.dart';
-import 'package:train_away/pages/form_page.dart';
-import 'package:train_away/pages/reservation_confirmed.dart';
-import 'package:train_away/pages/success_page.dart';
-import 'package:train_away/providers/last_train_provider.dart';
+import 'package:train_away/pages/reservar_pages/confirmation_dialog.dart';
+import 'package:train_away/pages/reservar_pages/date_time_page.dart';
+import 'package:train_away/pages/reservar_pages/form_page.dart';
+import 'package:train_away/pages/reservar_pages/reservation_confirmed.dart';
+import 'package:train_away/pages/reservar_pages/success_page.dart';
 import 'package:train_away/theme/app_colors.dart';
 import 'package:train_away/widgets/app_bottom_button.dart';
 import 'package:train_away/widgets/app_banner.dart';
@@ -17,6 +16,7 @@ import 'package:train_away/mocks/mock_service.dart';
 import 'package:train_away/models/stations.dart';
 import 'package:train_away/models/travel_category.dart';
 import 'package:train_away/models/travel_option.dart';
+import 'package:train_away/widgets/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:train_away/models/reserva_model.dart';
 
 // Inicia la aplicación Train Away.
@@ -35,8 +35,39 @@ void main() => runApp(
 );
 
 final _router = GoRouter(
+  initialLocation: 'reservar',
   routes: [
-    GoRoute(path: "/", builder: (context, state) => const ConfirmationPage()),
+    // Sección de 'reservar'
+    ShellRoute(
+      builder: (context, state, child) =>
+          Scaffold(body: child, bottomNavigationBar: const BottomNavBar()),
+      routes: [
+        GoRoute(
+          path: 'reservar',
+          builder: (context, state) => ConfirmationPage(),
+        ),
+        GoRoute(path: 'fecha', builder: ((context, state) => DateTimePage())),
+        GoRoute(
+          path: 'confirmacion',
+          builder: ((context, state) =>
+              ConfirmationDialog(onCancel: () {}, onConfirm: () {})),
+        ),
+        GoRoute(
+          path: 'reserva-confirmada',
+          builder: ((context, state) => SuccessPage()),
+        ),
+      ],
+    ),
+    ShellRoute(
+      builder: (context, state, child) =>
+          Scaffold(body: child, bottomNavigationBar: const BottomNavBar()),
+      routes: [
+        GoRoute(
+          path: 'mis-reservas',
+          builder: (context, state) => MisReservasPage(),
+        ),
+      ],
+    ),
   ],
 );
 
@@ -45,11 +76,14 @@ class TrainAwayApp extends StatelessWidget {
 
   // Widget de la aplicación
   @override
-  Widget build(BuildContext context) => MaterialApp(
+  Widget build(BuildContext context) => MaterialApp.router(
     title: 'Train Away',
     debugShowCheckedModeBanner: false,
 
-    // Permitir conversión de elementos para traducirlos a inglés o español, según el sistema
+    routerDelegate: _router.routerDelegate,
+    routeInformationProvider: _router.routeInformationProvider,
+    routeInformationParser: _router.routeInformationParser,
+
     supportedLocales: const [Locale('en'), Locale('es')],
     localizationsDelegates: const [
       GlobalMaterialLocalizations.delegate,
@@ -57,16 +91,6 @@ class TrainAwayApp extends StatelessWidget {
       GlobalCupertinoLocalizations.delegate,
       SfGlobalLocalizations.delegate,
     ],
-    theme: ThemeData(
-      useMaterial3: true,
-      scaffoldBackgroundColor: AppColors.white,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: AppColors.navy,
-        primary: AppColors.navy,
-      ),
-      fontFamily: 'DM Sans',
-    ),
-    home: const ConfirmationPage(),
   );
 }
 
