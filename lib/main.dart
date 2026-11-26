@@ -42,13 +42,17 @@ void main() => runApp(
 final _router = GoRouter(
   initialLocation: '/reservar',
   routes: [
-    // --- Sección 'Reservar' ---
     ShellRoute(
-      builder: (context, state, child) => Scaffold(
-        appBar: AppBanner(),
-        body: child,
-        bottomNavigationBar: const BottomNavBar(),
-      ),
+      builder: (context, state, child)
+      {
+        final selectedPath = state.uri.path == '/ajustes' ? state.uri.queryParameters['place'] ?? '/reservar' : state.uri.path;
+
+        return Scaffold(
+          appBar: AppBanner(onLogoTap: () => reiniciarReserva(context), currentPath: selectedPath,),
+          body: child,
+          bottomNavigationBar: BottomNavBar(currentPath: selectedPath),
+        );
+      },
       routes: [
         GoRoute(
           path: '/reservar',
@@ -69,17 +73,7 @@ final _router = GoRouter(
           path: '/reserva-confirmada',
           builder: (context, state) => SuccessPage(),
         ),
-      ],
-    ),
 
-    // --- Sección 'Mis reservas' ---
-    ShellRoute(
-      builder: (context, state, child) => Scaffold(
-        appBar: AppBanner(onLogoTap: () => reiniciarReserva(context)),
-        body: child,
-        bottomNavigationBar: const BottomNavBar(),
-      ),
-      routes: [
         GoRoute(
           path: '/mis-reservas',
           builder: (context, state) => MisReservasPage(),
@@ -90,18 +84,11 @@ final _router = GoRouter(
             ),
           ],
         ),
-      ],
-    ),
 
-    // --- Sección 'Ajustes' ---
-    ShellRoute(
-      builder: (context, state, child) => Scaffold(
-        appBar: AppBanner(onLogoTap: () => reiniciarReserva(context)),
-        body: child,
-        bottomNavigationBar: const BottomNavBar(),
-      ),
-      routes: [
-        GoRoute(path: '/ajustes', builder: (context, state) => SettingsPage()),
+        GoRoute(
+          path: '/ajustes', 
+          builder: (context, state) => SettingsPage()
+        ),
       ],
     ),
   ],

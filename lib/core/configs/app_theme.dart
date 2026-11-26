@@ -42,7 +42,7 @@ abstract final class AppTheme {
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: AppColors.white,
-        selectedItemColor: AppColors.navy,
+        selectedItemColor: AppColors.burgundy,
         unselectedItemColor: AppColors.muted,
       ),
       cardTheme: const CardThemeData(
@@ -73,6 +73,7 @@ abstract final class AppTheme {
       inversePrimary: AppColors.burgundyLigth,
       surfaceTint: AppColors.navy,
       surfaceContainerHigh: AppColors.muted,
+      primaryContainer: AppColors.navyLigth,
     );
 
     return ThemeData(
@@ -88,7 +89,7 @@ abstract final class AppTheme {
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: _darkBackground,
-        selectedItemColor: AppColors.white,
+        selectedItemColor: AppColors.burgundyLigth,
         unselectedItemColor: AppColors.grey,
       ),
       cardTheme: const CardThemeData(

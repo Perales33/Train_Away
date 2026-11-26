@@ -3,6 +3,7 @@
 // Colores compartidos por los componentes de la aplicación.
 abstract final class AppColors {
   static const navy = Color(0xFF294452);
+  static const navyLigth = Color(0xFF4492B9);
   static const burgundy = Color(0xFF842D45);
   static const muted = Color(0xFF737373);
   static const black = Color(0xFF000000);

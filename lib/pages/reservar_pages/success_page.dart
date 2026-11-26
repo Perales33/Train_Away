@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:train_away/widgets/elements_styles/bottom_button.dart';
+import 'package:train_away/navigation/reserva_reinicio.dart';
 
 class SuccessPage extends StatelessWidget {
   const SuccessPage({super.key});
@@ -47,7 +48,7 @@ class SuccessPage extends StatelessWidget {
                 child: AppBottomButton(
                   label: 'Entendido',
                   outlined: true,
-                  onPressed: () => context.go('/reservar'),
+                  onPressed: () => reiniciarReserva(context),
                 ), 
               ),
               Expanded(

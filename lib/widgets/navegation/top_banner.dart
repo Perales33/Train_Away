@@ -4,10 +4,16 @@ import 'package:train_away/navigation/reserva_reinicio.dart';
 
 // Widget que muestra la barra superior común de la aplicación.
 class AppBanner extends StatelessWidget implements PreferredSizeWidget {
-  const AppBanner({this.onLogoTap, super.key});
+  const AppBanner({
+    this.onLogoTap, 
+    required this.currentPath,
+    super.key
+  });
 
   // Acción opcional al pulsar el título
   final VoidCallback? onLogoTap;
+
+  final String currentPath;
 
   // Altura que la barra ocupa dentro de la estructura de la pantalla.
   @override
@@ -51,7 +57,10 @@ class AppBanner extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         IconButton(
           icon: Icon(Icons.menu, size: 34, color: colors.onSurface),
-          onPressed: () => context.go('/ajustes'),
+          onPressed: () {
+
+            context.push('/ajustes?place=${Uri.encodeComponent(currentPath)}');
+          } 
         ),
       ],
 
