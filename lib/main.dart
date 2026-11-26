@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 import 'package:train_away/data/example_data.dart';
-import 'package:train_away/pages/mis_reservas_pages/mis_reservas_page.dart';
-import 'package:train_away/pages/mis_reservas_pages/reserva_detalle_page.dart';
+import 'package:train_away/pages/mis_reservas_pages/pages/mis_reservas_page.dart';
+import 'package:train_away/pages/mis_reservas_pages/pages/reserva_detalle_page.dart';
 
 import 'package:train_away/models/clases_reserva/reserva_model.dart';
 import 'package:train_away/pages/reservar_pages/date_time_page.dart';
@@ -28,11 +28,12 @@ void main() => runApp(
       ChangeNotifierProvider(create: (_) => ReservaModel()),
       ChangeNotifierProvider(create: (_) => LastTrainProvider()),
       ChangeNotifierProvider(
-        // Leslie: Esto lo he añadido para probar los preferences y la carga de datos 
+        // Leslie: Esto lo he añadido para probar los preferences y la carga de datos
         // (Puedes modificar la parte de ReservasMemory con la clase que tengas tú)
-        create: (_) => ReservasProvider(ReservasMemoryDatabase.instance)..chargeReservas(),
+        create: (_) =>
+            ReservasProvider(ReservasMemoryDatabase.instance)..chargeReservas(),
       ),
-      ChangeNotifierProvider(create: (_) => ThemeProvider())
+      ChangeNotifierProvider(create: (_) => ThemeProvider()),
     ],
     child: const TrainAwayApp(),
   ),
@@ -45,25 +46,22 @@ final _router = GoRouter(
     ShellRoute(
       builder: (context, state, child) => Scaffold(
         appBar: AppBanner(),
-        body: child, 
-        bottomNavigationBar: const BottomNavBar()
+        body: child,
+        bottomNavigationBar: const BottomNavBar(),
       ),
       routes: [
         GoRoute(
           path: '/reservar',
           builder: (context, state) => FormPage(),
           routes: [
-            GoRoute(
-              path: 'fecha',
-              builder: (context, state) => DateTimePage(),
-            ),
+            GoRoute(path: 'fecha', builder: (context, state) => DateTimePage()),
             GoRoute(
               path: 'confirmacion',
               builder: (context, state) => ReservationConfirmedPage(),
             ),
-          ]
+          ],
         ),
-        
+
         GoRoute(
           path: '/reserva-confirmada',
           builder: (context, state) => SuccessPage(),
@@ -74,11 +72,9 @@ final _router = GoRouter(
     // --- Sección 'Mis reservas' ---
     ShellRoute(
       builder: (context, state, child) => Scaffold(
-        appBar: AppBanner(
-          onLogoTap: () => reiniciarReserva(context),
-        ),
-        body: child, 
-        bottomNavigationBar: const BottomNavBar()
+        appBar: AppBanner(onLogoTap: () => reiniciarReserva(context)),
+        body: child,
+        bottomNavigationBar: const BottomNavBar(),
       ),
       routes: [
         GoRoute(
@@ -89,7 +85,7 @@ final _router = GoRouter(
               path: ':id',
               builder: (context, state) => ReservaDetallePage(),
             ),
-          ]
+          ],
         ),
       ],
     ),
@@ -97,17 +93,12 @@ final _router = GoRouter(
     // --- Sección 'Ajustes' ---
     ShellRoute(
       builder: (context, state, child) => Scaffold(
-        appBar: AppBanner(
-          onLogoTap: () => reiniciarReserva(context),
-        ),
-        body: child, 
-        bottomNavigationBar: const BottomNavBar()
+        appBar: AppBanner(onLogoTap: () => reiniciarReserva(context)),
+        body: child,
+        bottomNavigationBar: const BottomNavBar(),
       ),
       routes: [
-        GoRoute(
-          path: '/ajustes',
-          builder: (context, state) => SettingsPage(),
-        ),
+        GoRoute(path: '/ajustes', builder: (context, state) => SettingsPage()),
       ],
     ),
   ],

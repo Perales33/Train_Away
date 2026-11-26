@@ -10,7 +10,9 @@ Future<void> reiniciarReserva(BuildContext context) async {
 
   await lastTrain.charge();
 
-  if(!context.mounted) { return; }
+  if (!context.mounted) {
+    return;
+  }
 
   const defaultOrigen = 'Estación de Almería';
   const defaultDestino = 'Estación de Cádiz';
@@ -18,7 +20,9 @@ Future<void> reiniciarReserva(BuildContext context) async {
   final origen = lastTrain.origen ?? defaultOrigen;
   final destinoGuardado = lastTrain.destino;
 
-  final destino = destinoGuardado != null && destinoGuardado != origen ? destinoGuardado : defaultDestino;
+  final destino = destinoGuardado != null && destinoGuardado != origen
+      ? destinoGuardado
+      : defaultDestino;
 
   reserva.resetReserva(origen: origen, destino: destino);
   context.go('/reservar');

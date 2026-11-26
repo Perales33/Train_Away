@@ -23,11 +23,9 @@ class ReservasProvider extends ChangeNotifier {
 
     try {
       _reservas = await _db.selectReservas();
-    }
-    catch (e) {
+    } catch (e) {
       _error = 'No se pudieron cargar las reservas';
-    }
-    finally {
+    } finally {
       _cargando = false;
       notifyListeners();
     }
@@ -37,13 +35,13 @@ class ReservasProvider extends ChangeNotifier {
     final id = await _db.insertReserva(reserva);
     final savedReserva = Reserva(
       id: id,
-      origen: reserva.origen, 
-      destino: reserva.destino, 
-      pasajeros: reserva.pasajeros, 
-      categoria: reserva.categoria, 
-      opciones: reserva.opciones, 
-      fecha: reserva.fecha, 
-      hora: reserva.hora
+      origen: reserva.origen,
+      destino: reserva.destino,
+      pasajeros: reserva.pasajeros,
+      categoria: reserva.categoria,
+      opciones: reserva.opciones,
+      fecha: reserva.fecha,
+      hora: reserva.hora,
     );
 
     _reservas = [savedReserva, ..._reservas];
@@ -52,12 +50,11 @@ class ReservasProvider extends ChangeNotifier {
     return savedReserva;
   }
 
-  Future<Reserva?> selectReserva(int id){
+  Future<Reserva?> selectReserva(int id) {
     return _db.selectReserva(id);
   }
 
-  Future<void> deleteReserva(int id) async
-  {
+  Future<void> deleteReserva(int id) async {
     await _db.deleteReserva(id);
     _reservas = _reservas.where((reserva) => reserva.id != id).toList();
     notifyListeners();
