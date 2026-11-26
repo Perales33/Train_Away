@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:train_away/theme/app_colors.dart';
-import 'package:train_away/widgets/general/app_banner.dart';
 import 'package:train_away/widgets/general/app_bottom_button.dart';
 
 // Página que confirma que la reserva se ha completado correctamente.
@@ -13,7 +12,6 @@ class SuccessPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBanner(),
       body: const Center(
         child: Padding(
           padding: EdgeInsets.all(28),

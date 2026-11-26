@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import 'package:train_away/theme/app_colors.dart';
-import 'package:train_away/widgets/general/app_banner.dart';
 import 'package:train_away/widgets/general/app_bottom_button.dart';
 import 'package:train_away/widgets/hour_selector/hour_selection.dart';
 
@@ -84,7 +83,6 @@ class _DateTimePageState extends State<DateTimePage> {
   // Construye el calendario, el selector de hora y la acción para continuar.
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: const AppBanner(),
     body: Column(
       children: [
         Expanded(

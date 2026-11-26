@@ -7,13 +7,15 @@ import 'package:train_away/pages/mis_reservas_pages/mis_reservas_page.dart';
 import 'package:train_away/pages/mis_reservas_pages/reserva_detalle_page.dart';
 
 import 'package:train_away/models/reserva_model.dart';
-import 'package:train_away/pages/reservar_pages/confirmation_dialog.dart';
 import 'package:train_away/pages/reservar_pages/date_time_page.dart';
+import 'package:train_away/pages/reservar_pages/reservation_confirmed.dart';
 import 'package:train_away/pages/reservar_pages/success_page.dart';
 import 'package:train_away/pages/reservar_pages/form_page.dart';
 import 'package:train_away/providers/last_train_provider.dart';
 import 'package:train_away/providers/reservas_provider.dart';
 import 'package:train_away/theme/app_colors.dart';
+import 'package:train_away/widgets/bottom_nav_bar/bottom_nav_bar.dart';
+import 'package:train_away/widgets/general/app_banner.dart';
 
 // Inicia la aplicación Train Away.
 void main() => runApp(
@@ -36,22 +38,27 @@ final _router = GoRouter(
   routes: [
     // --- Sección 'Reservar' ---
     ShellRoute(
-      builder: (context, state, child) =>
-          Scaffold(body: child, bottomNavigationBar: const BottomAppBar()),
+      builder: (context, state, child) => Scaffold(
+        appBar: AppBanner(),
+        body: child, 
+        bottomNavigationBar: const BottomNavBar()
+      ),
       routes: [
         GoRoute(
           path: '/reservar',
           builder: (context, state) => FormPage(),
+          routes: [
+            GoRoute(
+              path: 'fecha',
+              builder: (context, state) => DateTimePage(),
+            ),
+            GoRoute(
+              path: 'confirmacion',
+              builder: (context, state) => ReservationConfirmedPage(),
+            ),
+          ]
         ),
-        GoRoute(
-          path: '/reservar/fecha',
-          builder: (context, state) => DateTimePage(),
-        ),
-        GoRoute(
-          path: '/reservar/confirmacion',
-          builder: (context, state) =>
-              ConfirmationDialog(),
-        ),
+        
         GoRoute(
           path: '/reserva-confirmada',
           builder: (context, state) => SuccessPage(),
@@ -61,17 +68,23 @@ final _router = GoRouter(
 
     // --- Sección 'Mis reservas' ---
     ShellRoute(
-      builder: (context, state, child) =>
-          Scaffold(body: child, bottomNavigationBar: const BottomAppBar()),
+      builder: (context, state, child) => Scaffold(
+        appBar: AppBanner(),
+        body: child, 
+        bottomNavigationBar: const BottomNavBar()
+      ),
       routes: [
         GoRoute(
           path: '/mis-reservas',
           builder: (context, state) => MisReservasPage(),
+          routes: [
+            GoRoute(
+              path: ':id',
+              builder: (context, state) => ReservaDetallePage(),
+            ),
+          ]
         ),
-        GoRoute(
-          path: '/mis-reservas/:id',
-          builder: (context, state) => ReservaDetallePage(),
-        ),
+        
       ],
     ),
   ],

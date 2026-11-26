@@ -47,7 +47,7 @@ class ConfirmationDialog extends StatelessWidget {
                   style: FilledButton.styleFrom(
                     backgroundColor: AppColors.transparent,
                   ),
-                  onPressed: () => Navigator.of(context).pop(false),
+                  onPressed: () { Navigator.of(context).pop<bool>(false); },
                   child: const Text(
                     'No',
                     textAlign: TextAlign.center,
@@ -75,7 +75,7 @@ class ConfirmationDialog extends StatelessWidget {
                   style: FilledButton.styleFrom(
                     backgroundColor: AppColors.transparent,
                   ),
-                  onPressed: () => Navigator.of(context).pop(true),
+                  onPressed: () { Navigator.of(context).pop<bool>(true); },
                   child: const Text(
                     'Sí',
                     textAlign: TextAlign.center,

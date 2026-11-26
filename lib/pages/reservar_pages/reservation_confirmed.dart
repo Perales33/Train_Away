@@ -6,7 +6,6 @@ import 'package:train_away/theme/app_colors.dart';
 import 'package:train_away/models/reserva_model.dart';
 import 'package:train_away/providers/reservas_provider.dart';
 import 'package:train_away/providers/last_train_provider.dart';
-import 'package:train_away/widgets/general/app_banner.dart';
 import 'package:train_away/widgets/general/app_bottom_button.dart';
 import 'package:train_away/pages/reservar_pages/confirmation_dialog.dart';
 
@@ -21,7 +20,12 @@ class ReservationConfirmedPage extends StatelessWidget {
       builder: (_) => const ConfirmationDialog() 
     );
 
-    if(!context.mounted || confirmar != true) { return; }
+    if(!context.mounted || confirmar == null) { return; }
+
+    if(confirmar == false) {
+      context.go('/reservar');
+      return;
+    }
 
     try {
       final model = context.read<ReservaModel>();
@@ -53,77 +57,79 @@ class ReservationConfirmedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final reserva = context.watch<ReservaModel>();
     return Scaffold(
-      appBar: AppBanner(),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(),
-            child: Container(
+      body: Column( 
+        children: [
+          Expanded(
+            child: SingleChildScrollView (
               padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                border: Border.all(color: AppColors.navy),
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Center(
-                    child: Text(
-                      'Resumen de la reserva',
-                      style: TextStyle(
-                        color: AppColors.navy,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(),
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      border: Border.all(color: AppColors.navy),
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Center(
+                          child: Text(
+                            'Resumen de la reserva',
+                            style: TextStyle(
+                              color: AppColors.navy,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        
+                        const SizedBox(height: 18),
+
+                        _infoTile('Origen', reserva.origen),
+                        _infoTile('Destino', reserva.destino),
+                        Row(
+                          children: [
+                            Expanded(child: _infoTile('Fecha', reserva.fecha == null ? 'Sin seleccionar' : _formatDate(reserva.fecha!))),
+                            const SizedBox(width: 10),
+                            Expanded(child: _infoTile('Hora', reserva.hora ?? 'Sin seleccionar')),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _infoTile('Número de pasajeros', '${reserva.pasajeros}'),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(child: _infoTile('Categoría', reserva.categoria)),
+                          ],
+                        ),
+
+                        const SizedBox(height: 8),
+
+                        const Text(
+                          'Opciones de viaje',
+                          style: TextStyle(
+                            color: AppColors.navy,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        ...reserva.opciones.entries.map(
+                          (entry) => _valueBox('${entry.value ? 'Con' : 'Sin'} ${entry.key}')
+                        ),
+                      ],
                     ),
                   ),
-                  
-                  const SizedBox(height: 18),
-
-                  _infoTile('Origen', reserva.origen),
-                  _infoTile('Destino', reserva.destino),
-                  Row(
-                    children: [
-                      Expanded(child: _infoTile('Fecha', reserva.fecha != null ? 'Sin seleccionar' : _formatDate(reserva.fecha!))),
-                      const SizedBox(width: 10),
-                      Expanded(child: _infoTile('Hora', reserva.hora ?? 'Sin seleccionar')),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _infoTile('Número de pasajeros', '$reserva.pasajeros'),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(child: _infoTile('Categoría', reserva.categoria)),
-                    ],
-                  ),
-
-                  const SizedBox(height: 8),
-
-                  const Text(
-                    'Opciones de viaje',
-                    style: TextStyle(
-                      color: AppColors.navy,
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  ...reserva.opciones.entries.map(
-                    (entry) => _valueBox('${entry.value ? 'Con' : 'Sin'} ${entry.key}')
-                  ),
-                ],
+                ),
               ),
             ),
           ),
-        ),
-      ),
-      bottomNavigationBar: AppBottomButton(
-        label: 'Confirmar', 
-        onPressed: () => _confirmReserva(context)
+          AppBottomButton(label: 'Confirmar', onPressed: () => _confirmReserva(context))
+        ],
       ),
     );
   }
