@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:train_away/models/travel_category.dart';
-import 'package:train_away/models/travel_option.dart';
-import 'package:train_away/models/stations.dart';
+import 'package:train_away/models/clases_mock/travel_category.dart';
+import 'package:train_away/models/clases_mock/travel_option.dart';
+import 'package:train_away/models/clases_mock/stations.dart';
 import 'package:train_away/mocks/mock_service.dart';
 import 'package:train_away/theme/app_colors.dart';
 import 'package:train_away/widgets/elements_styles/form_dropdown.dart';
 import 'package:train_away/widgets/elements_styles/form_field_label.dart';
-import 'package:train_away/models/reserva_model.dart';
+import 'package:train_away/models/clases_reserva/reserva_model.dart';
 import 'package:train_away/providers/last_train_provider.dart';
 import 'package:train_away/widgets/elements_styles/bottom_button.dart';
 

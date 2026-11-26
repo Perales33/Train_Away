@@ -8,9 +8,9 @@ import 'package:train_away/widgets/elements_styles/bottom_button.dart';
 import 'package:train_away/widgets/hour_selector/hour_selection.dart';
 
 import 'package:train_away/mocks/mock_service.dart';
-import 'package:train_away/models/travel_schedule.dart';
+import 'package:train_away/models/clases_mock/travel_schedule.dart';
 
-import 'package:train_away/models/reserva_model.dart';
+import 'package:train_away/models/clases_reserva/reserva_model.dart';
 
 // Datos que la pantalla devuelve al completar la selección del viaje.
 class DateTimeSelection {

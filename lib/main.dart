@@ -6,7 +6,7 @@ import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 import 'package:train_away/pages/mis_reservas_pages/mis_reservas_page.dart';
 import 'package:train_away/pages/mis_reservas_pages/reserva_detalle_page.dart';
 
-import 'package:train_away/models/reserva_model.dart';
+import 'package:train_away/models/clases_reserva/reserva_model.dart';
 import 'package:train_away/pages/reservar_pages/date_time_page.dart';
 import 'package:train_away/pages/reservar_pages/reservation_confirmed.dart';
 import 'package:train_away/pages/reservar_pages/success_page.dart';

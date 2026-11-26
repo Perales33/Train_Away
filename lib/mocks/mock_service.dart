@@ -1,7 +1,7 @@
-import 'package:train_away/models/stations.dart';
-import 'package:train_away/models/travel_category.dart';
-import 'package:train_away/models/travel_option.dart';
-import 'package:train_away/models/travel_schedule.dart';
+import 'package:train_away/models/clases_mock/stations.dart';
+import 'package:train_away/models/clases_mock/travel_category.dart';
+import 'package:train_away/models/clases_mock/travel_option.dart';
+import 'package:train_away/models/clases_mock/travel_schedule.dart';
 
 // Clase MockService para generar los datos de la aplicación
 class MockService {

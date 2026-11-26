@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 // import 'package:train_away/data/reservas_database.dart';
-import 'package:train_away/models/reserva.dart';
+import 'package:train_away/models/clases_reserva/reserva.dart';
 
 class ReservasProvider extends ChangeNotifier {
   ReservasProvider(this._db);

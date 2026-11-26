@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:train_away/navigation/reserva_reinicio.dart';
 
 import 'package:train_away/theme/app_colors.dart';
-import 'package:train_away/models/reserva_model.dart';
+import 'package:train_away/models/clases_reserva/reserva_model.dart';
 import 'package:train_away/providers/reservas_provider.dart';
 import 'package:train_away/providers/last_train_provider.dart';
 import 'package:train_away/widgets/elements_styles/bottom_button.dart';

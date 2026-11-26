@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:train_away/models/reserva_model.dart';
+import 'package:train_away/models/clases_reserva/reserva_model.dart';
 import 'package:train_away/providers/last_train_provider.dart';
 
 Future<void> reiniciarReserva(BuildContext context) async {
