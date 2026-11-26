@@ -16,6 +16,7 @@ import 'package:train_away/providers/last_train_provider.dart';
 import 'package:train_away/theme/app_colors.dart';
 import 'package:train_away/widgets/navegation/bottom_nav_bar.dart';
 import 'package:train_away/widgets/navegation/top_banner.dart';
+import 'package:train_away/navigation/reserva_reinicio.dart';
 
 // Inicia la aplicación Train Away.
 void main() => runApp(
@@ -69,7 +70,9 @@ final _router = GoRouter(
     // --- Sección 'Mis reservas' ---
     ShellRoute(
       builder: (context, state, child) => Scaffold(
-        appBar: AppBanner(),
+        appBar: AppBanner(
+          onLogoTap: () => reiniciarReserva(context),
+        ),
         body: child, 
         bottomNavigationBar: const BottomNavBar()
       ),

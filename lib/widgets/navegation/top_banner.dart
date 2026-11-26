@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:train_away/navigation/reserva_reinicio.dart';
 
 import 'package:train_away/theme/app_colors.dart';
 
@@ -24,7 +25,7 @@ class AppBanner extends StatelessWidget implements PreferredSizeWidget {
 
     // Logo de la aplicación que permite reiniciar los valores de la reserva y vuelve al formulario inicial
     title: GestureDetector(
-      onTap: onLogoTap ?? () => Navigator.of(context).popUntil((route) => route.isFirst),
+      onTap: onLogoTap ?? () => reiniciarReserva(context),
       child: const Text(
         'Train Away',
         style: TextStyle(

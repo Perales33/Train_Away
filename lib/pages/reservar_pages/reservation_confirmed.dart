@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:train_away/navigation/reserva_reinicio.dart';
 
 import 'package:train_away/theme/app_colors.dart';
 import 'package:train_away/models/reserva_model.dart';
@@ -23,7 +24,7 @@ class ReservationConfirmedPage extends StatelessWidget {
     if(!context.mounted || confirmar == null) { return; }
 
     if(confirmar == false) {
-      context.go('/reservar');
+      await reiniciarReserva(context);
       return;
     }
 
@@ -100,7 +101,7 @@ class ReservationConfirmedPage extends StatelessWidget {
                         Row(
                           children: [
                             Expanded(
-                              child: _infoTile('Número de pasajeros', '${reserva.pasajeros}'),
+                              child: _infoTile('Pasajeros', '${reserva.pasajeros}'),
                             ),
                             const SizedBox(width: 10),
                             Expanded(child: _infoTile('Categoría', reserva.categoria)),

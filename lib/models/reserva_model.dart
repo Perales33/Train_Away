@@ -90,4 +90,18 @@ class ReservaModel extends ChangeNotifier
       hora: horaSel
     );
   }
+
+  void resetReserva({
+    required String origen,
+    required String destino
+  }) {
+    _origen = origen;
+    _destino = destino;
+    _pasajeros = 1;
+    _categoria = '1ª Clase';
+    _extras = { for (final nombre in _extras.keys) nombre: false };
+    _fecha = null;
+    _hora = null;
+    notifyListeners();
+  }
 }

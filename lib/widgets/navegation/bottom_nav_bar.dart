@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:train_away/navigation/reserva_reinicio.dart';
 
 /// Barra de navegación inferior con 2 secciones principales.
 /// Trabaja en conjunto con go_router para manejar la navegación.
@@ -18,7 +19,7 @@ class BottomNavBar extends StatelessWidget {
         switch (index) {
           case 0:
             // Sección "Reservar" - navegamos a la ruta inicial
-            router.go('/reservar');
+            reiniciarReserva(context);
             break;
           case 1:
             // Sección "Mis reservas" - navegamos a la lista de reservas
