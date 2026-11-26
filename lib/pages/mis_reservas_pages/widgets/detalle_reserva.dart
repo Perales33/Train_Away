@@ -5,7 +5,7 @@ import 'package:train_away/widgets/elements_styles/bottom_button.dart';
 
 class DetalleReserva extends StatelessWidget {
   final Reserva reserva;
-  const new({super.key, required this.reserva});
+  const DetalleReserva({super.key, required this.reserva});
 
   String _formatDateDetail(DateTime date) {
     final day = date.day.toString().padLeft(2, '0');

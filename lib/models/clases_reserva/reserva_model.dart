@@ -62,14 +62,16 @@ class ReservaModel extends ChangeNotifier
     notifyListeners();
   }
 
-  void setFechaHora({
-    required DateTime fecha,
-    required String hora
-  }) {
+  void setFecha(DateTime? fecha) {
     _fecha = fecha;
+    notifyListeners();
+  } 
+
+  void setHora(String? hora) {
     _hora = hora;
     notifyListeners();
   }
+
 
   Reserva crearReserva()
   {

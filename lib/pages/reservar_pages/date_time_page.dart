@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:train_away/models/clases_reserva/reserva.dart';
 
 import 'package:train_away/widgets/elements_styles/bottom_button.dart';
 import 'package:train_away/widgets/hour_selector/hour_selection.dart';
@@ -30,9 +31,6 @@ class _DateTimePageState extends State<DateTimePage> {
   static final now = DateTime.now();
   static final firstDay = DateTime(now.year, now.month, 1);
   static final lastDay = DateTime(now.year, now.month + 1, 0);
-
-  DateTime? selectedDate;
-  String? selectedHour;
 
   // Al igual que en el formulario y en el main.dart, se instancia un mock para cargar los datos, en este caso de las horas
   final MockService _mockService = const MockService();
@@ -67,30 +65,18 @@ class _DateTimePageState extends State<DateTimePage> {
 
   var reserveButtonActive = false;
 
-  void _dateAndTimeSelected() {
-    final date = selectedDate;
-    final hour = selectedHour;
+  void _selectedDate(DateTime date) {
+    final reserva = context.read<ReservaModel>();
 
-    if (date == null || hour == null) {
-      setState(() {
-        reserveButtonActive = false;
-      });
-      return;
-    }
-
-    setState(() {
-      reserveButtonActive = true;
-    });
+    reserva.setFecha(date);
+    reserva.setHora(_schedules.isEmpty ? null : _schedules.first.time);
   }
 
   // Devuelve la selección cuando se han indicado fecha y hora.
   void _confirmSelection() {
-    final date = selectedDate;
-    final hour = selectedHour;
+    final reserva = context.read<ReservaModel>();
 
-    if (date == null || hour == null) return;
-
-    context.read<ReservaModel>().setFechaHora(fecha: date, hora: hour);
+    if (reserva.hora == null || reserva.fecha == null) return;
 
     context.push('/reservar/confirmacion');
   }
@@ -99,6 +85,12 @@ class _DateTimePageState extends State<DateTimePage> {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
+
+    final reserva = context.watch<ReservaModel>();
+    final selectedDate = reserva.fecha;
+    final selectedHour = reserva.hora;
+    final reserveButtonActive = selectedDate != null && selectedHour != null;
+    
     return Scaffold(
       body: Column(
         children: [
@@ -152,6 +144,7 @@ class _DateTimePageState extends State<DateTimePage> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20),
                             child: SfDateRangePicker(
+                              initialSelectedDate: selectedDate,
                               selectionMode:
                                   DateRangePickerSelectionMode.single,
                               selectionColor: colors.inversePrimary,
@@ -165,13 +158,7 @@ class _DateTimePageState extends State<DateTimePage> {
                               ),
                               onSelectionChanged: (args) {
                                 if (args.value is DateTime) {
-                                  setState(() {
-                                    selectedDate = args.value as DateTime;
-                                    selectedHour = _schedules
-                                        .map((schedule) => schedule.time)
-                                        .toList()[0];
-                                  });
-                                  _dateAndTimeSelected();
+                                  _selectedDate(args.value as DateTime);
                                 }
                               },
                               monthViewSettings:
@@ -230,8 +217,7 @@ class _DateTimePageState extends State<DateTimePage> {
                                 .toList(),
                             selectedHour: selectedHour,
                             onChanged: (hour) {
-                              setState(() => selectedHour = hour);
-                              _dateAndTimeSelected();
+                              context.read<ReservaModel>().setHora(hour);
                             },
                           ),
                   ),
