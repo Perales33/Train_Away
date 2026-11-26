@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:train_away/navigation/reserva_reinicio.dart';
+
 // Widget que muestra la barra superior común de la aplicación.
 class AppBanner extends StatelessWidget implements PreferredSizeWidget {
   const AppBanner({this.onLogoTap, super.key});
@@ -14,8 +15,7 @@ class AppBanner extends StatelessWidget implements PreferredSizeWidget {
 
   // Construye la barra con el título, la acción de navegación y el menú.
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     return AppBar(
       toolbarHeight: 70,
@@ -23,6 +23,14 @@ class AppBanner extends StatelessWidget implements PreferredSizeWidget {
       surfaceTintColor: colors.surface,
       elevation: 0,
       automaticallyImplyLeading: false,
+      leading: context.canPop()
+          ? IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                if (context.canPop()) context.pop();
+              },
+            )
+          : null,
 
       // Logo de la aplicación que permite reiniciar los valores de la reserva y vuelve al formulario inicial
       title: GestureDetector(
@@ -36,9 +44,9 @@ class AppBanner extends StatelessWidget implements PreferredSizeWidget {
             fontStyle: FontStyle.italic,
             fontWeight: FontWeight.w600,
           ),
-        )
+        ),
       ),
-      
+
       // Acciones que aparecen al final de la barra.
       actions: [
         IconButton(
@@ -46,11 +54,8 @@ class AppBanner extends StatelessWidget implements PreferredSizeWidget {
           onPressed: () => context.go('/ajustes'),
         ),
       ],
-      
-      shape: Border(
-        bottom: BorderSide(color: colors.outline, width: 1.5),
-      ),
+
+      shape: Border(bottom: BorderSide(color: colors.outline, width: 1.5)),
     );
   }
-  
 }

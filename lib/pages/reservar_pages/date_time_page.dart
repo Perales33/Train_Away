@@ -154,9 +154,15 @@ class _DateTimePageState extends State<DateTimePage> {
                             child: SfDateRangePicker(
                               selectionMode:
                                   DateRangePickerSelectionMode.single,
-                              selectionColor: colors.primary,
-                              todayHighlightColor: colors.primary,
-
+                              selectionColor: colors.inversePrimary,
+                              todayHighlightColor: colors.inversePrimary,
+                              monthCellStyle: DateRangePickerMonthCellStyle(
+                                todayTextStyle: TextStyle(
+                                  color: colors.inversePrimary,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 15,
+                                ),
+                              ),
                               onSelectionChanged: (args) {
                                 if (args.value is DateTime) {
                                   setState(() {
@@ -178,6 +184,7 @@ class _DateTimePageState extends State<DateTimePage> {
                               headerStyle: DateRangePickerHeaderStyle(
                                 textAlign: TextAlign.center,
                                 textStyle: TextStyle(
+                                  fontStyle: FontStyle.normal,
                                   color: colors.onSurface,
                                   fontSize: 20,
                                   fontWeight: FontWeight.w600,
