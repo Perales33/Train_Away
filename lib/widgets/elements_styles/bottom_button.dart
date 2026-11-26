@@ -15,8 +15,7 @@ class AppBottomButton extends StatelessWidget {
 
   // Construye el contenedor inferior y el estilo de botón solicitado.
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     return Container(
       width: double.infinity,
@@ -33,13 +32,23 @@ class AppBottomButton extends StatelessWidget {
               ? OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     foregroundColor: colors.primary,
-                    side: BorderSide(color: colors.primary, width: 2.5),
+                    side: BorderSide(
+                      color: colors.onSurfaceVariant,
+                      width: 2.5,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(11),
                     ),
                   ),
                   onPressed: onPressed,
-                  child: Text(label),
+                  child: Text(
+                    label,
+                    style: TextStyle(
+                      color: colors.inverseSurface,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 18,
+                    ),
+                  ),
                 )
               : FilledButton(
                   style: FilledButton.styleFrom(

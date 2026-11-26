@@ -41,10 +41,9 @@ class _DateTimePageState extends State<DateTimePage> {
   List<TravelSchedule> _schedules = [];
   bool _loadingSchedules = true;
 
-
   // Definimos el estado inicial
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _loadSchedules();
   }
@@ -54,9 +53,11 @@ class _DateTimePageState extends State<DateTimePage> {
     // Obtenemos todos los horarios
     final schedules = await _mockService.getSchedules();
 
-    if(!mounted) { return; }
+    if (!mounted) {
+      return;
+    }
 
-    // En caso de estar en la pantalla adecuada se asignan los horarios a la lista de horarios de la página, 
+    // En caso de estar en la pantalla adecuada se asignan los horarios a la lista de horarios de la página,
     // y se indica que ya se ha terminado de cargar
     setState(() {
       _schedules = schedules;
@@ -122,10 +123,7 @@ class _DateTimePageState extends State<DateTimePage> {
                     child: Container(
                       width: 700,
                       decoration: BoxDecoration(
-                        border: Border.all(
-                          color: colors.onSurface,
-                          width: 1.5,
-                        ),
+                        border: Border.all(color: colors.onSurface, width: 1.5),
                         borderRadius: BorderRadius.circular(40),
                       ),
                       child: Padding(
@@ -136,7 +134,8 @@ class _DateTimePageState extends State<DateTimePage> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20),
                             child: SfDateRangePicker(
-                              selectionMode: DateRangePickerSelectionMode.single,
+                              selectionMode:
+                                  DateRangePickerSelectionMode.single,
                               selectionColor: colors.primary,
                               todayHighlightColor: colors.primary,
 
@@ -171,19 +170,16 @@ class _DateTimePageState extends State<DateTimePage> {
                       ),
                     ),
                   ),
-
-                  const SizedBox(height: 20),
-
+                  const SizedBox(height: 15),
                   Text(
                     'Horas disponibles para la fecha seleccionada',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 15,
                       fontWeight: FontWeight.w600,
-                      color: colors.surface,
+                      color: colors.inverseSurface,
                     ),
                   ),
-
                   const SizedBox(height: 10),
 
                   // Definimos el comportamiento del horario. En caso de seleccionar la fecha, aparecerán las opciones de las fechas, del contrario aparecerá solo el mensaje "Seleccione una fecha".
@@ -195,16 +191,19 @@ class _DateTimePageState extends State<DateTimePage> {
                     child: selectedDate == null
                         ? const Text('Seleccione una fecha')
                         : _loadingSchedules
-                          ? const Center(child: CircularProgressIndicator())
-                          : _schedules.isEmpty
-                            ? const Text('No hay horarios disponibles')
-                            : HourSelection(
-                              // Se cargan las horas desde el mock y se envian al Widget con el dropdown del horario (Mirar archivo: hour_selection.dart)
-                              hours: _schedules.map((schedule) => schedule.time).toList(), 
-                              selectedHour: selectedHour, 
-                              onChanged: (hour) { setState(() => selectedHour = hour);
-                              }
-                            )
+                        ? const Center(child: CircularProgressIndicator())
+                        : _schedules.isEmpty
+                        ? const Text('No hay horarios disponibles')
+                        : HourSelection(
+                            // Se cargan las horas desde el mock y se envian al Widget con el dropdown del horario (Mirar archivo: hour_selection.dart)
+                            hours: _schedules
+                                .map((schedule) => schedule.time)
+                                .toList(),
+                            selectedHour: selectedHour,
+                            onChanged: (hour) {
+                              setState(() => selectedHour = hour);
+                            },
+                          ),
                   ),
                 ],
               ),

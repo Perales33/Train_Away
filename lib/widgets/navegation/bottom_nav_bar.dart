@@ -11,8 +11,19 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final router = GoRouter.of(context);
+    final colors = Theme.of(context).colorScheme;
 
+    final indexInFirstPage = _getCurrentIndex(context) == 0;
     return BottomNavigationBar(
+      backgroundColor: colors.surfaceDim,
+      selectedItemColor: colors.inversePrimary,
+      unselectedItemColor: colors.inverseSurface,
+      selectedLabelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      showSelectedLabels: true,
+      unselectedLabelStyle: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+      ),
       // Determinamos el índice actual basándonos en la ruta actual
       currentIndex: _getCurrentIndex(context),
       onTap: (index) {
@@ -27,13 +38,27 @@ class BottomNavBar extends StatelessWidget {
             break;
         }
       },
-      items: const [
+      items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.calendar_today),
+          icon: Icon(
+            indexInFirstPage
+                ? Icons.calendar_today_outlined
+                : Icons.calendar_today,
+            color: indexInFirstPage
+                ? colors.inversePrimary
+                : colors.inverseSurface,
+            size: indexInFirstPage ? 36 : 26,
+          ),
           label: 'Reservar',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.history),
+          icon: Icon(
+            !indexInFirstPage ? Icons.history_sharp : Icons.history_rounded,
+            color: !indexInFirstPage
+                ? colors.inversePrimary
+                : colors.inverseSurface,
+            size: !indexInFirstPage ? 36 : 26,
+          ),
           label: 'Mis reservas',
         ),
       ],

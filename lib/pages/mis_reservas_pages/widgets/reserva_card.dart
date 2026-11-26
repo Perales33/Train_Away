@@ -14,6 +14,7 @@ class ReservaCard extends StatelessWidget {
     final multiplePasajeros = _reserva.pasajeros >= 2
         ? "pasajeros"
         : "pasajero";
+    final tickets = _reserva.pasajeros >= 2 ? "tickets" : "ticket";
     return Card(
       color: colors.surface,
       elevation: 0,
@@ -25,7 +26,7 @@ class ReservaCard extends StatelessWidget {
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         leading: CircleAvatar(
           backgroundColor: colors.primaryContainer,
-          child: Icon(Icons.train_outlined, color: colors.onPrimaryContainer),
+          child: Icon(Icons.train_outlined, color: colors.onInverseSurface),
         ),
         title: Text(
           "${_reserva.origen} → ${_reserva.destino}",
@@ -38,12 +39,12 @@ class ReservaCard extends StatelessWidget {
         subtitle: Padding(
           padding: EdgeInsetsGeometry.only(top: 6),
           child: Text(
-            "${_reserva.fecha} - ${_reserva.hora} -  ${_reserva.pasajeros} $multiplePasajeros",
+            "${_reserva.formatDate} a las ${_reserva.hora}h -  ${_reserva.pasajeros} $tickets de $multiplePasajeros.",
             style: TextStyle(color: colors.onSurfaceVariant, fontSize: 14),
           ),
         ),
         trailing: Icon(Icons.chevron_right, color: colors.primary),
-        onTap: () => id == null ? null : context.push('mis-reservas/$id'),
+        onTap: () => id == null ? null : context.push('/mis-reservas/$id'),
       ),
     );
   }

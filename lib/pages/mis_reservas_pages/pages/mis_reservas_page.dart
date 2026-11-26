@@ -48,7 +48,11 @@ class MisReservasPage extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.history_toggle_off, size: 48, color: colors.primary),
+              Icon(
+                Icons.history_toggle_off,
+                size: 48,
+                color: colors.inverseSurface,
+              ),
               const SizedBox(height: 16),
               Text(
                 "Todavía no tienes reservas confirmadas.",
@@ -79,6 +83,7 @@ class MisReservasPage extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return ReservaCard(reserva: state.reservas[index]);
       },
+
       separatorBuilder: (_, _) => const SizedBox(height: 12),
       itemCount: state.reservas.length,
       padding: EdgeInsets.all(16),
