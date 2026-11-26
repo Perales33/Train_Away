@@ -12,10 +12,10 @@ import 'package:train_away/pages/reservar_pages/reservation_confirmed.dart';
 import 'package:train_away/pages/reservar_pages/success_page.dart';
 import 'package:train_away/pages/reservar_pages/form_page.dart';
 import 'package:train_away/providers/last_train_provider.dart';
-import 'package:train_away/providers/reservas_provider.dart';
+// import 'package:train_away/providers/reservas_provider.dart';
 import 'package:train_away/theme/app_colors.dart';
-import 'package:train_away/widgets/bottom_nav_bar/bottom_nav_bar.dart';
-import 'package:train_away/widgets/general/app_banner.dart';
+import 'package:train_away/widgets/navegation/bottom_nav_bar.dart';
+import 'package:train_away/widgets/navegation/top_banner.dart';
 
 // Inicia la aplicación Train Away.
 void main() => runApp(

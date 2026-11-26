@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import 'package:train_away/theme/app_colors.dart';
-import 'package:train_away/widgets/general/app_bottom_button.dart';
+import 'package:train_away/widgets/elements_styles/bottom_button.dart';
 import 'package:train_away/widgets/hour_selector/hour_selection.dart';
 
 import 'package:train_away/mocks/mock_service.dart';
