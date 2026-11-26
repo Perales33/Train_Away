@@ -3,13 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-import 'package:train_away/theme/app_colors.dart';
 import 'package:train_away/widgets/elements_styles/bottom_button.dart';
 import 'package:train_away/widgets/hour_selector/hour_selection.dart';
-
 import 'package:train_away/mocks/mock_service.dart';
 import 'package:train_away/models/clases_mock/travel_schedule.dart';
-
 import 'package:train_away/models/clases_reserva/reserva_model.dart';
 
 // Datos que la pantalla devuelve al completar la selección del viaje.
@@ -19,8 +16,6 @@ class DateTimeSelection {
   final DateTime date;
   final String hour;
 }
-
-enum ReservationStep { form, summary, success }
 
 // Página donde se eligen la fecha y la hora de salida.
 class DateTimePage extends StatefulWidget {
@@ -45,6 +40,7 @@ class _DateTimePageState extends State<DateTimePage> {
   // Creamos dos variables para cargar los datos y saber cuando se han terminado de cargar
   List<TravelSchedule> _schedules = [];
   bool _loadingSchedules = true;
+
 
   // Definimos el estado inicial
   @override
@@ -82,141 +78,144 @@ class _DateTimePageState extends State<DateTimePage> {
 
   // Construye el calendario, el selector de hora y la acción para continuar.
   @override
-  Widget build(BuildContext context) => Scaffold(
-    body: Column(
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Scaffold(
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
 
-                const Text(
-                  'Fecha de salida',
-                  style: TextStyle(
-                    color: AppColors.black,
-                    fontSize: 35,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-
-                const SizedBox(height: 2),
-
-                Center(
-                  child: SizedBox(
-                    width: 800,
-                    child: Divider(
-                      thickness: 2,
-                      color: Colors.black.withAlpha(120),
-                      indent: 50,
-                      endIndent: 50,
+                  Text(
+                    'Fecha de salida',
+                    style: TextStyle(
+                      color: colors.onSurface,
+                      fontSize: 35,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
-                ),
 
-                const SizedBox(height: 6),
+                  const SizedBox(height: 2),
 
-                // Calendario de selección individual dentro del mes actual.
-                // Para evitar crearlo de forma manual, que ocuparía mucho código, usamos directamente la dependencia
-                // syncfusion_date_picker que nos permite diseñar un calendario solamente aplicando los estilos.
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Container(
-                    width: 700,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: AppColors.darkColor,
-                        width: 1.5,
+                  Center(
+                    child: SizedBox(
+                      width: 800,
+                      child: Divider(
+                        thickness: 2,
+                        color: Colors.black.withAlpha(120),
+                        indent: 50,
+                        endIndent: 50,
                       ),
-                      borderRadius: BorderRadius.circular(40),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Localizations.override(
-                        context: context,
-                        locale: const Locale('es', 'ES'),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: SfDateRangePicker(
-                            selectionMode: DateRangePickerSelectionMode.single,
-                            selectionColor: AppColors.burgundy,
-                            todayHighlightColor: AppColors.black.withAlpha(100),
+                  ),
 
-                            onSelectionChanged: (args) {
-                              if (args.value is DateTime) {
-                                setState(() {
-                                  selectedDate = args.value as DateTime;
-                                });
-                              }
-                            },
-                            monthViewSettings:
-                                const DateRangePickerMonthViewSettings(
-                                  showTrailingAndLeadingDates: false,
-                                  firstDayOfWeek: DateTime.monday,
+                  const SizedBox(height: 6),
+
+                  // Calendario de selección individual dentro del mes actual.
+                  // Para evitar crearlo de forma manual, que ocuparía mucho código, usamos directamente la dependencia
+                  // syncfusion_date_picker que nos permite diseñar un calendario solamente aplicando los estilos.
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Container(
+                      width: 700,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: colors.onSurface,
+                          width: 1.5,
+                        ),
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Localizations.override(
+                          context: context,
+                          locale: const Locale('es', 'ES'),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: SfDateRangePicker(
+                              selectionMode: DateRangePickerSelectionMode.single,
+                              selectionColor: colors.primary,
+                              todayHighlightColor: colors.primary,
+
+                              onSelectionChanged: (args) {
+                                if (args.value is DateTime) {
+                                  setState(() {
+                                    selectedDate = args.value as DateTime;
+                                  });
+                                }
+                              },
+                              monthViewSettings:
+                                  const DateRangePickerMonthViewSettings(
+                                    showTrailingAndLeadingDates: false,
+                                    firstDayOfWeek: DateTime.monday,
+                                  ),
+                              backgroundColor: colors.surface,
+                              headerHeight: 60,
+                              headerStyle: DateRangePickerHeaderStyle(
+                                textAlign: TextAlign.center,
+                                textStyle: TextStyle(
+                                  color: colors.onSurface,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                            backgroundColor: AppColors.white,
-                            headerHeight: 60,
-                            headerStyle: const DateRangePickerHeaderStyle(
-                              textAlign: TextAlign.center,
-                              textStyle: TextStyle(
-                                color: AppColors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
+                                backgroundColor: colors.surface,
                               ),
-                              backgroundColor: AppColors.white,
+                              minDate: firstDay,
+                              maxDate: lastDay,
                             ),
-                            minDate: firstDay,
-                            maxDate: lastDay,
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
 
-                const SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-                const Text(
-                  'Horas disponibles para la fecha seleccionada',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.black,
+                  Text(
+                    'Horas disponibles para la fecha seleccionada',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: colors.surface,
+                    ),
                   ),
-                ),
 
-                const SizedBox(height: 10),
+                  const SizedBox(height: 10),
 
-                // Definimos el comportamiento del horario. En caso de seleccionar la fecha, aparecerán las opciones de las fechas, del contrario aparecerá solo el mensaje "Seleccione una fecha".
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 100.0,
-                    vertical: 4,
+                  // Definimos el comportamiento del horario. En caso de seleccionar la fecha, aparecerán las opciones de las fechas, del contrario aparecerá solo el mensaje "Seleccione una fecha".
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 100.0,
+                      vertical: 4,
+                    ),
+                    child: selectedDate == null
+                        ? const Text('Seleccione una fecha')
+                        : _loadingSchedules
+                          ? const Center(child: CircularProgressIndicator())
+                          : _schedules.isEmpty
+                            ? const Text('No hay horarios disponibles')
+                            : HourSelection(
+                              // Se cargan las horas desde el mock y se envian al Widget con el dropdown del horario (Mirar archivo: hour_selection.dart)
+                              hours: _schedules.map((schedule) => schedule.time).toList(), 
+                              selectedHour: selectedHour, 
+                              onChanged: (hour) { setState(() => selectedHour = hour);
+                              }
+                            )
                   ),
-                  child: selectedDate == null
-                      ? const Text('Seleccione una fecha')
-                      : _loadingSchedules
-                        ? const Center(child: CircularProgressIndicator())
-                        : _schedules.isEmpty
-                          ? const Text('No hay horarios disponibles')
-                          : HourSelection(
-                            // Se cargan las horas desde el mock y se envian al Widget con el dropdown del horario (Mirar archivo: hour_selection.dart)
-                            hours: _schedules.map((schedule) => schedule.time).toList(), 
-                            selectedHour: selectedHour, 
-                            onChanged: (hour) { setState(() => selectedHour = hour);
-                            }
-                          )
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
 
-        // Este botón se crea desde el main, pasandole como el label del botón que deberá crearse, y actualizará las variables
-        // hora y fecha, para mostrarsela en la sección de reservation_confirmed
-        AppBottomButton(label: 'Reservar', onPressed: _confirmSelection),
-      ],
-    ),
-  );
+          // Este botón se crea desde el main, pasandole como el label del botón que deberá crearse, y actualizará las variables
+          // hora y fecha, para mostrarsela en la sección de reservation_confirmed
+          AppBottomButton(label: 'Reservar', onPressed: _confirmSelection),
+        ],
+      ),
+    );
+  }
 }

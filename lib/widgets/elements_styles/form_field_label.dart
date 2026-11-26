@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:train_away/theme/app_colors.dart';
 
 // Widget que muestra el nombre o la descripción de un campo del formulario.
 class FormFieldLabel extends StatelessWidget {
@@ -10,15 +9,19 @@ class FormFieldLabel extends StatelessWidget {
 
   // Construye la etiqueta con el formato compartido por la aplicación.
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(bottom: 6),
-    child: Text(
-      label,
-      style: const TextStyle(
-        fontSize: 17,
-        fontWeight: FontWeight.w700,
-        color: AppColors.black,
+  Widget build(BuildContext context)
+  {
+    final colors = Theme.of(context).colorScheme;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 6),
+      child: Text(
+        label,
+        style: TextStyle(
+          fontSize: 17,
+          fontWeight: FontWeight.w700,
+          color: colors.onSurface,
+        ),
       ),
-    ),
-  );
+    );
+  }
 }

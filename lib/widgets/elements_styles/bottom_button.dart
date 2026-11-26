@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:train_away/theme/app_colors.dart';
-
 // Widget que coloca un botón en la parte inferior de las pantallas.
 class AppBottomButton extends StatelessWidget {
   const AppBottomButton({
@@ -17,47 +15,52 @@ class AppBottomButton extends StatelessWidget {
 
   // Construye el contenedor inferior y el estilo de botón solicitado.
   @override
-  Widget build(BuildContext context) => Container(
-    width: double.infinity,
-    padding: const EdgeInsets.all(20),
-    decoration: const BoxDecoration(
-      border: Border(top: BorderSide(color: AppColors.divider)),
-    ),
-    child: Center(
-      child: SizedBox(
-        width: 192,
-        height: 46,
-        // Dependiendo del valor del booleano pasado, el botón se mostrará con un estilo u otro
-        child: outlined
-            ? OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: AppColors.navy,
-                  side: const BorderSide(color: AppColors.navy, width: 2.5),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(11),
-                  ),
-                ),
-                onPressed: onPressed,
-                child: Text(label),
-              )
-            : FilledButton(
-                style: FilledButton.styleFrom(
-                  backgroundColor: AppColors.navy,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(11),
-                  ),
-                ),
-                onPressed: onPressed,
-                child: Text(
-                  label,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 18,
-                  ),
-                ),
-              ),
+  Widget build(BuildContext context)
+  {
+    final colors = Theme.of(context).colorScheme;
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        border: Border(top: BorderSide(color: colors.outlineVariant)),
       ),
-    ),
-  );
+      child: Center(
+        child: SizedBox(
+          width: 192,
+          height: 46,
+          // Dependiendo del valor del booleano pasado, el botón se mostrará con un estilo u otro
+          child: outlined
+              ? OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: colors.primary,
+                    side: BorderSide(color: colors.primary, width: 2.5),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(11),
+                    ),
+                  ),
+                  onPressed: onPressed,
+                  child: Text(label),
+                )
+              : FilledButton(
+                  style: FilledButton.styleFrom(
+                    backgroundColor: colors.primary,
+                    foregroundColor: colors.onPrimary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(11),
+                    ),
+                  ),
+                  onPressed: onPressed,
+                  child: Text(
+                    label,
+                    style: TextStyle(
+                      color: colors.onSecondary,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+        ),
+      ),
+    );
+  }
 }

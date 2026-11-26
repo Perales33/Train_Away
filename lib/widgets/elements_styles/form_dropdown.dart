@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:train_away/theme/app_colors.dart';
 
 // Widget reutilizable para los campos desplegables de los formularios
 // (Origen, Destino, Clase, Personas, Horarios).
@@ -35,119 +34,122 @@ class _FormDropdownState<T> extends State<FormDropdown<T>> {
 
   // Construye el Widget empleado para los desplegables y la barra de desplazamiento.
   @override
-  Widget build(BuildContext context) => LayoutBuilder(
-    builder: (context, constraints) {
-      final width = constraints.maxWidth;
-      final items = widget.values
-          .map<Widget>(
-            (item) => SizedBox(
-              width: width,
-              child: MenuItemButton(
-                onPressed: () => widget.onChanged(item),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    item?.toString() ?? 'N/A',
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: AppColors.darkColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ).toList();
-
-      // Separamos el estilo de cuando hay más de 5 elementos, para uqe la pantalla no se vea opacada por el scroll  
-      final menuChildren = widget.values.length > 5
-          ? <Widget>[
-              SizedBox(
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+        final items = widget.values
+            .map<Widget>(
+              (item) => SizedBox(
                 width: width,
-                height: 5 * 48,
-                child: Scrollbar(
-                  controller: _menuScrollController,
-                  thumbVisibility: true,
-                  trackVisibility: true,
-                  thickness: 6,
-                  radius: const Radius.circular(8),
-                  child: ListView(
-                    controller: _menuScrollController,
-                    padding: EdgeInsets.zero,
-                    children: items,
-                  ),
-                ),
-              ),
-            ]
-          : items;
-
-      // Devuelve el elemento de Scroll para visualización de los elementos
-      return MenuAnchor(
-        alignmentOffset: const Offset(0, 4),
-        crossAxisUnconstrained: false,
-
-        style: MenuStyle(
-          backgroundColor: const WidgetStatePropertyAll(AppColors.white),
-          padding: const WidgetStatePropertyAll(
-            EdgeInsets.symmetric(vertical: 4),
-          ),
-          shape: WidgetStatePropertyAll(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-              side: const BorderSide(color: AppColors.navy, width: 2),
-            ),
-          ),
-        ),
-
-        menuChildren: menuChildren,
-        builder: (context, controller, child) => SizedBox(
-          width: width,
-          child: InkWell(
-            onTap: () {
-              if (controller.isOpen) {
-                controller.close();
-              } else {
-                controller.open();
-              }
-            },
-
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 8,
-              ),
-
-              decoration: BoxDecoration(
-                border: Border.all(color: AppColors.navy, width: 2.5),
-                borderRadius: BorderRadius.circular(12),
-              ),
-
-              child: Row(
-                children: [
-                  Expanded(
+                child: MenuItemButton(
+                  onPressed: () => widget.onChanged(item),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
                     child: Text(
-                      widget.hint != null && widget.value.toString().isEmpty
-                          ? widget.hint!
-                          : widget.value.toString(),
+                      item?.toString() ?? 'N/A',
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: AppColors.darkColor,
+                      style: TextStyle(
+                        color: colors.onSurface,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
-                  const Icon(
-                    Icons.keyboard_arrow_down,
-                    color: AppColors.navy,
+                ),
+              ),
+            ).toList();
+
+        // Separamos el estilo de cuando hay más de 5 elementos, para uqe la pantalla no se vea opacada por el scroll  
+        final menuChildren = widget.values.length > 5
+            ? <Widget>[
+                SizedBox(
+                  width: width,
+                  height: 5 * 48,
+                  child: Scrollbar(
+                    controller: _menuScrollController,
+                    thumbVisibility: true,
+                    trackVisibility: true,
+                    thickness: 6,
+                    radius: const Radius.circular(8),
+                    child: ListView(
+                      controller: _menuScrollController,
+                      padding: EdgeInsets.zero,
+                      children: items,
+                    ),
                   ),
-                ],
+                ),
+              ]
+            : items;
+
+        // Devuelve el elemento de Scroll para visualización de los elementos
+        return MenuAnchor(
+          alignmentOffset: const Offset(0, 4),
+          crossAxisUnconstrained: false,
+
+          style: MenuStyle(
+            backgroundColor: WidgetStatePropertyAll(colors.onPrimary),
+            padding: const WidgetStatePropertyAll(
+              EdgeInsets.symmetric(vertical: 4),
+            ),
+            shape: WidgetStatePropertyAll(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+                side: BorderSide(color: colors.scrim, width: 2),
               ),
             ),
           ),
-        ),
-      );
-    },
-  );
+
+          menuChildren: menuChildren,
+          builder: (context, controller, child) => SizedBox(
+            width: width,
+            child: InkWell(
+              onTap: () {
+                if (controller.isOpen) {
+                  controller.close();
+                } else {
+                  controller.open();
+                }
+              },
+
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
+
+                decoration: BoxDecoration(
+                  border: Border.all(color: colors.scrim, width: 2.5),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        widget.hint != null && widget.value.toString().isEmpty
+                            ? widget.hint!
+                            : widget.value.toString(),
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: colors.onSurface,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    Icon(
+                      Icons.keyboard_arrow_down,
+                      color: colors.primary,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
 }

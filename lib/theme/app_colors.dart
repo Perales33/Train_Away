@@ -12,4 +12,5 @@ abstract final class AppColors {
   static const divider = Color(0xFFBDBDBD);
   static const surfaceGrey = Color(0xFFE7E6E7);
   static const darkColor = Color(0xFF2a4252);
+  static const burgundy_ligth = Color(0xFFDF134D);
 }

@@ -12,12 +12,15 @@ import 'package:train_away/pages/reservar_pages/date_time_page.dart';
 import 'package:train_away/pages/reservar_pages/reservation_confirmed.dart';
 import 'package:train_away/pages/reservar_pages/success_page.dart';
 import 'package:train_away/pages/reservar_pages/form_page.dart';
+import 'package:train_away/pages/settings_pages/setting_page.dart';
 import 'package:train_away/providers/last_train_provider.dart';
 import 'package:train_away/providers/reservas_provider.dart';
+import 'package:train_away/providers/theme_provider.dart';
 import 'package:train_away/theme/app_colors.dart';
 import 'package:train_away/widgets/navegation/bottom_nav_bar.dart';
 import 'package:train_away/widgets/navegation/top_banner.dart';
 import 'package:train_away/navigation/reserva_reinicio.dart';
+import 'package:train_away/core/configs/app_theme.dart';
 
 // Inicia la aplicación Train Away.
 void main() => runApp(
@@ -29,7 +32,8 @@ void main() => runApp(
         // Leslie: Esto lo he añadido para probar los preferences y la carga de datos 
         // (Puedes modificar la parte de ReservasMemory con la clase que tengas tú)
         create: (_) => ReservasProvider(ReservasMemoryDatabase.instance)..chargeReservas(),
-      )
+      ),
+      ChangeNotifierProvider(create: (_) => ThemeProvider())
     ],
     child: const TrainAwayApp(),
   ),
@@ -88,7 +92,23 @@ final _router = GoRouter(
             ),
           ]
         ),
-        
+      ],
+    ),
+
+    // --- Sección 'Ajustes' ---
+    ShellRoute(
+      builder: (context, state, child) => Scaffold(
+        appBar: AppBanner(
+          onLogoTap: () => reiniciarReserva(context),
+        ),
+        body: child, 
+        bottomNavigationBar: const BottomNavBar()
+      ),
+      routes: [
+        GoRoute(
+          path: '/ajustes',
+          builder: (context, state) => SettingsPage(),
+        ),
       ],
     ),
   ],
@@ -99,29 +119,26 @@ class TrainAwayApp extends StatelessWidget {
 
   // Widget de la aplicación
   @override
-  Widget build(BuildContext context) => MaterialApp.router(
-    title: 'Train Away',
-    debugShowCheckedModeBanner: false,
+  Widget build(BuildContext context) {
+    final themeMode = context.watch<ThemeProvider>().themeMode;
+    return MaterialApp.router(
+      title: 'Train Away',
+      debugShowCheckedModeBanner: false,
 
-    routerDelegate: _router.routerDelegate,
-    routeInformationProvider: _router.routeInformationProvider,
-    routeInformationParser: _router.routeInformationParser,
+      routerDelegate: _router.routerDelegate,
+      routeInformationProvider: _router.routeInformationProvider,
+      routeInformationParser: _router.routeInformationParser,
 
-    supportedLocales: const [Locale('en'), Locale('es')],
-    localizationsDelegates: const [
-      GlobalMaterialLocalizations.delegate,
-      GlobalWidgetsLocalizations.delegate,
-      GlobalCupertinoLocalizations.delegate,
-      SfGlobalLocalizations.delegate,
-    ],
-    theme: ThemeData(
-      useMaterial3: true,
-      scaffoldBackgroundColor: AppColors.white,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: AppColors.navy,
-        primary: AppColors.navy,
-      ),
-      fontFamily: 'DM Sans',
-    ),
-  );
+      supportedLocales: const [Locale('en'), Locale('es')],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        SfGlobalLocalizations.delegate,
+      ],
+      themeMode: themeMode,
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+    );
+  }
 }

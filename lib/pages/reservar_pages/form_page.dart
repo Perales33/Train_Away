@@ -4,7 +4,6 @@ import 'package:train_away/models/clases_mock/travel_category.dart';
 import 'package:train_away/models/clases_mock/travel_option.dart';
 import 'package:train_away/models/clases_mock/stations.dart';
 import 'package:train_away/mocks/mock_service.dart';
-import 'package:train_away/theme/app_colors.dart';
 import 'package:train_away/widgets/elements_styles/form_dropdown.dart';
 import 'package:train_away/widgets/elements_styles/form_field_label.dart';
 import 'package:train_away/models/clases_reserva/reserva_model.dart';
@@ -112,17 +111,9 @@ class _FormPageState extends State<FormPage> {
     final stationNames = _stations.map((station) => station.name).toList();
     final categoryNames = _categories.map((category) => category.name).toList();
 
-    final origen = stationNames.contains(reserva.origen)
-        ? reserva.origen
-        : stationNames.first;
-    final destino =
-        stationNames.contains(reserva.destino) && reserva.destino != origen
-        ? reserva.destino
-        : stationNames.firstWhere((name) => name != origen);
-
-    final categoria = categoryNames.contains(reserva.categoria)
-        ? reserva.categoria
-        : categoryNames.first;
+    final origen = stationNames.contains(reserva.origen) ? reserva.origen : stationNames.first;
+    final destino = stationNames.contains(reserva.destino) && reserva.destino != origen ? reserva.destino : stationNames.firstWhere((name) => name != origen);
+    final categoria = categoryNames.contains(reserva.categoria) ? reserva.categoria : categoryNames.first;
 
     return Scaffold(
       body: Column(
@@ -215,6 +206,7 @@ class _FormPageState extends State<FormPage> {
 
   // Construye una opción seleccionable para personalizar el viaje.
   Widget _option(BuildContext context, String label, bool selected) {
+    final colors = Theme.of(context).colorScheme;
     return InkWell(
       onTap: () {
         context.read<ReservaModel>().setOpcion(label, !selected);
@@ -231,8 +223,9 @@ class _FormPageState extends State<FormPage> {
                 onChanged: (value) {
                   context.read<ReservaModel>().setOpcion(label, value ?? false);
                 },
-                activeColor: AppColors.navy,
-                side: const BorderSide(color: AppColors.navy, width: 2.5),
+                activeColor: colors.primary,
+                checkColor: colors.onPrimary,
+                side:  BorderSide(color: colors.outline, width: 2.5),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(6),
                 ),
@@ -243,8 +236,8 @@ class _FormPageState extends State<FormPage> {
 
             Text(
               label,
-              style: const TextStyle(
-                color: AppColors.navy,
+              style: TextStyle(
+                color: colors.onSurface,
                 fontWeight: FontWeight.w600,
                 fontSize: 15,
               ),

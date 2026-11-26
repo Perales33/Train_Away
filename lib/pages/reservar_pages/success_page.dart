@@ -1,50 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:train_away/theme/app_colors.dart';
 import 'package:train_away/widgets/elements_styles/bottom_button.dart';
 
-// Página que confirma que la reserva se ha completado correctamente.
 class SuccessPage extends StatelessWidget {
   const SuccessPage({super.key});
 
-  // Construye el icono y el mensaje de confirmación.
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+
     return Scaffold(
-      body: Column ( 
+      backgroundColor: colors.surface,
+      body: Column(
         children: [
           Expanded(
             child: Center(
-            child: Padding(
-              padding: EdgeInsets.all(28),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.verified_outlined, size: 30),
-                  SizedBox(height: 30),
-                  Text(
-                    'La reserva se ha realizado exitosamente.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: AppColors.navy,
-                      fontSize: 23,
-                      fontWeight: FontWeight.w700,
+              child: Padding(
+                padding: const EdgeInsets.all(28),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.verified_outlined,
+                      size: 30,
+                      color: colors.primary,
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 30),
+                    Text(
+                      'La reserva se ha realizado exitosamente.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: colors.onSurface,
+                        fontSize: 23,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          )
           ),
-          
           AppBottomButton(
             label: 'Entendido',
-            outlined: true, 
-            onPressed: () => context.go('/mis-reservas')
+            outlined: true,
+            onPressed: () => context.go('/mis-reservas'),
           ),
-        ]   
-    )
+        ],
+      ),
     );
   }
 }

@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:train_away/navigation/reserva_reinicio.dart';
 
-import 'package:train_away/theme/app_colors.dart';
 import 'package:train_away/models/clases_reserva/reserva_model.dart';
 import 'package:train_away/providers/reservas_provider.dart';
 import 'package:train_away/providers/last_train_provider.dart';
@@ -56,6 +55,7 @@ class ReservationConfirmedPage extends StatelessWidget {
   // Construye la tarjeta con el resumen completo de la reserva.
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
     final reserva = context.watch<ReservaModel>();
     return Scaffold(
       body: Column( 
@@ -69,18 +69,18 @@ class ReservationConfirmedPage extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: AppColors.white,
-                      border: Border.all(color: AppColors.navy),
+                      color: colors.surface,
+                      border: Border.all(color: colors.outline),
                       borderRadius: BorderRadius.circular(14),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Center(
+                        Center(
                           child: Text(
                             'Resumen de la reserva',
                             style: TextStyle(
-                              color: AppColors.navy,
+                              color: colors.onSurface,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
@@ -89,38 +89,38 @@ class ReservationConfirmedPage extends StatelessWidget {
                         
                         const SizedBox(height: 18),
 
-                        _infoTile('Origen', reserva.origen),
-                        _infoTile('Destino', reserva.destino),
+                        _infoTile(colors, 'Origen', reserva.origen),
+                        _infoTile(colors, 'Destino', reserva.destino),
                         Row(
                           children: [
-                            Expanded(child: _infoTile('Fecha', reserva.fecha == null ? 'Sin seleccionar' : _formatDate(reserva.fecha!))),
+                            Expanded(child: _infoTile(colors, 'Fecha', reserva.fecha == null ? 'Sin seleccionar' : _formatDate(reserva.fecha!))),
                             const SizedBox(width: 10),
-                            Expanded(child: _infoTile('Hora', reserva.hora ?? 'Sin seleccionar')),
+                            Expanded(child: _infoTile(colors, 'Hora', reserva.hora ?? 'Sin seleccionar')),
                           ],
                         ),
                         Row(
                           children: [
                             Expanded(
-                              child: _infoTile('Pasajeros', '${reserva.pasajeros}'),
+                              child: _infoTile(colors, 'Pasajeros', '${reserva.pasajeros}'),
                             ),
                             const SizedBox(width: 10),
-                            Expanded(child: _infoTile('Categoría', reserva.categoria)),
+                            Expanded(child: _infoTile(colors, 'Categoría', reserva.categoria)),
                           ],
                         ),
 
                         const SizedBox(height: 8),
 
-                        const Text(
+                        Text(
                           'Opciones de viaje',
                           style: TextStyle(
-                            color: AppColors.navy,
+                            color: colors.onSurface,
                             fontSize: 17,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: 6),
                         ...reserva.opciones.entries.map(
-                          (entry) => _valueBox('${entry.value ? 'Con' : 'Sin'} ${entry.key}')
+                          (entry) => _valueBox(colors, '${entry.value ? 'Con' : 'Sin'} ${entry.key}')
                         ),
                       ],
                     ),
@@ -136,41 +136,41 @@ class ReservationConfirmedPage extends StatelessWidget {
   }
   
   // Presenta una etiqueta junto al valor correspondiente.
-  Widget _infoTile(String label, String value)
+  Widget _infoTile(ColorScheme colors, String label, String value)
   {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+      padding: EdgeInsets.only(bottom: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
-            style: const TextStyle(
-              color: AppColors.navy,
+            style: TextStyle(
+              color: colors.onSurface,
               fontSize: 17,
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 5),
-          _valueBox(value),
+          _valueBox(colors, value),
         ],
       ),
     );
   }
   // Estilos para mostrar el valor dentro de la caja con los datos de la confirmación de reserva.
-  Widget _valueBox(String value) {
+  Widget _valueBox(ColorScheme colors, String value) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      margin: const EdgeInsets.only(bottom: 7),
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      margin: EdgeInsets.only(bottom: 7),
       decoration: BoxDecoration(
-        color: AppColors.surfaceGrey,
+        color: colors.surfaceContainerHigh,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(
         value,
-        style: const TextStyle(
-          color: AppColors.navy,
+        style: TextStyle(
+          color: colors.onSurface,
           fontSize: 20,
           fontWeight: FontWeight.w600,
         ),
