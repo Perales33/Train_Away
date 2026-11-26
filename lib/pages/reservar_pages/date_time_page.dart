@@ -215,7 +215,7 @@ class _DateTimePageState extends State<DateTimePage> {
 
         // Este botón se crea desde el main, pasandole como el label del botón que deberá crearse, y actualizará las variables
         // hora y fecha, para mostrarsela en la sección de reservation_confirmed
-        AppBottomButton(label: 'Continuar', onPressed: _confirmSelection),
+        AppBottomButton(label: 'Reservar', onPressed: _confirmSelection),
       ],
     ),
   );

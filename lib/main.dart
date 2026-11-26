@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_localizations/syncfusion_localizations.dart';
+import 'package:train_away/data/example_data.dart';
 import 'package:train_away/pages/mis_reservas_pages/mis_reservas_page.dart';
 import 'package:train_away/pages/mis_reservas_pages/reserva_detalle_page.dart';
 
@@ -12,7 +13,7 @@ import 'package:train_away/pages/reservar_pages/reservation_confirmed.dart';
 import 'package:train_away/pages/reservar_pages/success_page.dart';
 import 'package:train_away/pages/reservar_pages/form_page.dart';
 import 'package:train_away/providers/last_train_provider.dart';
-// import 'package:train_away/providers/reservas_provider.dart';
+import 'package:train_away/providers/reservas_provider.dart';
 import 'package:train_away/theme/app_colors.dart';
 import 'package:train_away/widgets/navegation/bottom_nav_bar.dart';
 import 'package:train_away/widgets/navegation/top_banner.dart';
@@ -24,11 +25,11 @@ void main() => runApp(
     providers: [
       ChangeNotifierProvider(create: (_) => ReservaModel()),
       ChangeNotifierProvider(create: (_) => LastTrainProvider()),
-      /*
       ChangeNotifierProvider(
-        create: (_) => ReservasProvider(ReservasDatabase.instance),
-        ..changeReservas(),
-      )*/
+        // Leslie: Esto lo he añadido para probar los preferences y la carga de datos 
+        // (Puedes modificar la parte de ReservasMemory con la clase que tengas tú)
+        create: (_) => ReservasProvider(ReservasMemoryDatabase.instance)..chargeReservas(),
+      )
     ],
     child: const TrainAwayApp(),
   ),
