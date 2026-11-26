@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:train_away/navigation/reserva_reinicio.dart';
-import 'package:train_away/theme/app_colors.dart';
-
 // Widget que muestra la barra superior común de la aplicación.
 class AppBanner extends StatelessWidget implements PreferredSizeWidget {
   const AppBanner({this.onLogoTap, super.key});

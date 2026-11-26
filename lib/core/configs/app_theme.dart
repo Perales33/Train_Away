@@ -70,7 +70,7 @@ abstract final class AppTheme {
       scrim: AppColors.white,
       inverseSurface: AppColors.white,
       onInverseSurface: AppColors.black,
-      inversePrimary: AppColors.burgundy_ligth,
+      inversePrimary: AppColors.burgundyLigth,
       surfaceTint: AppColors.navy,
       surfaceContainerHigh: AppColors.muted,
     );

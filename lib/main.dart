@@ -16,7 +16,6 @@ import 'package:train_away/pages/settings_pages/setting_page.dart';
 import 'package:train_away/providers/last_train_provider.dart';
 import 'package:train_away/providers/reservas_provider.dart';
 import 'package:train_away/providers/theme_provider.dart';
-import 'package:train_away/theme/app_colors.dart';
 import 'package:train_away/widgets/navegation/bottom_nav_bar.dart';
 import 'package:train_away/widgets/navegation/top_banner.dart';
 import 'package:train_away/navigation/reserva_reinicio.dart';
