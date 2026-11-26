@@ -41,11 +41,24 @@ class SuccessPage extends StatelessWidget {
               ),
             ),
           ),
-          AppBottomButton(
-            label: 'Entendido',
-            outlined: true,
-            onPressed: () => context.go('/mis-reservas'),
-          ),
+          Row(
+            children: [
+              Expanded(
+                child: AppBottomButton(
+                  label: 'Entendido',
+                  outlined: true,
+                  onPressed: () => context.go('/reservar'),
+                ), 
+              ),
+              Expanded(
+                child: AppBottomButton(
+                  label: 'Mis reservas ',
+                  outlined: false,
+                  onPressed: () => context.go('/mis-reservas'),
+                ),
+              )
+            ],
+          )
         ],
       ),
     );

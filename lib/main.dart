@@ -33,7 +33,7 @@ void main() => runApp(
         create: (_) =>
             ReservasProvider(ReservasMemoryDatabase.instance)..chargeReservas(),
       ),
-      ChangeNotifierProvider(create: (_) => ThemeProvider()),
+      ChangeNotifierProvider(create: (_) => ThemeProvider()..loadTheme()),
     ],
     child: const TrainAwayApp(),
   ),
@@ -54,10 +54,13 @@ final _router = GoRouter(
           path: '/reservar',
           builder: (context, state) => FormPage(),
           routes: [
-            GoRoute(path: 'fecha', builder: (context, state) => DateTimePage()),
             GoRoute(
-              path: 'confirmacion',
-              builder: (context, state) => ReservationConfirmedPage(),
+              path: 'fecha', 
+              builder: (context, state) => DateTimePage()
+            ),
+            GoRoute(
+              path: 'confirmacion', 
+              builder: (context, state) => ReservationConfirmedPage()
             ),
           ],
         ),

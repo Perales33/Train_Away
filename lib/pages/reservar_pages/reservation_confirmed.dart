@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:train_away/navigation/reserva_reinicio.dart';
 
 import 'package:train_away/models/clases_reserva/reserva_model.dart';
 import 'package:train_away/providers/reservas_provider.dart';
@@ -23,7 +22,7 @@ class ReservationConfirmedPage extends StatelessWidget {
     if(!context.mounted || confirmar == null) { return; }
 
     if(confirmar == false) {
-      await reiniciarReserva(context);
+      context.go('/reservar');
       return;
     }
 

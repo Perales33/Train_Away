@@ -7,6 +7,12 @@ class DetalleReserva extends StatelessWidget {
   final Reserva reserva;
   const new({super.key, required this.reserva});
 
+  String _formatDateDetail(DateTime date) {
+    final day = date.day.toString().padLeft(2, '0');
+    final month = date.month.toString().padLeft(2, '0');
+    return '$day/$month/${date.year}';
+  }
+
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
@@ -54,7 +60,7 @@ class DetalleReserva extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: _infoTile(colors, 'Fecha', reserva.formatDate),
+                        child: _infoTile(colors, 'Fecha', _formatDateDetail(reserva.fecha)),
                       ),
                       const SizedBox(width: 10),
                       Expanded(child: _infoTile(colors, 'Hora', reserva.hora)),

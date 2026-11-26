@@ -102,6 +102,8 @@ class _FormPageState extends State<FormPage> {
   // Construye los campos de trayecto, pasajeros, clase y opciones adicionales.
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+
     if (_loading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -118,6 +120,17 @@ class _FormPageState extends State<FormPage> {
     return Scaffold(
       body: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
+            child: Text(
+              'Formulario de Reserva',
+              style: TextStyle(
+                color: colors.onSurface,
+                fontSize: 26,
+                fontWeight: FontWeight.bold 
+              )
+            ),
+          ),
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
@@ -190,7 +203,7 @@ class _FormPageState extends State<FormPage> {
             ),
           ),
           AppBottomButton(
-            label: 'Continuar',
+            label: 'Reservar',
             onPressed: () => context.push('/reservar/fecha')
           )
         ],

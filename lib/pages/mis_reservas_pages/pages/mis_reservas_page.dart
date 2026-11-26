@@ -79,14 +79,34 @@ class MisReservasPage extends StatelessWidget {
       );
     }
 
-    return ListView.separated(
-      itemBuilder: (BuildContext context, int index) {
-        return ReservaCard(reserva: state.reservas[index]);
-      },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: Text(
+            'Mis Reservas',
+            style: TextStyle(
+              color: colors.onSurface,
+              fontSize: 28,
+              fontWeight: FontWeight.bold 
+            )
+          ),
+        ),
+        Expanded(
+          child: ListView.separated(
+            itemBuilder: (BuildContext context, int index) {
+              return ReservaCard(reserva: state.reservas[index]);
+            },
+            separatorBuilder: (_, _) => const SizedBox(height: 12),
+            itemCount: state.reservas.length,
+            padding: EdgeInsets.all(16),
+          ) 
+        )
+        
 
-      separatorBuilder: (_, _) => const SizedBox(height: 12),
-      itemCount: state.reservas.length,
-      padding: EdgeInsets.all(16),
+      
+      ]
     );
   }
 }
