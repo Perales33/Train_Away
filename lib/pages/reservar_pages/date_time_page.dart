@@ -65,6 +65,24 @@ class _DateTimePageState extends State<DateTimePage> {
     });
   }
 
+  var reserveButtonActive = false;
+
+  void _dateAndTimeSelected() {
+    final date = selectedDate;
+    final hour = selectedHour;
+
+    if (date == null || hour == null) {
+      setState(() {
+        reserveButtonActive = false;
+      });
+      return;
+    }
+
+    setState(() {
+      reserveButtonActive = true;
+    });
+  }
+
   // Devuelve la selección cuando se han indicado fecha y hora.
   void _confirmSelection() {
     final date = selectedDate;
@@ -143,7 +161,11 @@ class _DateTimePageState extends State<DateTimePage> {
                                 if (args.value is DateTime) {
                                   setState(() {
                                     selectedDate = args.value as DateTime;
+                                    selectedHour = _schedules
+                                        .map((schedule) => schedule.time)
+                                        .toList()[0];
                                   });
+                                  _dateAndTimeSelected();
                                 }
                               },
                               monthViewSettings:
@@ -202,6 +224,7 @@ class _DateTimePageState extends State<DateTimePage> {
                             selectedHour: selectedHour,
                             onChanged: (hour) {
                               setState(() => selectedHour = hour);
+                              _dateAndTimeSelected();
                             },
                           ),
                   ),
@@ -212,7 +235,11 @@ class _DateTimePageState extends State<DateTimePage> {
 
           // Este botón se crea desde el main, pasandole como el label del botón que deberá crearse, y actualizará las variables
           // hora y fecha, para mostrarsela en la sección de reservation_confirmed
-          AppBottomButton(label: 'Reservar', onPressed: _confirmSelection),
+          AppBottomButton(
+            label: 'Reservar',
+            outlined: !reserveButtonActive,
+            onPressed: _confirmSelection,
+          ),
         ],
       ),
     );
