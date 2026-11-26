@@ -3,18 +3,18 @@ import 'package:go_router/go_router.dart';
 import 'package:train_away/models/clases_reserva/reserva.dart';
 
 class ReservaCard extends StatelessWidget {
-  final Reserva _reserva;
-  const ReservaCard({super.key, required this._reserva});
+  final Reserva reserva;
+  const ReservaCard({super.key, required this.reserva});
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    final id = _reserva.id;
+    final id = reserva.id;
 
-    final multiplePasajeros = _reserva.pasajeros >= 2
+    final multiplePasajeros = reserva.pasajeros >= 2
         ? "pasajeros"
         : "pasajero";
-    final tickets = _reserva.pasajeros >= 2 ? "tickets" : "ticket";
+    final tickets = reserva.pasajeros >= 2 ? "tickets" : "ticket";
     return Card(
       color: colors.surface,
       elevation: 0,
@@ -29,7 +29,7 @@ class ReservaCard extends StatelessWidget {
           child: Icon(Icons.train_outlined, color: colors.onInverseSurface),
         ),
         title: Text(
-          "${_reserva.origen} → ${_reserva.destino}",
+          "${reserva.origen} → ${reserva.destino}",
           style: TextStyle(
             color: colors.onSurface,
             fontSize: 16,
@@ -39,7 +39,7 @@ class ReservaCard extends StatelessWidget {
         subtitle: Padding(
           padding: EdgeInsetsGeometry.only(top: 6),
           child: Text(
-            "${_reserva.formatDate} a las ${_reserva.hora}h -  ${_reserva.pasajeros} $tickets de $multiplePasajeros.",
+            "${reserva.formatDate} a las ${reserva.hora}h -  ${reserva.pasajeros} $tickets de $multiplePasajeros.",
             style: TextStyle(color: colors.onSurfaceVariant, fontSize: 14),
           ),
         ),

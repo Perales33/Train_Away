@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-import 'package:train_away/models/clases_reserva/reserva.dart';
-
 import 'package:train_away/widgets/elements_styles/bottom_button.dart';
 import 'package:train_away/widgets/hour_selector/hour_selection.dart';
 import 'package:train_away/mocks/mock_service.dart';
