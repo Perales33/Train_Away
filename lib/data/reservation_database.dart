@@ -1,4 +1,3 @@
-
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:train_away/models/clases_reserva/reserva.dart';
@@ -20,18 +19,11 @@ class ReservationDatabase {
     final rutaDataBase = await getDatabasesPath();
     final ruta = join(rutaDataBase, 'train_away.db');
 
-    return openDatabase(
-      ruta,
-      version: 1,
-      onCreate: _createDatabase,
-    );
+    return openDatabase(ruta, version: 1, onCreate: _createDatabase);
   }
 
   // Crea la tabla de reservas
-  Future<void> _createDatabase(
-    Database db,
-    int version,
-  ) async {
+  Future<void> _createDatabase(Database db, int version) async {
     await db.execute('''
       CREATE TABLE reservas (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -58,14 +50,9 @@ class ReservationDatabase {
   Future<List<Reserva>> selectReservas() async {
     final db = await _database;
 
-    final resultado = await db.query(
-      'reservas',
-      orderBy: 'id DESC',
-    );
+    final resultado = await db.query('reservas', orderBy: 'id DESC');
 
-    return resultado
-        .map((fila) => Reserva.fromMap(fila))
-        .toList();
+    return resultado.map((fila) => Reserva.fromMap(fila)).toList();
   }
 
   // Obtener una reserva por su id

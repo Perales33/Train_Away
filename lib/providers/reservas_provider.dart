@@ -1,12 +1,11 @@
 import 'package:flutter/foundation.dart';
-
-// import 'package:train_away/data/reservas_database.dart';
+import 'package:train_away/data/reservation_database.dart';
 import 'package:train_away/models/clases_reserva/reserva.dart';
 
 class ReservasProvider extends ChangeNotifier {
   ReservasProvider(this._db);
 
-  final /*ReservaDatabase*/ _db;
+  final ReservationDatabase _db;
 
   List<Reserva> _reservas = [];
   bool _cargando = false;
@@ -53,10 +52,11 @@ class ReservasProvider extends ChangeNotifier {
   Future<Reserva?> selectReserva(int id) {
     return _db.selectReserva(id);
   }
-
+  /* Se comenta el método porque según el enunciado no se puede eliminar reservas.
   Future<void> deleteReserva(int id) async {
     await _db.deleteReserva(id);
     _reservas = _reservas.where((reserva) => reserva.id != id).toList();
     notifyListeners();
   }
+*/
 }
