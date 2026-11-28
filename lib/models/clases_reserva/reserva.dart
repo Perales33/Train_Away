@@ -26,6 +26,7 @@ class Reserva {
     'origen': origen,
     'destino': destino,
     'pasajeros': pasajeros,
+    'categoria': categoria,
     'opciones': jsonEncode(opciones),
     'fecha': fecha.toIso8601String(),
     'hora': hora,
