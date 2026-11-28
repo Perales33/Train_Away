@@ -3,7 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_localizations/syncfusion_localizations.dart';
-import 'package:train_away/data/example_data.dart';
+import 'package:train_away/data/reservation_database.dart';
 import 'package:train_away/pages/mis_reservas_pages/pages/mis_reservas_page.dart';
 import 'package:train_away/pages/mis_reservas_pages/pages/reserva_detalle_page.dart';
 
@@ -28,10 +28,8 @@ void main() => runApp(
       ChangeNotifierProvider(create: (_) => ReservaModel()),
       ChangeNotifierProvider(create: (_) => LastTrainProvider()),
       ChangeNotifierProvider(
-        // Leslie: Esto lo he añadido para probar los preferences y la carga de datos
-        // (Puedes modificar la parte de ReservasMemory con la clase que tengas tú)
         create: (_) =>
-            ReservasProvider(ReservasMemoryDatabase.instance)..chargeReservas(),
+            ReservasProvider(ReservationDatabase.instance)..chargeReservas(),
       ),
       ChangeNotifierProvider(create: (_) => ThemeProvider()..loadTheme()),
     ],
@@ -43,12 +41,16 @@ final _router = GoRouter(
   initialLocation: '/reservar',
   routes: [
     ShellRoute(
-      builder: (context, state, child)
-      {
-        final selectedPath = state.uri.path == '/ajustes' ? state.uri.queryParameters['place'] ?? '/reservar' : state.uri.path;
+      builder: (context, state, child) {
+        final selectedPath = state.uri.path == '/ajustes'
+            ? state.uri.queryParameters['place'] ?? '/reservar'
+            : state.uri.path;
 
         return Scaffold(
-          appBar: AppBanner(onLogoTap: () => reiniciarReserva(context), currentPath: selectedPath,),
+          appBar: AppBanner(
+            onLogoTap: () => reiniciarReserva(context),
+            currentPath: selectedPath,
+          ),
           body: child,
           bottomNavigationBar: BottomNavBar(currentPath: selectedPath),
         );
@@ -58,13 +60,10 @@ final _router = GoRouter(
           path: '/reservar',
           builder: (context, state) => FormPage(),
           routes: [
+            GoRoute(path: 'fecha', builder: (context, state) => DateTimePage()),
             GoRoute(
-              path: 'fecha', 
-              builder: (context, state) => DateTimePage()
-            ),
-            GoRoute(
-              path: 'confirmacion', 
-              builder: (context, state) => ReservationConfirmedPage()
+              path: 'confirmacion',
+              builder: (context, state) => ReservationConfirmedPage(),
             ),
           ],
         ),
@@ -85,10 +84,7 @@ final _router = GoRouter(
           ],
         ),
 
-        GoRoute(
-          path: '/ajustes', 
-          builder: (context, state) => SettingsPage()
-        ),
+        GoRoute(path: '/ajustes', builder: (context, state) => SettingsPage()),
       ],
     ),
   ],
